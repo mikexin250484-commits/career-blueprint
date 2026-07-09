@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>職涯策略診斷報告｜Career Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:0mm}
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact}
+:root{
+  /* 大地暖色系主色盤 */
+  --o:#b5651d;       /* 暖土橘 */
+  --od:#6b3a1f;      /* 深咖啡 */
+  --om:#c97c35;      /* 中橘棕 */
+  --ol:#d9a05a;      /* 淺橘金 */
+  --op:#faf0e0;      /* 極淺米 */
+  --ox:#fdf8f0;      /* 近白米 */
+  --teal:#5c7a5e;    /* 大地綠 */
+  --teal-pale:#eaf2ea;
+  --text:#2a1a0a;    /* 深咖啡文字 */
+  --ts:#5a3a1a;      /* 中棕文字 */
+  --tm:#9a7a50;      /* 暖灰棕輔助 */
+  --line:#e0cdb0;    /* 暖米線條 */
+  /* 封面漸層色 */
+  --cv1:#3d1f0a;     /* 極深棕 */
+  --cv2:#6b3a1f;     /* 深棕 */
+  --cv3:#b5651d;     /* 暖土橘 */
+  --cv4:#d4915a;     /* 淺橘棕 */
+}
+body{font-family:'Noto Sans TC',sans-serif;background:#ede4d8;color:var(--text);font-size:14px;line-height:1.7}
+
+/* SCREEN NAV */
+.screen-nav{position:fixed;top:0;left:0;right:0;background:rgba(61,31,10,0.97);backdrop-filter:blur(8px);padding:10px 24px;display:flex;align-items:center;gap:16px;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.2)}
+.screen-nav .nav-title{color:rgba(255,255,255,0.9);font-size:13px;font-weight:500;letter-spacing:1px;flex:1}
+.screen-nav .nav-name{color:rgba(255,255,255,0.6);font-size:12px}
+.nav-btn{padding:6px 16px;border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s;letter-spacing:.5px;border:none}
+.nav-btn.print-btn{background:var(--o);color:white}
+.nav-btn.email{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+.pages-wrap{padding-top:52px}
+
+/* PAGE */
+.page{width:794px;min-height:1123px;margin:20px auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,0.15);position:relative;overflow:hidden;page-break-after:always}
+
+/* ── COVER ─────────────────────────────────────────── */
+.cover-bg{background-color:var(--cv2);background-image:linear-gradient(160deg,var(--cv1) 0%,var(--cv2) 40%,var(--cv3) 80%,var(--cv4) 100%);min-height:1123px;display:flex;flex-direction:column;justify-content:flex-end;padding:60px 56px 64px;position:relative;overflow:hidden}
+.cover-deco{position:absolute;inset:0;background-image:radial-gradient(circle at 70% 20%,rgba(220,170,100,0.12) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(180,110,50,0.08) 0%,transparent 40%)}
+.cover-badge{position:absolute;top:52px;right:56px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:50%;width:100px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cover-badge .num{font-size:26px;font-weight:700;font-family:'Noto Serif TC',serif;line-height:1;color:rgba(255,255,255,0.95)}
+.cover-badge .txt{font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-top:4px}
+.cv-tag{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
+.cv-line{width:60px;height:3px;background-color:rgba(255,255,255,0.5);margin-bottom:28px;border-radius:2px}
+.cv-h1{font-family:'Noto Serif TC',serif;font-size:42px;font-weight:700;color:#fff;line-height:1.2;letter-spacing:2px;margin-bottom:12px}
+.cv-h1 span{color:rgba(255,210,150,0.9)}
+.cv-sub{color:rgba(255,255,255,0.65);font-size:14px;letter-spacing:2px;margin-bottom:48px}
+.cv-divider{width:100%;height:1px;background-color:rgba(255,255,255,0.15);margin-bottom:32px}
+.cv-meta{display:flex;gap:40px}
+.cv-mi .label{color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.cv-mi .val{color:rgba(255,255,255,0.92);font-size:16px;font-family:'Noto Serif TC',serif;font-weight:500}
+/* WD type badge on cover */
+.cv-wd-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:30px;padding:8px 20px;margin-top:20px}
+.cv-wd-badge .wd-icon{font-size:20px}
+.cv-wd-badge .wd-label{color:rgba(255,255,255,0.9);font-size:13px;font-weight:500;letter-spacing:1px}
+.cv-wd-badge .wd-type{color:rgba(255,210,150,0.9);font-size:15px;font-weight:700;font-family:'Noto Serif TC',serif}
+
+/* ── INNER PAGES ─────────────────────────────────── */
+.inner{padding:52px 56px 72px}
+.ph{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:18px;border-bottom:2px solid var(--o)}
+.pn{width:44px;height:44px;border-radius:50%;background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1),var(--cv3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;font-family:'Noto Serif TC',serif;flex-shrink:0}
+.ph .chapter{font-size:10px;letter-spacing:3px;color:var(--o);text-transform:uppercase;margin-bottom:4px;font-weight:500}
+.ph .title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:600;color:var(--text);letter-spacing:1px}
+.pf{position:absolute;bottom:0;left:0;right:0;height:40px;background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.pf .brand{color:rgba(255,255,255,0.8);font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.pf .pg{color:rgba(255,255,255,0.6);font-size:11px}
+
+/* ── COMMON ──────────────────────────────────────── */
+.hbox{background-color:var(--op);border:1.5px solid var(--ol);border-left:4px solid var(--o);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:16px}
+.hbox.green{background-color:var(--teal-pale);border-color:#a0c8a0;border-left-color:var(--teal)}
+.hbox.red{background-color:#fef0f0;border-color:#f5c0c0;border-left-color:#b03020}
+.hbox.dark{background-color:#f5ece0;border-color:var(--o);border-left-color:var(--od)}
+.hb-t{font-size:11px;font-weight:600;color:var(--od);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.hbox.green .hb-t{color:var(--teal)}
+.hbox.red .hb-t{color:#b03020}
+.hb-body{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300}
+.hb-body strong{color:var(--text);font-weight:500}
+.hb-body em{font-style:normal;color:var(--o);font-weight:500}
+.sec{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:600;color:var(--od);margin:20px 0 12px;display:flex;align-items:center;gap:8px}
+.sec::before{content:'';width:4px;height:18px;background-color:var(--o);border-radius:2px;flex-shrink:0}
+.bt{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:16px}
+.bt strong{color:var(--text);font-weight:500}
+.bt em{font-style:normal;color:var(--o);font-weight:500}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tag{background-color:var(--op);border:1px solid var(--ol);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--od);font-weight:500}
+.tag.green{background-color:var(--teal-pale);border-color:#a0c8a0;color:#2a5a2a}
+.tag.blue{background-color:#eff3f8;border-color:#b8c8e0;color:#3a5a80}
+
+/* ── WD TYPE CARD (Page 2) ──────────────────────── */
+.wd-hero{background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1),var(--cv3));border-radius:16px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
+.wd-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 30%,rgba(220,170,80,0.1) 0%,transparent 60%)}
+.wd-hero-top{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.wd-big-icon{font-size:44px;line-height:1}
+.wd-hero-label{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
+.wd-hero-name{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:2px}
+.wd-hero-sub{color:rgba(255,220,150,0.9);font-size:14px;font-weight:500;letter-spacing:1px}
+.wd-hero-desc{color:rgba(255,255,255,0.82);font-size:13.5px;line-height:1.9;font-weight:300}
+.wd-score-row{display:flex;gap:10px;margin-bottom:20px}
+.wd-score-col{flex:1;background-color:var(--op);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.wd-score-col .wt{font-size:18px;font-weight:700;font-family:'Noto Serif TC',serif;color:var(--od)}
+.wd-score-col .wn{font-size:11px;color:var(--tm);margin:3px 0 8px;letter-spacing:.5px}
+.bar-wrap{background-color:#e8d8c0;border-radius:6px;height:8px;overflow:hidden;margin-bottom:4px}
+.bar-fill{height:100%;border-radius:6px;background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv2),var(--cv4))}
+.ws-num{font-size:12px;font-weight:600;color:var(--o)}
+/* WD radar SVG */
+.wd-radar-wrap{display:flex;gap:20px;align-items:flex-start;margin-bottom:20px}
+
+/* ── MARKET REALITY (Page 3) ─────────────────────── */
+.income-display{background-color:var(--op);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px}
+.income-display .inc-val{font-family:'Noto Serif TC',serif;font-size:40px;font-weight:700;color:var(--o);flex-shrink:0}
+.income-display .inc-info .inc-label{font-size:11px;color:var(--tm);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.income-display .inc-info .inc-text{font-size:13.5px;color:var(--ts);line-height:1.8;font-weight:300}
+.social-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.social-tag{background-color:var(--op);border:1px solid var(--ol);border-radius:20px;padding:5px 14px;font-size:12.5px;color:var(--od);font-weight:400}
+
+/* ── INCOME GUIDE (Page 4) ──────────────────────── */
+.income-card{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px}
+.income-card-hd{padding:14px 20px;display:flex;align-items:center;gap:10px}
+.income-card-hd.active{background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3))}
+.income-card-hd.passive{background-color:#3a5a3a;background-image:linear-gradient(90deg,#2a4020,#4a7050)}
+.income-card-badge{background-color:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.income-card-title{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px}
+.income-card-body{padding:18px 20px;background-color:var(--ox)}
+.income-card-lead{font-size:13.5px;color:var(--ts);line-height:1.85;font-weight:300;margin-bottom:12px}
+.income-card-lead strong{color:var(--text);font-weight:500}
+.income-tips{list-style:none;padding:0}
+.income-tips li{font-size:13px;color:var(--ts);padding:5px 0 5px 18px;position:relative;font-weight:300;line-height:1.7;border-bottom:1px solid rgba(224,205,176,0.4)}
+.income-tips li:last-child{border-bottom:none}
+.income-tips li::before{content:'▸';position:absolute;left:0;color:var(--o);font-size:11px;top:7px}
+
+/* ── SOL CARDS (Page 5 - from locking) ──────────── */
+.sol-card{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.sol-hd{padding:14px 20px;display:flex;align-items:center;gap:12px}
+.sol-hd.A{background-color:var(--od);background-image:linear-gradient(90deg,var(--cv1),var(--cv3))}
+.sol-hd.B{background-color:#4a6b4a;background-image:linear-gradient(90deg,#2a4a2a,#5c8060)}
+.sol-hd.C{background-color:#4a5a6b;background-image:linear-gradient(90deg,#2a3a50,#5a7090)}
+.sol-badge{background-color:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:1px;white-space:nowrap}
+.sol-title{color:#fff;font-size:14px;font-weight:600}
+.sol-body{padding:16px 20px;background-color:#fffaf4}
+.sol-diag{margin-bottom:12px}
+.sol-diag-title{font-size:11px;font-weight:600;color:var(--o);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.sol-diag-text{font-size:13px;color:var(--ts);line-height:1.8;font-weight:300}
+.sol-diag-text strong{color:var(--text);font-weight:500}
+.sol-lock{display:flex;gap:10px;background-color:rgba(200,118,42,0.05);border:1px solid rgba(200,118,42,0.15);border-radius:10px;padding:12px 14px;margin-top:8px}
+.sol-lock-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.sol-lock-text{font-size:12.5px;color:var(--ts);line-height:1.75;font-weight:300}
+.sol-lock-text strong{color:var(--od);font-weight:500}
+
+/* ── WHISPER (Page 6 - Mike 主任 note) ─────────────── */
+.whisper-box{background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1) 0%,var(--cv3) 100%);border-radius:18px;padding:36px 40px;position:relative;overflow:hidden;margin-bottom:20px}
+.whisper-box::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(220,170,80,0.08) 0%,transparent 50%)}
+.whisper-quote{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:300;color:rgba(255,255,255,0.92);line-height:1.7;letter-spacing:1px;margin-bottom:20px;position:relative;padding-left:20px}
+.whisper-quote::before{content:'"';font-size:60px;color:rgba(255,255,255,0.1);position:absolute;top:-16px;left:-10px;font-family:Georgia,serif;line-height:1}
+.whisper-sign{color:rgba(255,255,255,0.6);font-size:12px;letter-spacing:2px}
+
+/* ── CTA BOX ─────────────────────────────────────── */
+.cta-box{border:1.5px solid var(--ol);border-radius:16px;overflow:hidden;margin-top:20px}
+.cta-hd{background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));padding:14px 24px;display:flex;align-items:center;gap:10px}
+.cta-hd-badge{background-color:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:10px;padding:3px 10px;border-radius:20px;letter-spacing:2px}
+.cta-hd-title{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px}
+.cta-body{padding:20px 24px;background-color:var(--ox)}
+.cta-lead{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:16px}
+.cta-lead strong{color:var(--text);font-weight:500}
+.cta-items{list-style:none;padding:0;margin-bottom:18px}
+.cta-items li{font-size:13.5px;color:var(--ts);padding:6px 0 6px 20px;position:relative;font-weight:400;line-height:1.8}
+.cta-items li::before{content:'';position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background-color:var(--o)}
+.cta-scarcity{background-color:rgba(181,101,29,0.06);border:1px solid rgba(181,101,29,0.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:var(--od);line-height:1.75}
+.cta-scarcity strong{font-weight:600}
+.cta-btn{display:block;text-align:center;background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));color:#fff;padding:16px;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:2px;text-decoration:none}
+
+/* ── SVG CHARTS ──────────────────────────────────── */
+.chart-note{font-size:11px;color:var(--tm);margin-top:6px}
+
+/* ── CLOSING ─────────────────────────────────────── */
+.closing-bg{background-color:var(--cv2);background-image:linear-gradient(160deg,var(--cv1),var(--cv2) 50%,var(--cv3));min-height:1123px;display:flex;flex-direction:column;justify-content:center;padding:80px 64px;position:relative;overflow:hidden}
+.closing-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(255,200,100,0.08) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(255,150,50,0.06) 0%,transparent 40%)}
+.cl-quote{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:300;color:rgba(255,255,255,0.92);line-height:1.6;letter-spacing:2px;margin-bottom:48px;position:relative;padding-left:20px}
+.cl-quote::before{content:'"';font-size:80px;color:rgba(255,255,255,0.08);position:absolute;top:-24px;left:-16px;font-family:Georgia,serif;line-height:1}
+.cl-divider{width:60px;height:2px;background-color:rgba(255,255,255,0.3);margin-bottom:32px;border-radius:1px}
+.cl-info .ci-label{color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.cl-info .ci-val{color:rgba(255,255,255,0.85);font-size:16px;font-family:'Noto Serif TC',serif;margin-bottom:20px}
+.cl-cta{display:inline-flex;align-items:center;gap:8px;background-color:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:30px;padding:12px 28px;color:rgba(255,255,255,0.9);font-size:13px;letter-spacing:2px;margin-top:16px;text-decoration:none}
+.cl-seal{position:absolute;bottom:40px;right:56px;color:rgba(255,255,255,0.25);font-size:11px;letter-spacing:3px;text-transform:uppercase}
+
+@media print{
+  .screen-nav{display:none!important}
+  .pages-wrap{padding-top:0!important}
+  .page{margin:0!important;box-shadow:none!important;width:100%!important;page-break-after:always!important}
+  body{background:#fff!important}
+}
+</style>
+</head>
+<body>
+
+<div class="screen-nav">
+  <div class="nav-title">職涯策略診斷報告</div>
+  <div class="nav-name" id="navName">載入中...</div>
+  <button class="nav-btn email" onclick="openEmailModal()">📧 寄送 Email</button>
+  <button class="nav-btn print-btn" onclick="window.print()">🖨 列印 / PDF</button>
+</div>
+
+<div class="pages-wrap">
+
+<!-- ══ PAGE 1: COVER ══ -->
+<div class="page">
+<div class="cover-bg">
+  <div class="cover-deco"></div>
+  <div class="cover-badge"><div class="num">8</div><div class="txt">PAGES</div></div>
+  <div class="cv-line"></div>
+  <div class="cv-tag">Career Blueprint · 職涯策略診斷報告</div>
+  <div class="cv-h1">你的<span>職涯藍圖</span><br>正式啟動</div>
+  <div class="cv-sub">專屬職涯策略診斷報告 · 嚴格保密</div>
+  <div class="cv-divider"></div>
+  <div class="cv-meta">
+    <div class="cv-mi"><div class="label">個案姓名</div><div class="val" id="cvName">—</div></div>
+    <div class="cv-mi"><div class="label">報告日期</div><div class="val" id="cvDate">—</div></div>
+    <div class="cv-mi"><div class="label">諮詢顧問</div><div class="val">Mike 主任</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ PAGE 2: 能量特質 ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">1</div>
+    <div><div class="chapter">Chapter 01</div><div class="title">📌 你的特質：你的出廠設定</div></div>
+  </div>
+
+  <div class="wd-hero" id="wdHero">
+    <div class="wd-hero-top">
+      <div class="wd-big-icon" id="wdBigIcon">✦</div>
+      <div>
+        <div class="wd-hero-label">你的特質能量</div>
+        <div class="wd-hero-name" id="wdHeroName">—</div>
+        <div class="wd-hero-sub" id="wdHeroSub">—</div>
+      </div>
+    </div>
+    <div class="wd-hero-desc" id="wdHeroDesc">載入中...</div>
+  </div>
+
+  <!-- WD 分數圖 -->
+  <div class="wd-score-row">
+    <div class="wd-score-col"><div class="wt">⚡</div><div class="wn">發電機</div><div class="bar-wrap"><div class="bar-fill" id="barA" style="width:0%"></div></div><div class="ws-num" id="scA">0/6</div></div>
+    <div class="wd-score-col"><div class="wt">🔥</div><div class="wn">火焰</div><div class="bar-wrap"><div class="bar-fill" id="barB" style="width:0%"></div></div><div class="ws-num" id="scB">0/6</div></div>
+    <div class="wd-score-col"><div class="wt">🎯</div><div class="wn">節奏</div><div class="bar-wrap"><div class="bar-fill" id="barC" style="width:0%"></div></div><div class="ws-num" id="scC">0/6</div></div>
+    <div class="wd-score-col"><div class="wt">🔩</div><div class="wn">鋼鐵</div><div class="bar-wrap"><div class="bar-fill" id="barD" style="width:0%"></div></div><div class="ws-num" id="scD">0/6</div></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="sec">你最輕鬆的工作模式</div>
+      <div class="tag-row" id="wdStrengths"></div>
+      <div class="bt" id="wdStrengthDesc">載入中...</div>
+    </div>
+    <div>
+      <div class="sec">要小心的盲區 ⚠️</div>
+      <div class="hbox red">
+        <div class="hb-t">最容易自我消耗的地方</div>
+        <div class="hb-body" id="wdBlind">載入中...</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">2 / 8</span></div>
+</div>
+
+<!-- ══ PAGE 3: 市場現實 ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">2</div>
+    <div><div class="chapter">Chapter 02</div><div class="title">📌 市場現實面：你現在的位置</div></div>
+  </div>
+
+  <!-- 收入顯示 -->
+  <div class="income-display">
+    <div class="inc-val" id="incVal">—</div>
+    <div class="inc-info">
+      <div class="inc-label">目前月收入區間</div>
+      <div class="inc-text" id="incText">載入中...</div>
+    </div>
+  </div>
+
+  <!-- 薪資圖 -->
+  <div class="sec">你的產業薪資 × 台灣整體對比</div>
+  <div style="background-color:#fffaf4;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:20px">
+    <svg id="wageChart" width="100%" height="130" viewBox="0 0 580 130">
+      <line x1="80" y1="10" x2="550" y2="10" stroke="#e8d8c0" stroke-width="0.5"/>
+      <line x1="80" y1="45" x2="550" y2="45" stroke="#e8d8c0" stroke-width="0.5"/>
+      <line x1="80" y1="80" x2="550" y2="80" stroke="#e8d8c0" stroke-width="0.5"/>
+      <text x="75" y="13" text-anchor="end" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">120萬</text>
+      <text x="75" y="48" text-anchor="end" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">80萬</text>
+      <text x="75" y="83" text-anchor="end" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">40萬</text>
+      <rect id="wb1" x="90" y="53" width="60" height="27" rx="4" fill="#e0c898"/>
+      <rect id="wb2" x="190" y="38" width="60" height="42" rx="4" fill="#c8762a"/>
+      <rect id="wb3" x="290" y="20" width="60" height="60" rx="4" fill="#7a3a10"/>
+      <rect id="wb4" x="390" y="45" width="60" height="35" rx="4" fill="#d98530"/>
+      <text x="120" y="118" text-anchor="middle" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">全台均值</text>
+      <text x="220" y="118" text-anchor="middle" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif" id="wl2">你的產業</text>
+      <text x="320" y="118" text-anchor="middle" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">目標路徑</text>
+      <text x="420" y="118" text-anchor="middle" font-size="9" fill="#9a7050" font-family="Noto Sans TC,sans-serif">現狀軌跡</text>
+      <text x="120" y="49" text-anchor="middle" font-size="9" font-weight="600" fill="#7a3a10" font-family="Noto Sans TC,sans-serif">50萬</text>
+      <text id="wv2" x="220" y="34" text-anchor="middle" font-size="9" font-weight="600" fill="#fff" font-family="Noto Sans TC,sans-serif">—</text>
+      <text id="wv3" x="320" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#fff" font-family="Noto Sans TC,sans-serif">—</text>
+      <text id="wv4" x="420" y="41" text-anchor="middle" font-size="9" font-weight="600" fill="#fff" font-family="Noto Sans TC,sans-serif" id="wv4txt">—</text>
+    </svg>
+    <p class="chart-note">※ 資料參考：主計總處、104人力銀行薪資調查 2024</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="sec">薪資與行業真心話</div>
+      <div class="hbox">
+        <div class="hb-t">Mike 主任的觀察</div>
+        <div class="hb-body" id="industryTruth">載入中...</div>
+      </div>
+    </div>
+    <div>
+      <div class="sec">你的社交圈現況 👥</div>
+      <div id="socialCircleViz" style="margin-bottom:12px"></div>
+      <div class="social-tags" id="socialTags"></div>
+      <div class="hbox red">
+        <div class="hb-t">社交圈的隱形限制</div>
+        <div class="hb-body" id="socialLimit">載入中...</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">3 / 8</span></div>
+</div>
+
+<!-- ══ PAGE 4: 收入指南 ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">3</div>
+    <div><div class="chapter">Chapter 03</div><div class="title">📌 收入增長：Mike 主任給你的客製化指南</div></div>
+  </div>
+
+  <div class="bt">每個人都想增加收入，但不能盲目努力。依你的特質，我幫你拆解出<strong>主動與被動收入</strong>的調整方向：</div>
+
+  <!-- 主動收入 -->
+  <div class="income-card">
+    <div class="income-card-hd active">
+      <span class="income-card-badge">💰 主動收入</span>
+      <span class="income-card-title">職涯衝刺 × 副業起步</span>
+    </div>
+    <div class="income-card-body">
+      <div class="income-card-lead" id="activeIncomeLead">載入中...</div>
+      <ul class="income-tips" id="activeIncomeTips"></ul>
+    </div>
+  </div>
+
+  <!-- 被動收入 -->
+  <div class="income-card">
+    <div class="income-card-hd passive">
+      <span class="income-card-badge">📈 被動收入</span>
+      <span class="income-card-title">財商開竅 × 理財延伸</span>
+    </div>
+    <div class="income-card-body">
+      <div class="income-card-lead" id="passiveIncomeLead">載入中...</div>
+      <ul class="income-tips" id="passiveIncomeTips"></ul>
+    </div>
+  </div>
+
+  <!-- 未來目標呼應 -->
+  <div class="hbox green" style="margin-top:4px">
+    <div class="hb-t">關於你說的「未來目標」</div>
+    <div class="hb-body" id="goalResponse">載入中...</div>
+  </div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">4 / 8</span></div>
+</div>
+
+
+<!-- ══ PAGE 5: 職場人際 × 溝通風格 ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">4</div>
+    <div><div class="chapter">Chapter 04</div><div class="title">📌 職場人際：你的溝通優勢與地雷</div></div>
+  </div>
+  <p class="bt">每種能量類型在職場人際上都有自己的「黃金溝通模式」和「踩雷習慣」。了解這些，能讓你少走很多彎路。</p>
+
+  <div class="two-col">
+    <div>
+      <div class="sec">與你合作最順的人</div>
+      <div class="hbox green">
+        <div class="hb-t">天生的合拍夥伴</div>
+        <div class="hb-body" id="interpersonalMatch">載入中...</div>
+      </div>
+      <div class="sec">你的溝通優勢</div>
+      <div class="bt" id="commStrength">載入中...</div>
+    </div>
+    <div>
+      <div class="sec">最容易踩的地雷 ⚠️</div>
+      <div class="hbox red">
+        <div class="hb-t">在這些情境要小心</div>
+        <div class="hb-body" id="interpersonalMine">載入中...</div>
+      </div>
+      <div class="sec">破解方法</div>
+      <div class="bt" id="mineBreak">載入中...</div>
+    </div>
+  </div>
+
+  <div class="sec">職場不同角色的相處建議</div>
+  <div id="roleCards" style="display:flex;flex-direction:column;gap:10px"></div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">5 / 8</span></div>
+</div>
+
+<!-- ══ PAGE 6: 90天行動起點 ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">5</div>
+    <div><div class="chapter">Chapter 05</div><div class="title">📌 你的行動起點：現在就能開始做的 3 件事</div></div>
+  </div>
+  <p class="bt">不需要等準備好，不需要等時機完美。這 3 件事，<strong>這週就能開始</strong>，而且每一件都是針對你的類型量身設計的。</p>
+
+  <div id="actionCards" style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px"></div>
+
+  <div class="sec">如果只能做一件事</div>
+  <div class="hbox dark">
+    <div class="hb-t">Mike 主任的首要建議</div>
+    <div class="hb-body" id="topAction">載入中...</div>
+  </div>
+
+  <div class="sec">你的成長里程碑</div>
+  <div style="background-color:var(--ox);border:1.5px solid var(--line);border-radius:14px;padding:20px 20px 16px">
+    <svg width="100%" height="110" viewBox="0 0 640 110">
+      <!-- 連接線 -->
+      <line x1="60" y1="36" x2="580" y2="36" stroke="#e0cdb0" stroke-width="2.5"/>
+      <!-- DAY 1 節點（強調色 + 脈衝感） -->
+      <circle cx="60" cy="36" r="14" fill="#7a3a10" stroke="#b5651d" stroke-width="3"/>
+      <text x="60" y="41" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Noto Sans TC,sans-serif">D1</text>
+      <!-- 其他節點 -->
+      <circle cx="200" cy="36" r="10" fill="#b5651d"/>
+      <circle cx="380" cy="36" r="10" fill="#b5651d"/>
+      <circle cx="560" cy="36" r="10" fill="#b5651d"/>
+      <!-- 頂部標籤 -->
+      <text x="60" y="16" text-anchor="middle" font-size="9" font-weight="700" fill="#7a3a10" font-family="Noto Sans TC,sans-serif">▶ 這週</text>
+      <text x="200" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 1 個月</text>
+      <text x="380" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 3 個月</text>
+      <text x="560" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 6 個月</text>
+      <!-- 底部說明 -->
+      <foreignObject x="0" y="56" width="130" height="50">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;color:#7a3a10;font-weight:700;line-height:1.5;font-family:Noto Sans TC,sans-serif;text-align:center">與 Mike 主任<br>策略複診校準</div>
+      </foreignObject>
+      <text x="200" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">啟動第一個</text>
+      <text x="200" y="72" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">行動實驗</text>
+      <text x="380" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">看見可量化</text>
+      <text x="380" y="72" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">的改變</text>
+      <text x="560" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif" id="tl6m">收穫成果</text>
+      <!-- Day1 強調箭頭 -->
+      <polygon points="60,54 55,62 65,62" fill="#b5651d"/>
+    </svg>
+    <p style="font-size:11px;color:#7a3a10;font-weight:500;margin-top:4px;text-align:center">⚡ Day 1 是整個計畫最關鍵的一步——方向沒校準，後面的行動都是在加速跑錯路</p>
+    <p class="chart-note" id="growthNote" style="text-align:center;margin-top:4px">載入中...</p>
+  </div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">6 / 8</span></div>
+</div>
+
+<!-- ══ PAGE 7: Mike主任的務實建議 + CTA ══ -->
+<div class="page">
+<div class="inner">
+  <div class="ph">
+    <div class="pn">6</div>
+    <div><div class="chapter">Chapter 06</div><div class="title">📌 Mike 主任的務實建議</div></div>
+  </div>
+
+  <div class="whisper-box">
+    <div class="whisper-quote" id="whisperQuote">載入中...</div>
+    <div class="whisper-sign">— Mike 主任</div>
+  </div>
+
+  <div class="bt" id="whisperBody">載入中...</div>
+
+  <div class="cta-box">
+    <div class="cta-hd">
+      <span class="cta-hd-badge">📣 本月僅開放 3 個名額</span>
+      <span class="cta-hd-title">來跟我真人聊聊吧</span>
+    </div>
+    <div class="cta-body">
+      <div class="cta-lead">
+        這份報告是 AI 策略模型根據你的初階資料跑出來的。<br>
+        它能幫你看見大方向，但<strong>每個人真正的特質深度和具體的財務理財狀況，需要更細緻的拆解</strong>，AI 是做不到的。<br><br>
+        如果你想知道：
+      </div>
+      <ul class="cta-items">
+        <li>怎麼用你的特質在目前的環境，<strong>更快、更順流地增加收入</strong>？</li>
+        <li>在 <strong>Wealth Dynamics 財富流系統</strong>中，你的原型（創作者、明星、媒合者⋯⋯）決定了你最適合的副業變現模式——這份報告只到門口，<strong>真正的核心在複診裡</strong>。</li>
+        <li>怎麼<strong>擴大社交圈</strong>，讓對的機會開始主動找上你？</li>
+      </ul>
+      <div class="cta-scarcity">
+        本報告是 AI 根據你初階的職場情境跑出來的。它能看出你的能量方向，但<strong>無法幫你精準定錨出你在 Wealth Dynamics 財富流系統中屬於哪個原型</strong>——不同原型，副業變現的模式差了十萬八千里。<br><br>
+        歡迎點擊下方預約連結，跟我進行一場 <strong>30 分鐘的 1-on-1 真人策略複診</strong>。<br>
+        <strong>本月僅開放 3 個免費名額</strong>，額滿恢復原價，期待在諮詢室見到你 😊
+      </div>
+      <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" class="cta-btn">立即預約 30 分鐘策略複診 ↗</a>
+    </div>
+  </div>
+
+</div>
+<div class="pf"><span class="brand">Career Blueprint · Mike 主任</span><span class="pg">7 / 8</span></div>
+</div>
+
+<!-- ══ PAGE 8: CLOSING ══ -->
+<div class="page">
+<div class="closing-bg">
+  <div class="cl-quote" id="closingQuote">每一個卡關的時刻，<br>都是你正在蛻變的證明。</div>
+  <div class="cl-divider"></div>
+  <div class="cl-info">
+    <div class="ci-label">此報告專屬於</div>
+    <div class="ci-val" id="closingName">—</div>
+    <div class="ci-label">諮詢顧問</div>
+    <div class="ci-val">Mike 主任 · 職涯定位顧問</div>
+    <div class="ci-label">能量類型</div>
+    <div class="ci-val" id="closingWd">—</div>
+    <div class="ci-label">報告生成日期</div>
+    <div class="ci-val" id="closingDate">—</div>
+  </div>
+  <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" class="cl-cta">預約策略複診 ↗</a>
+  <div class="cl-seal">CAREER BLUEPRINT · 嚴格保密</div>
+</div>
+</div>
+
+</div><!-- /pages-wrap -->
+
+<script>
+const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
+const params=new URLSearchParams(location.search);
+const docId=params.get('id');
+
+/* ══ WD TYPE DATA ═══════════════════════════════════════════════════ */
+const WD={
+  A:{name:'發電機',icon:'⚡',sub:'點子王 · 創新驅動者',
+    heroDesc:'老實說，你就是那種讓人又愛又頭痛的天才型朋友 😄 只要丟給你一個新問題，你的大腦馬上就會「開機」，三分鐘內冒出五個方向。你在職場上最閃亮的時刻，就是那些別人覺得「沒辦法」的任務——因為限制越多，你反而越興奮。',
+    strengths:['創意像噴泉停不住','能快速看見突破口','很會啟動新專案','跨領域整合高手','讓無聊的事變有趣'],
+    strengthDesc:'你做事最輕鬆的狀態，是有自主空間、可以不斷嘗試的環境。逼你每天重複一樣的事，你的能量會慢慢被「磨光」——這不是你不努力，是你的引擎根本不是設計來跑這種路的。',
+    blind:'說個可能你已經知道但沒人直說的事：你的盲區是「開頭容易、收尾難」。每次新專案剛開始你超興奮，但到了執行細節或後期維運，熱情會掉得很快。這讓你身邊有一堆開了頭、沒下文的計畫，也讓合作的人覺得你「想法很多，但不穩定」。這個問題，是你目前最需要正視的。',
+    activeIncomeLead:'你不應該把自己綁在重複性高的職位裡。你的創意，本身就是可以賣錢的東西——只是你還沒找到對的載體。',
+    activeTips:['【主動收入卡點】：發電機型最大的副業陷阱，是永遠在「開新坑」卻沒有一個跑起來。你需要的不是更多點子，而是一套「選擇濾鏡」，讓你把能量集中在最高回報的那一個方向上。<em>具體怎麼建立這個濾鏡，需要 1-on-1 複診根據你目前的資源配置解鎖。</em>','【職場槓桿警告】：你的創意如果一直放在幫公司賺錢，而不是幫自己建立資產，五年後你的處境不會有太大不同。什麼樣的職涯動作，能讓你在不離職的情況下開始累積屬於自己的資產？<em>這個路徑，在真人複診中會有完整的規劃。</em>','【內容變現誤區】：不是什麼內容都適合你。發電機型做內容最忌諱「什麼都發」，需要找到一個能持續產生高信任度的定位軌道。<em>你的定位軌道在哪裡？這是複診的核心議題之一。</em>'],
+    passiveIncomeLead:'你對「管錢」的耐心通常比賺錢少很多，但這正是你最需要補上的一課。你的創意收入如果沒有一個「容器」承接，賺多少就花多少，永遠不會累積。',
+    passiveTips:['【理財盲區】：發電機型的儲蓄最忌諱靠意志力。你目前最需要一套自動化的金融承接容器，讓賺進來的錢不會不知不覺流走。<em>根據你目前的財務級距，最適合你的資產承接系統，在 1-on-1 複診中拆解。</em>','【被動收入誤判】：很多人以為被動收入就是「放著不管」，但發電機型如果選錯了工具，反而會因為無聊而半途放棄。你需要的是「有創意空間」的被動收入模型。<em>哪種最適合你？複診中討論。</em>','【財商升級缺口】：你現在的理財行為，和你想要的收入目標之間，有多大的差距？差距在哪裡，就補哪裡。<em>這個缺口的具體診斷，是複診的延伸議題。</em>'],
+    whisper:'你不是執行力不夠，你只是還沒找到那個「讓你願意堅持下去」的對的方向。'},
+  B:{name:'火焰',icon:'🔥',sub:'人脈磁鐵 · 關係變現者',
+    heroDesc:'你有一種很多人羨慕的能力：走進一個陌生的場合，你用不了多久就能讓大家都喜歡你、想靠近你。你的超能力不是技術有多強，而是「讓人信任你、願意跟你合作」。在職場上，這種能力比大多數技術都值錢——你只是還沒有把它正確地變現。',
+    strengths:['天生讓人覺得親近','讀懂氣氛和情緒','激勵他人的感染力','建立信任超快','人際關係深而廣'],
+    strengthDesc:'你在有互動、有能量流動的環境裡才會真正活起來。一個人悶頭做事對你來說是最大的折磨；但給你一個舞台、一群人，你立刻就能讓全場的溫度上升。',
+    blind:'直說了：你的盲區是你太好說話了。你很難拒絕別人，很容易為了「不想讓人失望」就答應不該答應的事。這讓你的時間和能量大量消耗在維持表面和諧上，而不是放在真正能讓你進步的地方。',
+    activeIncomeLead:'你最快增加收入的方式，就是把你的「人脈」和「信任感」直接變現。你不需要成為最會做事的人，你要成為「大家最想跟你合作」的人。',
+    activeTips:['【主動收入卡點】：火焰型的人最常犯的錯，是把時間花在「廣泛維繫關係」，卻沒有把人脈導流到能產生收入的通道上。你的人脈已經是資產了，缺的是一條「變現管道」。<em>這條管道怎麼設計，需要 1-on-1 複診根據你的人際網路結構規劃。</em>','【職場定價警告】：你的親和力和感染力讓你很容易被「壓低身價」——因為大家都喜歡你，所以不好意思跟你計較，但你也不好意思開高價。如何讓好人緣轉化成高定價能力？<em>這是複診的核心議題。</em>','【人脈槓桿缺口】：你現在的人脈，能直接幫你創造收入的比例是多少？這個比例，決定了你的收入天花板在哪裡。<em>提高這個比例的具體方法，在複診中解鎖。</em>'],
+    passiveIncomeLead:'你的被動收入最佳路徑，是讓你的品牌和影響力在你不在的時候繼續工作——因為你的信任感，才是你最核心的資產。',
+    passiveTips:['【被動收入誤區】：火焰型最適合「靠影響力帶動的被動收入」，但如果品牌定位不夠清晰，流量來了也留不住。你目前的品牌輪廓，清晰嗎？<em>品牌定位校準，是複診延伸服務之一。</em>','【理財盲區】：你的社交成本通常比別人高——應酬、禮物、聚餐。這些「關係維護費用」有沒有被納入你的財務規劃？<em>如何讓社交投資有更高的 ROI，複診中討論。</em>','【資產累積缺口】：你賺錢快，但「留住錢」的系統比賺錢更重要。你目前有沒有一套讓收入自動流向資產的機制？<em>這套機制的設計，在複診中量身規劃。</em>'],
+    whisper:'你最大的資產不是技術，是「讓人願意跟你合作」的能力。現在要做的，是讓這個能力開始產生可以量化的回報。'},
+  C:{name:'節奏',icon:'🎯',sub:'穩健派 · 趨勢敏銳者',
+    heroDesc:'你是那種職場裡「大家都很慶幸有你」的人。你不是最高調的，但你往往是最後能把事情落地、讓大家安心的那個。你最厲害的地方不是衝勁，是眼光——你不會亂動，但每次你動了，幾乎都在對的時機點。',
+    strengths:['觀察力比大多數人敏銳','穩健到讓人有安全感','看準時機才出手','抗壓不崩潰','做事扎實有始有終'],
+    strengthDesc:'你在有穩定節奏、能按計畫推進的環境裡效率最高。你不喜歡被突然打亂或被催趕，給你足夠的空間，你能把事情做得比任何人都扎實。',
+    blind:'說個也許你自己也隱約知道的事：你太怕失去穩定了。這讓你常常在一個「還過得去，但已經沒有在成長」的狀態裡待太久。你一直在等「準備好了再說」，但現實是，等你覺得準備好，最好的時機窗口可能已經關了。',
+    activeIncomeLead:'你增加收入的關鍵，是把你的「穩健眼光和判斷力」轉化成別人願意付費的能力。你不適合靠衝勁和衝動賺錢，但你非常適合靠「看得準」賺錢。',
+    activeTips:['【主動收入卡點】：節奏型的人最容易在「等待最佳時機」的過程中，讓市場機會從旁邊走過。你的判斷力本身就是稀缺資源，但如何讓它被市場正確定價？<em>這個定價策略，需要 1-on-1 複診根據你目前的專業積累來設計。</em>','【職場晉升盲點】：你的穩健讓你在執行層非常可靠，但這個特質如果沒有配合「向上能見度」的策略，很容易被主管忽略、被同事繞過。如何讓穩健變成被看見的籌碼？<em>這是複診的核心議題。</em>','【副業起步障礙】：節奏型最大的副業阻力是「我還沒準備好」。你需要的不是更多準備，而是一個低風險的「試水溫」框架。<em>怎麼設計這個框架，複診中解鎖。</em>'],
+    passiveIncomeLead:'你天生就適合做資產配置。你的耐心和風險意識，是在理財這條路上，比任何人都好用的武器。',
+    passiveTips:['【被動收入誤區】：節奏型很容易把「穩健」等同於「保守」，錯過了本來可以接受的更高報酬機會。你目前的理財配置，有沒有在錯誤地犧牲報酬換取安全感？<em>這個評估，在複診的財務對話中進行。</em>','【資產配置盲區】：你的判斷力在投資上有很高的應用價值，但判斷力要產生效益，需要一個正確的框架來承載。你目前有這個框架嗎？<em>框架建立，是複診延伸議題。</em>','【時間成本警告】：穩健型的人往往把最好的時間花在幫別人把事情做對，而不是在幫自己累積資產。時間、能力與金錢的三者平衡，怎麼調整？<em>複診中具體討論。</em>'],
+    whisper:'你看得比大多數人準，問題只有一個：你習慣等到「完全確定」才出手。現實是，七成把握就夠了，剩下三成在走的過程中自然會清楚。'},
+  D:{name:'鋼鐵',icon:'🔩',sub:'系統邏輯大師 · 數字說話者',
+    heroDesc:'你是那種別人吵得一團亂、你坐下來畫一張表就解決問題的人。你最厲害的地方是把複雜的事情拆解成清晰的步驟和邏輯，讓混亂變得有序。當別人還在憑感覺做決定，你已經分析完三個方案的優缺點、選出最佳解了。',
+    strengths:['邏輯清晰讓人心安','系統思考是天生的','對數字特別敏感','做決定精準不後悔','流程優化信手拈來'],
+    strengthDesc:'你在有清楚規則、能用數據說話的環境裡最有安全感也最有效率。你不喜歡模糊地帶，給你清楚的目標和足夠的資訊，你能做出讓大家都佩服的精準判斷。',
+    blind:'直說一件你可能不太願意承認的事：你太追求完美了，很容易卡在細節裡動不了。你習慣在行動前收集超多資料、分析超多情境，導致很多本來可以「先走再調整」的機會，被你變成了無止盡的「準備」。',
+    activeIncomeLead:'你最大的收入槓桿，是把「會建系統、會分析」這件事變成稀缺資源。在市場上，能把複雜問題系統化的人永遠不夠，而且越往高端市場，這個能力越值錢。',
+    activeTips:['【主動收入卡點】：鋼鐵型最容易在「分析哪個副業最好」上面花掉所有的起步能量。你需要的不是更多分析，而是一個「可接受的最低標準」讓你動起來。<em>這個標準怎麼設，需要 1-on-1 複診根據你目前的狀況校準。</em>','【職場定價警告】：你的系統化能力在市場上嚴重被低估，因為你習慣把它「藏在執行裡」而不是包裝成可以定價的服務。如何把你的能力轉化成高溢價的專業服務？<em>這個包裝策略，是複診的核心議題。</em>','【完美主義陷阱】：你的高標準在執行上是優勢，但在副業起步上是最大的阻力。有沒有一種副業模式，是專門設計給鋼鐵型、能在不犧牲品質的前提下快速啟動的？<em>這個模式，在複診中解鎖。</em>'],
+    passiveIncomeLead:'你對數字的敏感度讓你在理財上有先天優勢，你只需要把你「分析自己的財務」這件事排進優先清單，結果一定不差。',
+    passiveTips:['【理財盲區】：鋼鐵型最容易犯的理財錯誤，是把所有注意力放在「優化細節」，卻忽略了整體資產配置的大方向是否正確。方向錯了，細節再完美也沒用。<em>你目前的大方向對嗎？複診中評估。</em>','【被動收入誤判】：你的系統思維讓你很適合建立「自動化的被動收入系統」，但選錯了工具，維護成本反而比主動收入更高。哪種系統最適合你的特質和時間？<em>這個選擇，需要真人對話才能判斷。</em>','【財務槓桿缺口】：你的分析能力是理財的最大優勢，但分析要產生財富，需要足夠的「本金」作為基礎。你目前的儲蓄率和資本積累速度，足以讓你的分析能力發揮嗎？<em>這個評估，在複診的財務對話中進行。</em>'],
+    whisper:'你的分析能力是真正的優勢，但分析是工具，不是目的。現在你需要的不是更多資料，是一個「先做再說」的決定。'}
+};
+
+/* ══ INDUSTRY DATA ══════════════════════════════════════════════════ */
+const IND={
+  '科技／工程':{wage:90,target:150,label:'科技/工程'},
+  '金融／顧問':{wage:80,target:140,label:'金融/顧問'},
+  '業務／行銷':{wage:65,target:120,label:'業務/行銷'},
+  '管理／主管職':{wage:85,target:140,label:'管理主管'},
+  '設計／創意':{wage:60,target:110,label:'設計/創意'},
+  '教育／公職':{wage:55,target:90,label:'教育/公職'},
+  '服務業':{wage:40,target:80,label:'服務業'},
+  '創業者':{wage:70,target:200,label:'創業者'},
+  '自由工作者':{wage:60,target:120,label:'自由工作者'},
+  '轉職中':{wage:55,target:110,label:'轉職中'},
+  '學生／應屆畢業':{wage:35,target:70,label:'應屆畢業'},
+};
+function getInd(k){return IND[k]||{wage:55,target:95,label:k||'你的產業'};}
+
+/* ══ HELPERS ════════════════════════════════════════════════════════ */
+function incomeNum(range){
+  if(!range)return 50;
+  if(range.includes('3萬'))return 40;
+  if(range.includes('5萬'))return 65;
+  if(range.includes('8萬'))return 100;
+  if(range.includes('12萬'))return 150;
+  return 65;
+}
+
+function calcWd(wd){
+  const c={A:0,B:0,C:0,D:0};
+  Object.values(wd||{}).forEach(v=>{if(c[v]!==undefined)c[v]++;});
+  const s=Object.entries(c).sort((a,b)=>b[1]-a[1]);
+  return{counts:c,primary:s[0][0],secondary:s[1][1]>0?s[1][0]:null,sorted:s};
+}
+
+function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt||'';}
+function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html||'';}
+
+/* ══ RENDER ═════════════════════════════════════════════════════════ */
+function render(data){
+  const wdRaw=data.wd||data.disc||{};
+  const d=calcWd(wdRaw);
+  const pt=WD[d.primary]||WD.A;
+  const ind=getInd(data.industry);
+  const name=data.name||'您';
+  const incRange=data.incomeRange||'';
+  const incN=incomeNum(incRange);
+  const social=data.socialLife||data.topics||[];
+  const futureGoal=data.futureGoal||data.interest||'';
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+  const wdLabel=d.secondary?`${pt.name} × ${WD[d.secondary].name}`:pt.name;
+
+  // ── 封面 ──
+  setText('cvName',name);
+  setText('cvDate',dateStr);
+  setText('navName',`${name} 的報告`);
+  setText('closingName',name);
+  setText('closingDate',dateStr);
+  setText('closingWd',wdLabel);
+  setText('closingQuote','每一個卡關的時刻，\n都是你正在蛻變的證明。');
+
+  // ── Page 2: 能量特質 ──
+  setText('wdHeroName',pt.name);
+  setText('wdHeroSub',pt.sub);
+  setText('wdBigIcon',pt.icon);
+  setText('wdHeroDesc',pt.heroDesc);
+  setText('wdStrengthDesc',pt.strengthDesc);
+  setText('wdBlind',pt.blind);
+  setHTML('wdStrengths',pt.strengths.map(s=>`<span class="tag">${s}</span>`).join(''));
+
+  // WD 分數條
+  const total=6;
+  const bmap={A:'barA',B:'barB',C:'barC',D:'barD'};
+  const smap={A:'scA',B:'scB',C:'scC',D:'scD'};
+  Object.entries(d.counts).forEach(([k,v])=>{
+    const bar=document.getElementById(bmap[k]);
+    const sc=document.getElementById(smap[k]);
+    if(bar)bar.style.width=(v/total*100)+'%';
+    if(sc)sc.textContent=`${v}/${total}`;
+  });
+  // WD radar SVG
+  const radar_pts={A:{cx:110,cy:10},B:{cx:190,cy:70},C:{cx:60,cy:160},D:{cx:160,cy:160}};
+  const cx_r=110,cy_r=105;
+  const poly=document.getElementById('radarPoly');
+  const keys=['A','B','C','D'];
+  const dots=['rdA','rdB','rdC','rdD'];
+  const pts_arr=keys.map(k=>{
+    const p=radar_pts[k],v=d.counts[k]/total;
+    return{x:cx_r+(p.cx-cx_r)*v,y:cy_r+(p.cy-cy_r)*v};
+  });
+  if(poly)poly.setAttribute('points',pts_arr.map(p=>`${p.x},${p.y}`).join(' '));
+  dots.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el){el.setAttribute('cx',pts_arr[i].x);el.setAttribute('cy',pts_arr[i].y);}
+  });
+
+  // ── Page 3: 市場現實 ──
+  const incomeLabels={'3萬~5萬':'低於市場平均，有強烈提升空間','5萬~8萬':'接近市場均值，但離理想還有距離','8萬~12萬':'高於平均，目標是繼續往上走','12萬以上':'已在高薪區間，重點是增加穩定性與槓桿'};
+  setText('incVal',incRange||'未填寫');
+  setText('incText',incomeLabels[incRange]||'依你的情況，有很好的提升空間');
+
+  // 薪資圖 bars
+  const maxH=90,scale=maxH/200;
+  const avgW=Math.round(50*scale),indW=Math.round(ind.wage*scale),tgtW=Math.round(ind.target*scale);
+  const wBar1=document.getElementById('wb1');
+  if(wBar1){wBar1.setAttribute('y',90-avgW);wBar1.setAttribute('height',avgW);}
+  const wb2el=document.getElementById('wb2');if(wb2el){wb2el.setAttribute('y',90-indW);wb2el.setAttribute('height',indW);}
+  const wb3el=document.getElementById('wb3');if(wb3el){wb3el.setAttribute('y',90-tgtW);wb3el.setAttribute('height',tgtW);}
+  setText('wl2',ind.label);setText('wv2',ind.wage+'萬');setText('wv3',ind.target+'萬');
+  // wb4 = 現狀軌跡（以現有收入換算年薪）
+  const currentYearly = incN ? Math.round(incN*12/10000*10)/10 : null;
+  setText('wv4txt', currentYearly ? currentYearly+'萬' : '未填');
+  // 確保 wb4 高度對應現有收入，與 social 資料完全隔離
+  const wb4el=document.getElementById('wb4');
+  if(wb4el){const curH=Math.round((currentYearly||50)/200*90);wb4el.setAttribute('y',90-curH);wb4el.setAttribute('height',curH);}
+
+  // 折線圖
+  const s=90+(6-Math.min(incN/20,6))*5;
+  const gLine1=document.getElementById('growLine1');if(gLine1)gLine1.setAttribute('points',`80,${s} 200,${s-7} 320,${s-13} 440,${s-17} 560,${s-20}`);
+  const gLine2=document.getElementById('growLine2');if(gLine2)gLine2.setAttribute('points',`80,${s} 200,${s-20} 320,${s-45} 440,${s-70} 560,${s-93}`);
+  const gArea=document.getElementById('growArea');if(gArea)gArea.setAttribute('points',`80,${s} 200,${s-20} 320,${s-45} 440,${s-70} 560,${s-93} 560,${s-20} 440,${s-17} 320,${s-13} 200,${s-7} 80,${s}`);
+
+  // 產業真心話
+  const industryTexts={
+    '科技／工程':'台灣科技業目前是薪資最高的產業之一，但競爭也是最激烈的。在這個產業裡，「技術好」只是入場券，真正決定你薪資的是：你能不能把技術能力和你的核心優勢結合，成為「不可取代的那個人」。',
+    '金融／顧問':'金融顧問業的收入天花板非常高，但大多數人都卡在中段。原因很簡單：太依賴公司給的背書，沒有建立屬於自己的信任感和個人品牌。你如果能補上這塊，就能從「打工仔」升級成「靠自己的人」。',
+    '業務／行銷':'業務行銷的收入差距是所有產業裡最大的——頂端和底端差了好幾倍。這個差距不是能力差，是「賣什麼」和「怎麼定位自己」的差距。你賣的是產品，還是你自己的影響力？這個問題的答案，決定了你的收入上限在哪裡。',
+    '管理／主管職':'管理職的薪資成長通常是線性的，跟著年資一格一格爬。但如果你能善用你的優勢建立真正的向上影響力，晉升速度會很不一樣。',
+    '設計／創意':'台灣設計創意產業的整體薪資被嚴重低估，但這個產業有一條很清楚的溢價路徑：從「執行者」變成「有定位的創意策略者」。',
+    '教育／公職':'教育和公職的薪資結構相對固定，但這不代表你的「收入」一定只有這些。副業和知識變現，是這個產業的人最容易忽略、也最快有回報的一條路。',
+    '服務業':'台灣服務業的薪資確實偏低，但你在服務業磨練出的人際溝通技巧，是可以「轉移」到更高溢價場景的。問題不是你能力不夠，是你現在把能力放在了報酬太低的地方。',
+    '創業者':'你已經選擇了那條「沒有上限、但也沒有保底」的路——恭喜你有這個勇氣。創業者的收入完全取決於定位和槓桿點，找到它、把它放大，就是你的下一步。',
+    '自由工作者':'自由工作者的問題通常不是能力，是「定價」和「客戶選擇」。你如果一直接低報酬的案子，不是因為市場不好，而是因為你的定位還不夠清楚讓高端客戶主動找上你。',
+    '轉職中':'你現在在轉職，這是很需要勇氣的決定。搞清楚你的方向，才能確保這次的轉換是真的往上走，而不只是「離開不喜歡的地方」。',
+  };
+  setText('industryTruth',industryTexts[data.industry]||`「${data.industry||'你的產業'}」這個領域，你如果能正確對齊優勢，可以讓你在同行中站到很不一樣的位置。`);
+
+  // 社交圈
+  const socialMap={'下班回家，社交圈比較小':'🏠 下班直接回家','會去打桌遊、運動或社團':'🎲 有參與社群活動','會去上課學習、自我充實':'📚 持續自我充實','已經有在經營副業':'💼 已有副業經驗'};
+  const socialArr=Array.isArray(social)?social:[social].filter(Boolean);
+  setHTML('socialTags',socialArr.map(s=>`<span class="social-tag">${socialMap[s]||s}</span>`).join(''));
+  const hasHome=socialArr.some(s=>s.includes('回家'));
+  const hasSide=socialArr.some(s=>s.includes('副業'));
+  const hasSocial=socialArr.some(s=>s.includes('桌遊')||s.includes('社團'));
+  // 社交圈視覺化：小圈 vs 大圈 SVG
+  const vizEl=document.getElementById('socialCircleViz');
+  if(vizEl){
+    const small=hasHome?30:hasSocial?55:45;
+    const big=90;
+    vizEl.innerHTML=`<svg width="100%" height="70" viewBox="0 0 300 70">
+      <circle cx="50" cy="35" r="${small}" fill="rgba(181,101,29,0.12)" stroke="#b5651d" stroke-width="1.5" stroke-dasharray="${hasHome?'4,3':'none'}"/>
+      <text x="50" y="39" text-anchor="middle" font-size="9" fill="#7a3a10" font-weight="600" font-family="Noto Sans TC,sans-serif">你現在</text>
+      <text x="140" y="38" text-anchor="middle" font-size="14" fill="#c0c0b0">→</text>
+      <circle cx="230" cy="35" r="${big}" fill="rgba(91,120,91,0.1)" stroke="#5a7060" stroke-width="1.5"/>
+      <text x="230" y="32" text-anchor="middle" font-size="9" fill="#3a5a3a" font-weight="600" font-family="Noto Sans TC,sans-serif">機會圈</text>
+      <text x="230" y="44" text-anchor="middle" font-size="8" fill="#6a8a6a" font-family="Noto Sans TC,sans-serif">（可以達到的）</text>
+    </svg>`;
+  }
+  setText('socialLimit',hasHome?
+    `說個殘酷的現實：社交圈小，機會就少——這不是在批評你，這是統計事實。以你現在的特質，如果一直困在同一個固定的小圈子裡，你的潛力會持續被低估，因為沒有足夠多的人知道你的存在。你最需要做的，是走進一個「有更多可能性的圈子」，哪怕每個月只有一次也好。`:
+    hasSide?`你已經在經營副業了，這很好——你比大多數人早了一步。但副業有沒有在成長、有沒有在靠近你的甜蜜點，這才是下一個要確認的問題。`:
+    hasSocial?`你有在維持社交圈的廣度，這是很重要的基礎。下一步是讓這些連結「升級」——從認識人，進化到跟對的人建立有深度的合作關係，讓圈子真正替你的職涯產生槓桿。`:
+    `你目前的社交狀態，如果能刻意拓展到你領域的核心人脈圈，機會的質量會大幅提升。`);
+
+  // ── Page 4: 收入指南 ──
+  setText('activeIncomeLead',pt.activeIncomeLead);
+  setHTML('activeIncomeTips',pt.activeTips.map(t=>`<li>${t}</li>`).join(''));
+  setText('passiveIncomeLead',pt.passiveIncomeLead);
+  setHTML('passiveIncomeTips',pt.passiveTips.map(t=>`<li>${t}</li>`).join(''));
+  // 未來目標
+  const goalEl=document.getElementById('goalResponse');
+  if(goalEl){
+    const goal=futureGoal.slice(0,80)||'你填寫的期待';
+    goalEl.innerHTML=`你說你最大的期待是：<em>「${goal}${futureGoal.length>80?'…':''}」</em><br><br>聽到這裡，我想問你一個問題：<strong>你現在走的路，是朝著這個目標在走，還是每天只是在「應付」？</strong><br><br>很多人有方向，但沒有讓自己的優勢真正對齊那個方向。結果就是努力了很久，卻發現自己還是在原地跑。你的優勢是對的，只是需要一個「正確的催化劑」，讓它真正動起來。`;
+  }
+
+  // ── Page 5: 職場人際 ──
+  const interpersonal={
+    A:{match:'節奏型和鋼鐵型的人——他們的執行力和嚴謹度，正好補上你的弱項，而你的創意能量能讓他們不那麼保守。',
+       commStrength:'你在溝通上最強的地方是「點燃對話」——你能把沉悶的會議變得有活力，把複雜的問題用有趣的方式解釋清楚。',
+       mine:'你最容易在「被要求解釋細節」的時候踩雷。你想到什麼就說什麼，但有些人需要的是條理和數字，不是靈感爆發。',
+       mineBreak:'每次提出想法前，先在心裡問自己：「我有沒有辦法把這個想法，用三個具體步驟說清楚？」養成這個習慣，你的創意會被接受的機率大幅提升。',
+       roles:[{r:'面對主管',t:'用數字和結果說話，把你的創意包裝成「這樣做可以帶來 X 的好處」，而不是「我覺得這個方向很有趣」。'},{r:'面對同事',t:'記得：不是每個人的節奏都跟你一樣快。把你的想法拆成小步驟，讓別人能跟上，比單獨衝刺更有效率。'},{r:'面對客戶',t:'你的熱情是最好的武器，但要確保熱情背後有具體的交付物和時程表，這樣信任感才能持續。'}]},
+    B:{match:'發電機型和節奏型的人——發電機帶給你新刺激和方向，節奏型給你穩定感和可靠的執行夥伴。',
+       commStrength:'你最強的地方是「讓人感受到被重視」。你記得別人說過的事，你在意對方的感受，這讓你成為職場上最受歡迎的合作對象之一。',
+       mine:'你最容易在「需要說不」的時候踩雷。答應太多、照顧太多，最後把自己搞得精疲力盡，還讓別人覺得理所當然。',
+       mineBreak:'練習「有時限的承諾」：不說「好」，而是說「讓我確認一下時間安排，我週四前給你答覆」。這樣既保護了自己，也讓別人學會尊重你的邊界。',
+       roles:[{r:'面對主管',t:'善用你的人際讀心術，提前了解主管的優先順序和痛點，讓你的工作成果永遠踩在他最需要的點上。'},{r:'面對同事',t:'你天生是團隊的潤滑劑，但要注意不要讓自己成為「情緒垃圾桶」。設定界線，才能長期維持這個角色。'},{r:'面對客戶',t:'你建立信任的速度比任何人都快，善用這個優勢深耕 VIP 客戶，比開發新客戶的報酬率高得多。'}]},
+    C:{match:'鋼鐵型和火焰型的人——鋼鐵型給你邏輯架構，火焰型帶你打開人脈和機會的視野。',
+       commStrength:'你最強的地方是「說的話都有份量」。你不輕易發言，但一開口就讓人覺得可信賴。這種特質在需要被委以重任的場合，價值極高。',
+       mine:'你最容易在「需要快速回應」的時候踩雷。你習慣思考清楚再說話，但有時候別人需要的是當下的表態，而不是完美的答案。',
+       mineBreak:'練習「先給方向，再補細節」：說「我的初步想法是 X，讓我再確認一下細節」，讓對話先推進，把完整分析留到下一步。',
+       roles:[{r:'面對主管',t:'主動讓主管知道你的思考進度，不要讓他以為你「沒在動」。定期的簡短更新，能讓你的穩健被正確詮釋為可靠，而不是沉默。'},{r:'面對同事',t:'你是讓大家安心的那個人，但要注意不要讓「穩健」變成「固執」。定期問自己：這個習慣是因為它真的最好，還是因為我不想改變？'},{r:'面對客戶',t:'你給客戶的安全感是你最大的武器，強調你的可靠紀錄和持續追蹤，讓長期合作關係成為你最穩定的收入來源。'}]},
+    D:{match:'節奏型和火焰型的人——節奏型和你一樣重視品質，火焰型能幫你在人際關係上做你不擅長的「暖場」。',
+       commStrength:'你最強的地方是「讓人感覺踏實」。你說出口的東西都有憑有據，這讓你在需要說服決策者的場合，往往是房間裡最有說服力的人。',
+       mine:'你最容易在「非正式的社交場合」踩雷。你不擅長閒聊，有時候會讓人覺得你冷漠或難以接近。',
+       mineBreak:'準備 3 個「暖場問題」：關於工作以外的話題。不需要很多，3 個夠用，讓自己從「有距離的專家」變成「讓人願意靠近的專家」。',
+       roles:[{r:'面對主管',t:'準備數據，準備數據，再準備數據。你最強的地方：當你能用清楚的邏輯和具體的數字說話時，沒有人能忽視你。'},{r:'面對同事',t:'試著對同事的進度給予具體的認可（「你上次那份報告的架構做得很好」），而不只是指出問題。讓你的高標準成為激勵，而不是壓力。'},{r:'面對客戶',t:'建立系統性的客戶追蹤流程，讓你的服務品質成為可被複製的標準。這是你最自然的競爭護城河。'}]}
+  };
+  const ip=interpersonal[d.primary]||interpersonal.A;
+  setText('interpersonalMatch',ip.match);
+  setText('commStrength',ip.commStrength);
+  setText('interpersonalMine',ip.mine);
+  setText('mineBreak',ip.mineBreak);
+  setHTML('roleCards',ip.roles.map(r=>`<div style="background:var(--ox);border:1px solid var(--line);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start"><span style="background:var(--o);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;margin-top:2px;flex-shrink:0">${r.r}</span><span style="font-size:13px;color:var(--ts);line-height:1.75;font-weight:300">${r.t}</span></div>`).join(''));
+
+  // ── Page 6: 行動起點 ──
+  const actions={
+    A:{items:[{num:'01',title:'選一個想法，這週就測試它',desc:'你不缺想法，你缺的是「做了再說」的第一步。從你腦袋裡所有的計畫裡，選出最小、最快能驗證的那個，這週花 2 小時把它做成能給別人看的東西——哪怕很粗糙也沒關係。'},{num:'02',title:'找一個能幫你把關細節的夥伴',desc:'你的盲區是執行和收尾。你不需要靠意志力克服它，你只需要找一個節奏型或鋼鐵型的人，讓他們幫你追蹤進度和品質。這比你一個人硬撐有效十倍。'},{num:'03',title:'把你最近一個「開頭很好」的計畫重新撿起來',desc:'隨便選一個你三個月前開始、但後來沒下文的副業或專案。不是要你重新開始，而是問自己：它卡在哪裡？是缺資源？缺夥伴？還是你只是忘了它？'}],
+      top:'從你所有的想法裡，選一個最容易在兩週內完成的「最小版本」，把它做出來、給真實的人看、問他們願不願意為它付錢。這個動作，比你再思考六個月都有用。',
+      growth:'以你的特質，一旦方向對了、有了第一個成功案例，複製和放大的速度會非常快——通常 3-6 個月就能看到明顯的收入改變。'},
+    B:{items:[{num:'01',title:'這週主動介紹兩個你認識的人認識彼此',desc:'你的人脈是你最大的資產，但大多數人的人脈是「靜態的」——只有在需要的時候才想到。開始有意識地「媒合」，讓你的人脈網路開始為你主動流通。'},{num:'02',title:'把你一直說「以後要做」的個人品牌，這週發第一篇',desc:'不需要完美。就用你的手機，說一件你最近在工作上的觀察或收穫，發到 LinkedIn 或 Instagram。第一篇是最難的，發了之後你會發現沒有想像中可怕。'},{num:'03',title:'列出你的前 10 個「高信任度聯繫人」',desc:'把他們列出來，然後想想：你上次主動聯繫他們是什麼時候？這週去跟其中一個「純聊天、不求人」地聯絡一下。'}],
+      top:'選你信任度最高的 3 個人脈，這週主動聯繫他們，純粹地問他們最近好不好、有沒有什麼你能幫到的。不帶目的的關係維護，是最強的長期投資。',
+      growth:'以你的特質，人脈的複利效應是所有類型裡最快的——一個對的介紹或合作，可以在短短幾個月內完全改變你的收入和機會結構。'},
+    C:{items:[{num:'01',title:'把你觀察到但還沒說出口的想法，寫下來',desc:'你比大多數人看得更準，但你常常覺得「還不到時候說」。這週，把你最近 3 個在工作上的敏銳觀察寫下來，讓自己看清楚：你的判斷力其實比你以為的更值錢。'},{num:'02',title:'在目前的領域找一個「比你高兩階」的人請教',desc:'找一個在你目標方向上走得比你遠的人，跟他吃頓飯或線上聊 30 分鐘，問他：「如果你是我，現在會優先做什麼？」'},{num:'03',title:'設定一個「這個月要嘗試的小改變」',desc:'這個月，刻意選一件你一直覺得「時機還沒到」的事情，設定一個最小的版本去試試看。不是要你莽撞，是讓你練習接受「夠好就出發」。'}],
+      top:'把你最近 3 個沒有說出口的判斷，寫下來，評估它們哪一個如果真的做了會帶來最大的改變。你的眼光是你最被低估的資產，先讓自己看見它有多值錢。',
+      growth:'以你的特質，一旦方向確定、開始行動，你的穩健執行力會讓成果遠比預期的更紮實——而且時間軸通常比你預期的更快，因為你早就準備好了。'},
+    D:{items:[{num:'01',title:'建立一個你自己的「個人財務儀表板」',desc:'這是最適合你的起點。用 Excel 或 Notion，把你的月收入、固定支出、儲蓄比例、投資配置全部數字化。你的分析能力用在自己的財務上，效果會超出你的預期。'},{num:'02',title:'找一個你可以「直接幫人建系統」的機會',desc:'你最高溢價的副業，就是幫別人解決他們沒有辦法系統化的問題。想想你身邊有哪個人或哪個小企業，有一個「亂」的地方是你 2 個小時就能整理清楚的，主動去幫他做做看。'},{num:'03',title:'選一件你一直「想清楚再做」的事，這週就開始',desc:'這週，選一件你分析超過三個月的事，設定一個「可接受的最低標準」，然後開始做。完美版本可以之後再優化，但你必須先有第一版。'}],
+      top:'打開 Excel，把你最近三個月的收入和支出完整地記錄下來。這是你最自然、也最有效的起點——當你把自己的財務數字化，你的大腦會自動開始找優化的方向。',
+      growth:'以你的特質，一旦你的系統建立起來，它的複利效應會很驚人——你的分析和流程能力，讓你不只能提升自己的效率，還能幫助別人，進而創造額外的收入。'}
+  };
+  const ac=actions[d.primary]||actions.A;
+  setHTML('actionCards',ac.items.map(a=>`<div style="border:1.5px solid var(--line);border-radius:12px;overflow:hidden"><div style="background:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));padding:10px 18px;display:flex;align-items:center;gap:12px"><span style="background:rgba(255,255,255,0.2);color:#fff;font-size:13px;font-weight:700;font-family:'Noto Serif TC',serif;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">${a.num}</span><span style="color:#fff;font-size:13.5px;font-weight:600;letter-spacing:.5px">${a.title}</span></div><div style="padding:14px 18px;background:var(--ox);font-size:13px;color:var(--ts);line-height:1.8;font-weight:300">${a.desc}</div></div>`).join(''));
+  setText('topAction',ac.top);
+  setText('growthNote',ac.growth);
+
+  // ── Page 7: Mike悄悄話 ──
+  setText('whisperQuote',pt.whisper);
+  setHTML('whisperBody',`看完你的資料，我有幾件事想直接跟你說。<br><br>你是<strong>${pt.name}</strong>型的人，這代表你最大的優勢是<strong>${pt.strengths.slice(0,3).join('、')}</strong>。但優勢沒有放在對的位置，就只是「潛力」，不會自動變成收入。<br><br>我見過太多人，能力沒問題，但因為方向沒對準、或是一直用錯方式努力，結果在同一個卡點繞了好幾年。<br><br><strong>這份報告能幫你看清楚方向，但「看清楚」和「真的動起來」之間，還差一步。</strong> 那一步，就是有個人幫你把報告裡的分析，對應到你真實的處境，告訴你<em>第一個</em>最值得做的行動是什麼。`);
+}
+
+/* ══ LOAD ═══════════════════════════════════════════════════════════ */
+const DEMO={name:'範例個案・小明',industry:'業務／行銷',
+  incomeRange:'5萬~8萬',
+  socialLife:['下班回家，社交圈比較小','會去上課學習、自我充實'],
+  futureGoal:'希望收入能翻倍，想找到自己真正有熱情的工作方向',
+  wd:{q1:'A',q2:'A',q3:'A',q4:'A',q5:'B',q6:'B'}};
+
+async function load(){
+  if(!docId){render(DEMO);return;}
+  try{
+    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+    const {getFirestore,doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+    const app=initializeApp(fbCfg);
+    const db=getFirestore(app);
+    const snap=await getDoc(fsDoc(db,'bookings',docId));
+    if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#5c3a1a">找不到此報告。</p>';return;}
+    window._reportData=snap.data();window._reportId=docId;
+    render(snap.data());
+  }catch(e){
+    console.warn('Firebase 讀取失敗，使用 demo 資料:',e.message);
+    render(DEMO);
+  }
+}
+
+window.openEmailModal=()=>{
+  if(!window._reportData){alert('預覽模式，請從後台開啟報告後再寄送。');return;}
+  const d=window._reportData;
+  const url=`${location.origin}/report?id=${window._reportId}`;
+  const subj=encodeURIComponent(`${d.name} 的職涯策略診斷報告｜Career Blueprint`);
+  const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《職涯策略診斷報告》出爐了！\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
+  window.open(`mailto:${d.email}?subject=${subj}&body=${body}`);
+};
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mike 主任 CRM｜後台管理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sage:#6b8068;--sage-l:#8fa882;--sage-pale:#c9d4bf;
+  --amber:#b5651d;--amber-pale:#fdf3e7;--amber-dark:#7a3a10;
+  --cream:#f6f1e8;--warm:#fdfbf6;
+  --text:#3d4a3d;--text-s:#7a8a7a;--text-m:#a3ad9d;
+  --line:#e3dccd;--shadow:0 1px 8px rgba(107,128,104,0.08);
+  --disc:#5a4a8a;--disc-pale:#ece8f5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:#f0f3ee;color:var(--text);font-size:13px;min-height:100vh}
+.layout{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+
+/* ── SIDEBAR ── */
+.sidebar{background:#2d3a2d;display:flex;flex-direction:column}
+.sb-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-logo .name{color:#e8f0e5;font-family:'Noto Serif TC',serif;font-size:15px;font-weight:500}
+.sb-logo .tagline{color:#8fa882;font-size:10px;letter-spacing:2px;margin-top:2px;text-transform:uppercase}
+.sb-nav{padding:12px 8px;flex:1}
+.sb-section{color:#5a7057;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 8px 6px;font-weight:500}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:#a8bea5;font-size:12.5px;transition:all .15s;margin-bottom:2px}
+.sb-item:hover{background:rgba(143,168,130,.12);color:#c9d4bf}
+.sb-item.active{background:rgba(143,168,130,.2);color:#c9d4bf}
+.sb-item svg{width:14px;height:14px;flex-shrink:0;opacity:.8}
+.sb-badge{margin-left:auto;background:#6b8068;color:#e8f0e5;font-size:10px;padding:1px 6px;border-radius:10px}
+.sb-footer{padding:12px 8px;border-top:1px solid rgba(255,255,255,.06)}
+.sb-avatar{display:flex;align-items:center;gap:8px;padding:8px 12px}
+.sb-avatar-circle{width:30px;height:30px;border-radius:50%;background:#4f6150;display:flex;align-items:center;justify-content:center;color:#c9d4bf;font-size:11px;font-weight:500;flex-shrink:0}
+.sb-avatar .info .n{color:#c9d4bf;font-size:12px}
+.sb-avatar .info .r{color:#5a7057;font-size:10px;margin-top:1px}
+
+/* ── MAIN ── */
+.main{display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--warm);border-bottom:1px solid var(--line);padding:0 24px;height:52px;display:flex;align-items:center;gap:16px;flex-shrink:0}
+.topbar-title{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:500;color:#3d4a3d;flex:1}
+.search-box{display:flex;align-items:center;background:var(--cream);border:1px solid var(--line);border-radius:20px;padding:5px 12px;gap:6px;width:200px}
+.search-box input{border:none;background:transparent;font-size:12px;color:var(--text);outline:none;width:100%;font-family:inherit}
+.search-box input::placeholder{color:var(--text-m)}
+.refresh-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--sage-pale);background:transparent;color:var(--sage);font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s}
+.refresh-btn:hover{background:var(--sage);color:white}
+.content{flex:1;overflow-y:auto;padding:20px 24px 24px}
+.page{display:none}.page.active{display:block}
+
+/* ── STATS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--warm);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.stat-label{font-size:11px;color:var(--text-m);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:500;color:#3d4a3d;line-height:1}
+.stat-sub{font-size:11px;color:var(--text-s);margin-top:5px}
+.stat-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;vertical-align:middle}
+
+/* ── TABLE ── */
+.table-card{background:var(--warm);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.table-header{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.table-title{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:500;color:#3d4a3d;flex:1}
+.filter-tabs{display:flex;gap:4px}
+.filter-tab{padding:4px 10px;border-radius:14px;border:1px solid var(--line);background:transparent;font-size:11px;color:var(--text-s);cursor:pointer;font-family:inherit;transition:all .15s}
+.filter-tab.active{background:var(--sage);color:white;border-color:var(--sage)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#f8f7f3}
+th{padding:9px 14px;text-align:left;font-size:11px;font-weight:500;color:var(--text-m);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--line)}
+td{padding:10px 14px;border-bottom:1px solid rgba(227,220,205,.5);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#faf9f5}
+.name-cell{display:flex;align-items:center;gap:10px}
+.avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;background:#e8f0e5;color:#4f6150}
+.name-text .n{font-size:13px;color:var(--text)}
+.name-text .e{font-size:11px;color:var(--text-m)}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:12px;font-size:11px}
+.badge.pending{background:#fef3e5;color:#a06520;border:1px solid #f5d9aa}
+.badge.confirmed{background:#e8f0e5;color:#4f6150;border:1px solid var(--sage-pale)}
+.badge.done{background:#f0f0f0;color:#888;border:1px solid #ddd}
+.badge.planA{background:#fdf0e8;color:#7a3a10;border:1px solid #e0c0a0}
+.badge.planB{background:#e8f0e5;color:#3d5a3d;border:1px solid var(--sage-pale)}
+.badge.has-report{background:#e8f0e5;color:#4f6150;border:1px solid var(--sage-pale)}
+.badge.no-report{background:#f8f7f3;color:var(--text-m);border:1px solid var(--line)}
+.badge.emailed{background:#e8f0fb;color:#2a5a9a;border:1px solid #b0c8f0}
+.badge.disc{background:var(--disc-pale);color:var(--disc);border:1px solid #d0c8e8}
+.topic-pill{display:inline-block;background:#f0f3ee;color:var(--text-s);border-radius:10px;padding:2px 7px;font-size:10px;margin:1px;border:1px solid var(--line)}
+.btn-group-cell{display:flex;gap:5px;flex-wrap:wrap}
+.action-btn{background:transparent;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--text-s);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.action-btn:hover{border-color:var(--sage);color:var(--sage)}
+.action-btn.primary{border-color:var(--sage);color:var(--sage)}
+.action-btn.primary:hover{background:var(--sage);color:white}
+.action-btn.gen{border-color:var(--amber);color:var(--amber)}
+.action-btn.gen:hover{background:var(--amber-pale)}
+.action-btn.email{border-color:#2a6aa0;color:#2a6aa0}
+.action-btn.email:hover{background:#e8f0fb}
+.table-empty{padding:40px;text-align:center;color:var(--text-m);font-size:13px}
+.loading-spinner{width:28px;height:28px;border:2px solid var(--line);border-top-color:var(--sage);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── DETAIL PANEL ── */
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(61,74,61,.25);z-index:50;align-items:center;justify-content:center}
+.detail-overlay.show{display:flex}
+.detail-panel{background:var(--warm);width:560px;max-width:95vw;border-radius:18px;box-shadow:0 8px 40px rgba(61,74,61,.18);max-height:92vh;overflow-y:auto;padding:28px}
+.dp-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.dp-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;flex-shrink:0;background:#e8f0e5;color:#4f6150}
+.dp-name{font-family:'Noto Serif TC',serif;font-size:16px;color:#3d4a3d;margin-bottom:4px}
+.dp-email{font-size:12px;color:var(--text-m)}
+.dp-wd-tag{display:inline-block;background:linear-gradient(90deg,var(--amber-dark),var(--amber));color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:4px;letter-spacing:1px}
+.dp-close{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-m);font-size:18px;line-height:1}
+.dp-section{margin-bottom:16px}
+.dp-section-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-m);margin-bottom:8px;font-weight:500;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.dp-row{display:flex;gap:8px;margin-bottom:6px;align-items:flex-start}
+.dp-row-label{font-size:12px;color:var(--text-s);width:80px;flex-shrink:0;padding-top:1px}
+.dp-row-val{font-size:12.5px;color:var(--text);flex:1;word-break:break-all;line-height:1.6}
+.dp-notes{background:#f8f6f0;border-radius:10px;padding:12px;font-size:12.5px;color:var(--text-s);line-height:1.7;font-weight:300}
+.dp-social-tags{display:flex;flex-wrap:wrap;gap:4px}
+.dp-social-tag{background:var(--amber-pale);color:var(--amber-dark);font-size:11px;padding:2px 8px;border-radius:10px;border:1px solid #e0c0a0}
+.dp-btn-row{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);flex-wrap:wrap}
+.dp-btn{flex:1;min-width:80px;padding:9px;border-radius:24px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .15s;letter-spacing:.3px;text-align:center;border:none}
+.dp-btn.primary{background:var(--sage);color:white}
+.dp-btn.primary:hover{background:#4f6150}
+.dp-btn.danger{background:transparent;border:1px solid #e0b0b0;color:#c0392b}
+.dp-btn.danger:hover{background:#fdf0f0}
+.dp-btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text-s)}
+.dp-btn.secondary:hover{border-color:var(--sage);color:var(--sage)}
+.dp-btn.amber{background:transparent;border:1px solid var(--amber);color:var(--amber)}
+.dp-btn.amber:hover{background:var(--amber-pale)}
+.dp-btn.blue{background:transparent;border:1px solid #2a6aa0;color:#2a6aa0}
+.dp-btn.blue:hover{background:#e8f0fb}
+.dp-disc-tag{display:inline-block;background:linear-gradient(90deg,var(--disc),#7a6ab0);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:4px;letter-spacing:1px}
+
+/* ── EMAIL MODAL ── */
+.email-modal-bg{position:fixed;inset:0;background:rgba(61,74,61,.35);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.email-modal-bg.show{display:flex}
+.email-modal{background:var(--warm);border-radius:20px;padding:32px;max-width:500px;width:100%;box-shadow:0 12px 40px rgba(61,74,61,.18);max-height:90vh;overflow-y:auto}
+.email-modal h3{font-family:'Noto Serif TC',serif;font-size:17px;color:#3d4a3d;margin-bottom:4px}
+.email-modal .em-sub{color:var(--text-s);font-size:12px;margin-bottom:20px}
+.email-modal label{font-size:12px;color:var(--text-s);display:block;margin-bottom:4px;margin-top:12px;font-weight:500}
+.email-modal input,.email-modal textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-family:inherit;font-size:13px;color:var(--text);background:#fff;outline:none}
+.email-modal input:focus,.email-modal textarea:focus{border-color:var(--sage)}
+.email-modal textarea{min-height:140px;resize:vertical;line-height:1.7}
+.em-preview-box{background:#f0f3ee;border-radius:10px;padding:10px 12px;font-size:11px;color:var(--text-s);margin-top:6px;line-height:1.6;word-break:break-all}
+.em-btns{display:flex;gap:10px;margin-top:20px}
+.em-btns button{flex:1;padding:11px;border-radius:24px;font-family:inherit;font-size:13px;cursor:pointer}
+.em-cancel{background:transparent;border:1px solid var(--line);color:var(--text-s)}
+.em-cancel:hover{border-color:var(--sage);color:var(--sage)}
+.em-send{background:linear-gradient(90deg,#2a5a40,#4a9060);color:white;border:none}
+.em-send:hover{opacity:.9}
+
+/* ── DELETE MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(61,74,61,.35);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--warm);border-radius:18px;padding:32px 28px;max-width:360px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(61,74,61,.18)}
+.modal h3{font-family:'Noto Serif TC',serif;font-size:17px;color:#3d4a3d;margin-bottom:10px}
+.modal p{color:var(--text-s);font-size:13px;margin-bottom:22px;line-height:1.7;font-weight:300}
+.modal-btns{display:flex;gap:10px}
+.modal-btns button{flex:1;padding:10px;border-radius:24px;font-family:inherit;font-size:13px;cursor:pointer}
+.modal-cancel{background:transparent;border:1px solid var(--line);color:var(--text-s)}
+.modal-cancel:hover{border-color:var(--sage);color:var(--sage)}
+.modal-confirm{background:#c0392b;color:white;border:none}
+.modal-confirm:hover{background:#a93226}
+.toast{position:fixed;bottom:28px;right:28px;background:#3d4a3d;color:#e8f0e5;padding:12px 20px;border-radius:12px;font-size:13px;z-index:300;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="name">Mike 主任 CRM</div>
+      <div class="tagline">諮詢管理系統</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">主選單</div>
+      <div class="sb-item active" onclick="showPage('dashboard',this)">
+        <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>總覽
+      </div>
+      <div class="sb-item" onclick="showPage('clients',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M1.5 13.5c0-3.3 2.9-6 6.5-6s6.5 2.7 6.5 6"/></svg>所有客戶
+        <span class="sb-badge" id="sbCountAll">0</span>
+      </div>
+      <div class="sb-item" onclick="showPage('pending',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>待確認
+        <span class="sb-badge" id="sbCountPending">0</span>
+      </div>
+      <div class="sb-item" onclick="showPage('confirmed',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="14" height="12" rx="1.5"/><path d="M5 1v2M11 1v2M1 6h14"/></svg>已確認
+        <span class="sb-badge" id="sbCountConfirmed">0</span>
+      </div>
+      <div class="sb-item" onclick="showPage('done',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8l4 4 8-8"/></svg>已完成
+        <span class="sb-badge" id="sbCountDone">0</span>
+      </div>
+      <div class="sb-section">DISC 測驗</div>
+      <div class="sb-item" onclick="showPage('disc',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>DISC 測驗客戶
+        <span class="sb-badge" id="sbCountDisc">0</span>
+      </div>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-avatar">
+        <div class="sb-avatar-circle">M</div>
+        <div class="info"><div class="n">Mike 主任</div><div class="r">管理員</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">總覽</div>
+      <div class="search-box">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#a3ad9d" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10l3.5 3.5"/></svg>
+        <input type="text" placeholder="搜尋姓名或 Email..." id="searchInput" oninput="filterSearch()"/>
+      </div>
+      <button class="refresh-btn" onclick="loadBookings()">↻ 重新整理</button>
+    </div>
+    <div class="content">
+
+      <!-- 總覽 -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-label">總預約數</div><div class="stat-value" id="st-total">—</div><div class="stat-sub">所有時間</div></div>
+          <div class="stat-card"><div class="stat-label">待確認</div><div class="stat-value" id="st-pending">—</div><div class="stat-sub"><span class="stat-dot" style="background:#e8a84a"></span>需要回覆</div></div>
+          <div class="stat-card"><div class="stat-label">Plan B 收入</div><div class="stat-value" id="st-income">—</div><div class="stat-sub"><span class="stat-dot" style="background:#8fa882"></span>NT$1,500 / 場</div></div>
+          <div class="stat-card"><div class="stat-label">DISC 測驗人數</div><div class="stat-value" id="st-disc">—</div><div class="stat-sub"><span class="stat-dot" style="background:#5a4a8a"></span>累計完成人數</div></div>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">最新預約</div><div style="font-size:11px;color:var(--text-m)">即時同步 Firebase</div></div>
+          <div id="dashboardTable"></div>
+        </div>
+      </div>
+
+      <!-- 所有客戶 -->
+      <div class="page" id="page-clients">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">所有客戶</div>
+            <div class="filter-tabs">
+              <button class="filter-tab active" onclick="setFilter('all',this)">全部</button>
+              <button class="filter-tab" onclick="setFilter('pending',this)">待確認</button>
+              <button class="filter-tab" onclick="setFilter('confirmed',this)">已確認</button>
+              <button class="filter-tab" onclick="setFilter('done',this)">已完成</button>
+            </div>
+          </div>
+          <div id="clientsTable"></div>
+        </div>
+      </div>
+
+      <div class="page" id="page-pending"><div class="table-card"><div class="table-header"><div class="table-title">待確認預約</div></div><div id="pendingTable"></div></div></div>
+      <div class="page" id="page-confirmed"><div class="table-card"><div class="table-header"><div class="table-title">已確認預約</div></div><div id="confirmedTable"></div></div></div>
+      <div class="page" id="page-done"><div class="table-card"><div class="table-header"><div class="table-title">已完成諮詢</div></div><div id="doneTable"></div></div></div>
+
+      <!-- DISC 測驗客戶 -->
+      <div class="page" id="page-disc">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">DISC 測驗客戶</div>
+            <div style="font-size:11px;color:var(--text-m)">獨立於職涯諮詢客戶名單，即時同步 Firebase (discClients)</div>
+          </div>
+          <div id="discTable"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- DETAIL PANEL（職涯諮詢客戶） -->
+<div class="detail-overlay" id="detailOverlay" onclick="maybeClose(event)">
+  <div class="detail-panel">
+    <div class="dp-header">
+      <div class="dp-avatar" id="dpAvatar"></div>
+      <div>
+        <div class="dp-name" id="dpName"></div>
+        <div class="dp-email" id="dpEmail"></div>
+        <div class="dp-wd-tag" id="dpWdTag"></div>
+      </div>
+      <button class="dp-close" onclick="closeDetail()">✕</button>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">基本資料</div>
+      <div class="dp-row"><span class="dp-row-label">年齡區間</span><span class="dp-row-val" id="dpAge"></span></div>
+      <div class="dp-row"><span class="dp-row-label">工作年資</span><span class="dp-row-val" id="dpExp"></span></div>
+      <div class="dp-row"><span class="dp-row-label">產業</span><span class="dp-row-val" id="dpIndustry"></span></div>
+      <div class="dp-row"><span class="dp-row-label">工作描述</span><span class="dp-row-val" id="dpJobDesc"></span></div>
+      <div class="dp-row"><span class="dp-row-label">收入區間</span><span class="dp-row-val" id="dpIncome"></span></div>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">諮詢資訊</div>
+      <div class="dp-row"><span class="dp-row-label">下班社交</span><span class="dp-row-val"><div class="dp-social-tags" id="dpSocial"></div></span></div>
+      <div class="dp-row"><span class="dp-row-label">未來目標</span><span class="dp-row-val" id="dpGoal"></span></div>
+      <div class="dp-row"><span class="dp-row-label">方案</span><span class="dp-row-val" id="dpPlan"></span></div>
+      <div class="dp-row"><span class="dp-row-label">諮詢方式</span><span class="dp-row-val" id="dpFormat"></span></div>
+      <div class="dp-row"><span class="dp-row-label">預約時段</span><span class="dp-row-val" id="dpAppt"></span></div>
+      <div class="dp-row"><span class="dp-row-label">Email 狀態</span><span class="dp-row-val" id="dpEmailSent"></span></div>
+      <div class="dp-row"><span class="dp-row-label">建立時間</span><span class="dp-row-val" id="dpCreated"></span></div>
+    </div>
+
+    <div class="dp-section" id="dpNotesSection">
+      <div class="dp-section-title">備註</div>
+      <div class="dp-notes" id="dpNotes"></div>
+    </div>
+
+    <div class="dp-btn-row">
+      <button class="dp-btn secondary" onclick="closeDetail()">關閉</button>
+      <button class="dp-btn danger" id="dpDeleteBtn">刪除</button>
+      <button class="dp-btn amber" id="dpReportBtn">📋 報告</button>
+      <button class="dp-btn blue" id="dpEmailBtn">📧 寄信</button>
+      <button class="dp-btn primary" id="dpActionBtn" style="display:none"></button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL（DISC 測驗客戶） -->
+<div class="detail-overlay" id="discDetailOverlay" onclick="maybeCloseDisc(event)">
+  <div class="detail-panel">
+    <div class="dp-header">
+      <div class="dp-avatar" id="ddpAvatar"></div>
+      <div>
+        <div class="dp-name" id="ddpName"></div>
+        <div class="dp-email" id="ddpEmail"></div>
+        <div class="dp-disc-tag" id="ddpDiscTag"></div>
+      </div>
+      <button class="dp-close" onclick="closeDiscDetail()">✕</button>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">基本資料</div>
+      <div class="dp-row"><span class="dp-row-label">工作領域</span><span class="dp-row-val" id="ddpIndustry"></span></div>
+      <div class="dp-row"><span class="dp-row-label">建立時間</span><span class="dp-row-val" id="ddpCreated"></span></div>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">DISC 分數（20 題）</div>
+      <div class="dp-row"><span class="dp-row-label">D 指揮型</span><span class="dp-row-val" id="ddpD"></span></div>
+      <div class="dp-row"><span class="dp-row-label">I 社交型</span><span class="dp-row-val" id="ddpI"></span></div>
+      <div class="dp-row"><span class="dp-row-label">S 穩健型</span><span class="dp-row-val" id="ddpS"></span></div>
+      <div class="dp-row"><span class="dp-row-label">C 謹慎型</span><span class="dp-row-val" id="ddpC"></span></div>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">諮詢資訊</div>
+      <div class="dp-row"><span class="dp-row-label">諮詢方式</span><span class="dp-row-val" id="ddpFormat"></span></div>
+      <div class="dp-row"><span class="dp-row-label">Email 狀態</span><span class="dp-row-val" id="ddpEmailSent"></span></div>
+    </div>
+
+    <div class="dp-section" id="ddpNotesSection">
+      <div class="dp-section-title">備註</div>
+      <div class="dp-notes" id="ddpNotes"></div>
+    </div>
+
+    <div class="dp-btn-row">
+      <button class="dp-btn secondary" onclick="closeDiscDetail()">關閉</button>
+      <button class="dp-btn danger" id="ddpDeleteBtn">刪除</button>
+      <button class="dp-btn amber" id="ddpReportBtn">📋 報告</button>
+      <button class="dp-btn blue" id="ddpEmailBtn">📧 寄信</button>
+      <button class="dp-btn primary" id="ddpActionBtn" style="display:none"></button>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL MODAL（共用） -->
+<div class="email-modal-bg" id="emailModalBg">
+  <div class="email-modal">
+    <h3>📧 寄送報告</h3>
+    <div class="em-sub" id="emSub">寄送至個案 Email</div>
+    <label>收件人</label>
+    <input type="email" id="emTo" readonly style="background:#f8f6f0"/>
+    <label>主旨</label>
+    <input type="text" id="emSubject"/>
+    <label>內文</label>
+    <textarea id="emBody"></textarea>
+    <label>報告連結</label>
+    <div class="em-preview-box" id="emPreview"></div>
+    <div class="em-btns">
+      <button class="em-cancel" onclick="closeEmailModal()">取消</button>
+      <button class="em-send" onclick="doSendEmail()">✉️ 開啟郵件寄送</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM（共用） -->
+<div class="modal-bg" id="deleteModal">
+  <div class="modal">
+    <h3>確定要刪除？</h3>
+    <p id="deleteModalText">刪除後無法還原，此筆資料將從 Firebase 永久移除。</p>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="document.getElementById('deleteModal').classList.remove('show')">取消</button>
+      <button class="modal-confirm" id="confirmDeleteBtn">確定刪除</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══ FIREBASE ═══════════════════════════════════════════════════════ */
+const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
+let db,allBookings=[],allDiscClients=[],currentFilter='all',currentDocId=null,currentSource='bookings',searchQuery='';
+
+// 報告頁的基礎 URL（部署後請改成正式域名）
+const REPORT_BASE = location.hostname==='localhost'||location.protocol==='file:'
+  ? 'file:///Users/mike/Downloads/report.html'
+  : `${location.origin}/report.html`;
+const DISC_REPORT_BASE = location.hostname==='localhost'||location.protocol==='file:'
+  ? 'file:///Users/mike/Downloads/disc-report.html'
+  : `${location.origin}/disc-report.html`;
+
+async function initFirebase(){
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  const {getFirestore,collection,getDocs,doc,updateDoc,deleteDoc,addDoc,serverTimestamp}=
+    await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+  const app=initializeApp(fbCfg);
+  db=getFirestore(app);
+  window._fb={collection,getDocs,doc,updateDoc,deleteDoc,addDoc,serverTimestamp,db};
+}
+
+/* ══ LOAD ═══════════════════════════════════════════════════════════ */
+window.loadBookings=async()=>{
+  setTableLoading('dashboardTable');setTableLoading('clientsTable');setTableLoading('discTable');
+  try{
+    if(!db)await initFirebase();
+    const {collection,getDocs}=window._fb;
+    const [snap,discSnap]=await Promise.all([
+      getDocs(collection(db,'bookings')),
+      getDocs(collection(db,'discClients'))
+    ]);
+    allBookings=snap.docs.map(d=>({id:d.id,...d.data()}));
+    allBookings.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    allDiscClients=discSnap.docs.map(d=>({id:d.id,...d.data()}));
+    allDiscClients.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    renderAll();
+  }catch(e){
+    const msg=`<div class="table-empty" style="color:#c0392b">❌ ${e.message}</div>`;
+    document.getElementById('dashboardTable').innerHTML=msg;
+    document.getElementById('clientsTable').innerHTML=msg;
+    document.getElementById('discTable').innerHTML=msg;
+  }
+};
+
+/* ══ HELPERS ════════════════════════════════════════════════════════ */
+function getFiltered(status){
+  let list=status==='all'?allBookings:allBookings.filter(b=>b.status===status);
+  if(searchQuery){const q=searchQuery.toLowerCase();list=list.filter(b=>(b.name||'').toLowerCase().includes(q)||(b.email||'').toLowerCase().includes(q));}
+  return list;
+}
+
+function wdLabel(r){
+  // 支援新欄位 wdLabel，相容舊的 disc 欄位
+  if(r.wdLabel) return r.wdLabel;
+  if(r.wdPrimary) return r.wdSecondary?`${r.wdPrimary} × ${r.wdSecondary}`:r.wdPrimary;
+  if(r.disc){
+    const c={A:0,B:0,C:0,D:0};
+    Object.values(r.disc).forEach(v=>{if(c[v]!==undefined)c[v]++;});
+    const s=Object.entries(c).sort((a,b)=>b[1]-a[1]);
+    const m={A:'D型',B:'I型',C:'S型',D:'C型'};
+    return s[1][1]>0?`${m[s[0][0]]}×${m[s[1][0]]}`:m[s[0][0]];
+  }
+  return '未完成';
+}
+
+function socialArr(r){
+  if(Array.isArray(r.socialLife)&&r.socialLife.length) return r.socialLife;
+  if(Array.isArray(r.topics)&&r.topics.length) return r.topics;
+  return [];
+}
+
+/* ══ RENDER ═════════════════════════════════════════════════════════ */
+function renderAll(){
+  const pending=allBookings.filter(b=>b.status==='pending').length;
+  const confirmed=allBookings.filter(b=>b.status==='confirmed').length;
+  const done=allBookings.filter(b=>b.status==='done').length;
+  const planBDone=allBookings.filter(b=>b.plan==='B'&&b.status==='done').length;
+  document.getElementById('sbCountAll').textContent=allBookings.length;
+  document.getElementById('sbCountPending').textContent=pending;
+  document.getElementById('sbCountConfirmed').textContent=confirmed;
+  document.getElementById('sbCountDone').textContent=done;
+  document.getElementById('sbCountDisc').textContent=allDiscClients.length;
+  document.getElementById('st-total').textContent=allBookings.length;
+  document.getElementById('st-pending').textContent=pending;
+  document.getElementById('st-income').textContent=`NT$${(planBDone*1500).toLocaleString()}`;
+  document.getElementById('st-disc').textContent=allDiscClients.length;
+  renderTable('dashboardTable',allBookings.slice(0,20));
+  renderTable('clientsTable',getFiltered(currentFilter));
+  renderTable('pendingTable',getFiltered('pending'));
+  renderTable('confirmedTable',getFiltered('confirmed'));
+  renderTable('doneTable',getFiltered('done'));
+  renderDiscTable('discTable',allDiscClients);
+}
+
+function setTableLoading(id){document.getElementById(id).innerHTML=`<div class="table-empty"><div class="loading-spinner"></div>載入中...</div>`;}
+
+function renderTable(containerId,rows){
+  const el=document.getElementById(containerId);
+  if(!rows.length){el.innerHTML=`<div class="table-empty">目前沒有資料</div>`;return;}
+  el.innerHTML=`<table>
+    <thead><tr><th>客戶</th><th>社交 / 目標</th><th>能量類型</th><th>方案</th><th>狀態</th><th>操作</th></tr></thead>
+    <tbody>${rows.map(r=>rowHTML(r)).join('')}</tbody>
+  </table>`;
+  el.querySelectorAll('[data-view-id]').forEach(btn=>btn.addEventListener('click',()=>openDetail(btn.dataset.viewId)));
+  el.querySelectorAll('[data-email-id]').forEach(btn=>btn.addEventListener('click',()=>openEmailModal(btn.dataset.emailId,'bookings')));
+}
+
+function rowHTML(r){
+  const wd=wdLabel(r);
+  const social=socialArr(r).slice(0,2).map(s=>`<span class="topic-pill">${s.replace('下班回家，社交圈比較小','下班回家').replace('會去打桌遊、運動或社團','社群活動').replace('會去上課學習、自我充實','自我充實').replace('已經有在經營副業','有副業')}</span>`).join('');
+  const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
+  const appt=r.appointmentTime?`<div style="font-size:10px;color:var(--text-m);margin-top:2px">📅 ${r.appointmentTime}</div>`:'';
+  return`<tr>
+    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
+    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div>${appt}</div></div></td>
+    <td>${social||'—'}<div style="font-size:11px;color:var(--text-m);margin-top:2px">${(r.futureGoal||r.interest||'').slice(0,30)||''}</div></td>
+    <td><span class="badge ${wd!=='未完成'?'has-report':'no-report'}">${wd}</span></td>
+    <td>${r.plan?`<span class="badge plan${r.plan}">Plan ${r.plan}</span>`:'—'} ${emailBadge}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td><div class="btn-group-cell">
+      <button class="action-btn" data-view-id="${r.id}">查看</button>
+      <button class="action-btn email" data-email-id="${r.id}">📧 寄報告</button>
+    </div></td>
+  </tr>`;
+}
+
+function statusBadge(s){
+  if(s==='pending')return`<span class="badge pending">待確認</span>`;
+  if(s==='confirmed')return`<span class="badge confirmed">已確認</span>`;
+  return`<span class="badge done">已完成</span>`;
+}
+
+/* ══ DISC TABLE ═════════════════════════════════════════════════════ */
+function renderDiscTable(containerId,rows){
+  const el=document.getElementById(containerId);
+  if(!rows.length){el.innerHTML=`<div class="table-empty">目前沒有 DISC 測驗資料</div>`;return;}
+  el.innerHTML=`<table>
+    <thead><tr><th>客戶</th><th>工作領域</th><th>DISC 類型</th><th>狀態</th><th>操作</th></tr></thead>
+    <tbody>${rows.map(r=>discRowHTML(r)).join('')}</tbody>
+  </table>`;
+  el.querySelectorAll('[data-disc-view-id]').forEach(btn=>btn.addEventListener('click',()=>openDiscDetail(btn.dataset.discViewId)));
+  el.querySelectorAll('[data-disc-email-id]').forEach(btn=>btn.addEventListener('click',()=>openEmailModal(btn.dataset.discEmailId,'discClients')));
+}
+
+function discRowHTML(r){
+  const label=r.label||'未完成';
+  const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
+  return`<tr>
+    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
+    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div></div></div></td>
+    <td>${r.industry||'—'}</td>
+    <td><span class="badge disc">${label}</span> ${emailBadge}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td><div class="btn-group-cell">
+      <button class="action-btn" data-disc-view-id="${r.id}">查看</button>
+      <button class="action-btn email" data-disc-email-id="${r.id}">📧 寄報告</button>
+    </div></td>
+  </tr>`;
+}
+
+window.openDiscDetail=(id)=>{
+  const r=allDiscClients.find(b=>b.id===id);if(!r)return;
+  currentDocId=id;currentSource='discClients';
+  document.getElementById('ddpAvatar').textContent=(r.name||'?')[0];
+  document.getElementById('ddpName').textContent=r.name||'—';
+  document.getElementById('ddpEmail').textContent=r.email||'—';
+  document.getElementById('ddpDiscTag').textContent=r.label||'未完成';
+  document.getElementById('ddpIndustry').textContent=r.industry||'—';
+  const ts=r.createdAt?.seconds?new Date(r.createdAt.seconds*1000):null;
+  document.getElementById('ddpCreated').textContent=ts?ts.toLocaleString('zh-TW'):'—';
+  const c=r.counts||{D:0,I:0,S:0,C:0};
+  const total=20;
+  document.getElementById('ddpD').textContent=`${c.D||0} / ${total}（${Math.round((c.D||0)/total*100)}%）`;
+  document.getElementById('ddpI').textContent=`${c.I||0} / ${total}（${Math.round((c.I||0)/total*100)}%）`;
+  document.getElementById('ddpS').textContent=`${c.S||0} / ${total}（${Math.round((c.S||0)/total*100)}%）`;
+  document.getElementById('ddpC').textContent=`${c.C||0} / ${total}（${Math.round((c.C||0)/total*100)}%）`;
+  document.getElementById('ddpFormat').textContent=r.format||'尚未填寫';
+  document.getElementById('ddpEmailSent').innerHTML=r.emailSentAt
+    ?`<span style="color:#2a7a4a">✓ 已寄送（${new Date(r.emailSentAt).toLocaleDateString('zh-TW')}）</span>`
+    :'<span style="color:#a3ad9d">尚未寄送</span>';
+  if(r.notes){document.getElementById('ddpNotesSection').style.display='block';document.getElementById('ddpNotes').textContent=r.notes;}
+  else{document.getElementById('ddpNotesSection').style.display='none';}
+  const rBtn=document.getElementById('ddpReportBtn');
+  rBtn.onclick=()=>{closeDiscDetail();openDiscReportInNewTab(id);};
+  document.getElementById('ddpEmailBtn').onclick=()=>{closeDiscDetail();openEmailModal(id,'discClients');};
+  const aBtn=document.getElementById('ddpActionBtn');
+  if(r.status==='pending'){aBtn.textContent='✓ 確認預約';aBtn.style.display='block';aBtn.onclick=()=>advanceDiscStatus(id,'pending');}
+  else if(r.status==='confirmed'){aBtn.textContent='✓ 標記完成';aBtn.style.display='block';aBtn.onclick=()=>advanceDiscStatus(id,'confirmed');}
+  else{aBtn.style.display='none';}
+  document.getElementById('discDetailOverlay').classList.add('show');
+};
+window.closeDiscDetail=()=>document.getElementById('discDetailOverlay').classList.remove('show');
+window.maybeCloseDisc=(e)=>{if(e.target===document.getElementById('discDetailOverlay'))closeDiscDetail();};
+
+async function advanceDiscStatus(id,current){
+  const next=current==='pending'?'confirmed':'done';
+  try{
+    const {doc,updateDoc}=window._fb;
+    await updateDoc(doc(db,'discClients',id),{status:next});
+    const idx=allDiscClients.findIndex(b=>b.id===id);
+    if(idx>-1)allDiscClients[idx].status=next;
+    renderAll();closeDiscDetail();
+    showToast(next==='confirmed'?'✓ 已確認預約':'✓ 已標記完成');
+  }catch(e){showToast('更新失敗：'+e.message);}
+}
+
+function openDiscReportInNewTab(id){window.open(`${DISC_REPORT_BASE}?id=${id}`,'_blank');}
+
+document.getElementById('ddpDeleteBtn').addEventListener('click',()=>{
+  document.getElementById('deleteModalText').textContent='刪除後無法還原，此筆 DISC 測驗資料將從 Firebase 永久移除。';
+  document.getElementById('deleteModal').classList.add('show');
+});
+
+/* ══ DETAIL（職涯諮詢客戶）═══════════════════════════════════════════ */
+window.openDetail=(id)=>{
+  const r=allBookings.find(b=>b.id===id);if(!r)return;
+  currentDocId=id;currentSource='bookings';
+  document.getElementById('dpAvatar').textContent=(r.name||'?')[0];
+  document.getElementById('dpName').textContent=r.name||'—';
+  document.getElementById('dpEmail').textContent=r.email||'—';
+  document.getElementById('dpWdTag').textContent=wdLabel(r);
+  document.getElementById('dpAge').textContent=r.age||'—';
+  document.getElementById('dpExp').textContent=r.experience||'—';
+  document.getElementById('dpIndustry').textContent=r.industry||'—';
+  document.getElementById('dpJobDesc').textContent=r.jobDesc||r.industry||'—';
+  document.getElementById('dpIncome').textContent=r.incomeRange||r.incomeSatisfaction||'—';
+  const sArr=socialArr(r);
+  document.getElementById('dpSocial').innerHTML=sArr.length
+    ?sArr.map(s=>`<span class="dp-social-tag">${s}</span>`).join('')
+    :'—';
+  document.getElementById('dpGoal').textContent=r.futureGoal||r.interest||'—';
+  document.getElementById('dpPlan').innerHTML=r.plan?`<span class="badge plan${r.plan}">Plan ${r.plan}</span>`:'—';
+  document.getElementById('dpFormat').textContent=r.format||'—';
+  document.getElementById('dpAppt').textContent=r.appointmentTime||'尚未填寫';
+  const ts=r.createdAt?.seconds?new Date(r.createdAt.seconds*1000):null;
+  document.getElementById('dpCreated').textContent=ts?ts.toLocaleString('zh-TW'):'—';
+  document.getElementById('dpEmailSent').innerHTML=r.emailSentAt
+    ?`<span style="color:#2a7a4a">✓ 已寄送（${new Date(r.emailSentAt).toLocaleDateString('zh-TW')}）</span>`
+    :'<span style="color:#a3ad9d">尚未寄送</span>';
+  if(r.notes){document.getElementById('dpNotesSection').style.display='block';document.getElementById('dpNotes').textContent=r.notes;}
+  else{document.getElementById('dpNotesSection').style.display='none';}
+  const rBtn=document.getElementById('dpReportBtn');
+  rBtn.onclick=()=>{closeDetail();openReportInNewTab(id);};
+  rBtn.textContent='📋 查看報告';
+  document.getElementById('dpEmailBtn').onclick=()=>{closeDetail();openEmailModal(id,'bookings');};
+  const aBtn=document.getElementById('dpActionBtn');
+  if(r.status==='pending'){aBtn.textContent='✓ 確認預約';aBtn.style.display='block';aBtn.onclick=()=>advanceStatus(id,'pending');}
+  else if(r.status==='confirmed'){aBtn.textContent='✓ 標記完成';aBtn.style.display='block';aBtn.onclick=()=>advanceStatus(id,'confirmed');}
+  else{aBtn.style.display='none';}
+  document.getElementById('detailOverlay').classList.add('show');
+};
+
+window.closeDetail=()=>document.getElementById('detailOverlay').classList.remove('show');
+window.maybeClose=(e)=>{if(e.target===document.getElementById('detailOverlay'))closeDetail();};
+
+async function advanceStatus(id,current){
+  const next=current==='pending'?'confirmed':'done';
+  try{
+    const {doc,updateDoc}=window._fb;
+    await updateDoc(doc(db,'bookings',id),{status:next});
+    const idx=allBookings.findIndex(b=>b.id===id);
+    if(idx>-1)allBookings[idx].status=next;
+    renderAll();closeDetail();
+    showToast(next==='confirmed'?'✓ 已確認預約':'✓ 已標記完成');
+  }catch(e){showToast('更新失敗：'+e.message);}
+}
+
+/* ══ REPORT VIEWER ══════════════════════════════════════════════════ */
+function openReportInNewTab(id){
+  const url=`${REPORT_BASE}?id=${id}`;
+  window.open(url,'_blank');
+}
+
+/* ══ EMAIL MODAL（共用，依 source 切換文案與連結）══════════════════════ */
+window.openEmailModal=(id,source)=>{
+  source=source||'bookings';
+  const list=source==='discClients'?allDiscClients:allBookings;
+  const r=list.find(b=>b.id===id);if(!r)return;
+  currentDocId=id;currentSource=source;
+  const reportUrl=source==='discClients'?`${DISC_REPORT_BASE}?id=${id}`:`${REPORT_BASE}?id=${id}`;
+  document.getElementById('emSub').textContent=`寄送至：${r.email||'（未知）'}`;
+  document.getElementById('emTo').value=r.email||'';
+
+  if(source==='discClients'){
+    const label=r.label||'未完成';
+    document.getElementById('emSubject').value=`${r.name||'您'} 的 DISC 行為風格報告出爐了！｜Mike 主任`;
+    document.getElementById('emBody').value=
+`嗨 ${r.name||'您'}，
+
+感謝你完成 DISC 行為風格測驗 😊
+
+你的《DISC 行為風格報告》已完成！
+行為風格：${label}
+
+報告共 8 頁，包含：
+✦ 你的 DISC 總覽與雷達圖
+✦ 主導風格深度解析
+✦ 人際溝通優勢與地雷
+✦ 行動起點建議
+
+點選以下連結查看你的專屬報告：
+${reportUrl}
+
+本月僅開放 3 個 1-on-1 策略複診名額，
+建議儘早預約：
+https://calendar.app.google/y7pFfnC2HXbyvydP9
+
+期待在諮詢室見到你 😊
+Mike 主任`;
+  }else{
+    const wdType=wdLabel(r);
+    document.getElementById('emSubject').value=`${r.name||'您'} 的職涯策略診斷報告出爐了！｜Mike 主任`;
+    document.getElementById('emBody').value=
+`嗨 ${r.name||'您'}，
+
+感謝你填寫諮詢表單 😊
+
+你的《職涯策略診斷報告》已完成！
+能量類型：${wdType}
+
+報告共 8 頁，包含：
+✦ 你的能量特質深度解析
+✦ 市場現實 × 台灣薪資趨勢
+✦ 主動 + 被動收入客製化指南
+✦ 職場人際溝通優勢
+✦ 行動起點建議
+
+點選以下連結查看你的專屬報告：
+${reportUrl}
+
+本月僅開放 3 個 1-on-1 策略複診名額，
+建議儘早預約：
+https://calendar.app.google/y7pFfnC2HXbyvydP9
+
+期待在諮詢室見到你 😊
+Mike 主任`;
+  }
+  document.getElementById('emPreview').textContent=reportUrl;
+  document.getElementById('emailModalBg').classList.add('show');
+};
+
+window.closeEmailModal=()=>document.getElementById('emailModalBg').classList.remove('show');
+
+window.doSendEmail=async()=>{
+  const to=document.getElementById('emTo').value;
+  const subject=document.getElementById('emSubject').value;
+  const body=document.getElementById('emBody').value;
+  if(!to){showToast('找不到收件人 Email');return;}
+  window.open(`mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+  try{
+    const {doc,updateDoc}=window._fb;
+    const sentAt=new Date().toISOString();
+    await updateDoc(doc(db,currentSource,currentDocId),{emailSentAt:sentAt});
+    if(currentSource==='discClients'){
+      const idx=allDiscClients.findIndex(b=>b.id===currentDocId);
+      if(idx>-1)allDiscClients[idx].emailSentAt=sentAt;
+    }else{
+      const idx=allBookings.findIndex(b=>b.id===currentDocId);
+      if(idx>-1)allBookings[idx].emailSentAt=sentAt;
+    }
+    renderAll();
+    showToast('✓ 郵件草稿已開啟，記得確認後寄出');
+  }catch(e){showToast('備記寄送狀態失敗：'+e.message);}
+  closeEmailModal();
+};
+
+/* ══ DELETE（共用，依 currentSource 切換 collection）══════════════════ */
+document.getElementById('dpDeleteBtn').addEventListener('click',()=>{
+  currentSource='bookings';
+  document.getElementById('deleteModalText').textContent='刪除後無法還原，此筆資料將從 Firebase 永久移除。';
+  document.getElementById('deleteModal').classList.add('show');
+});
+document.getElementById('confirmDeleteBtn').addEventListener('click',async()=>{
+  if(!currentDocId)return;
+  try{
+    const {doc,deleteDoc}=window._fb;
+    await deleteDoc(doc(db,currentSource,currentDocId));
+    if(currentSource==='discClients'){
+      allDiscClients=allDiscClients.filter(b=>b.id!==currentDocId);
+      closeDiscDetail();
+    }else{
+      allBookings=allBookings.filter(b=>b.id!==currentDocId);
+      closeDetail();
+    }
+    renderAll();
+    document.getElementById('deleteModal').classList.remove('show');
+    showToast('已刪除此筆資料');
+  }catch(e){showToast('刪除失敗：'+e.message);}
+});
+
+/* ══ NAV ════════════════════════════════════════════════════════════ */
+const pageTitles={dashboard:'總覽',clients:'所有客戶',pending:'待確認',confirmed:'已確認',done:'已完成',disc:'DISC 測驗客戶'};
+window.showPage=(name,el)=>{
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.getElementById('topbarTitle').textContent=pageTitles[name]||name;
+};
+window.setFilter=(f,el)=>{
+  currentFilter=f;
+  document.querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderTable('clientsTable',getFiltered(f));
+};
+window.filterSearch=()=>{searchQuery=document.getElementById('searchInput').value;renderAll();};
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+window.addEventListener('DOMContentLoaded',()=>loadBookings());
+</script>
+</body>
+</html>

@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mike｜職涯天賦策略診斷</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --o:#c8762a;--om:#d98530;--ol:#e89a50;--op:#fdf3e7;
+  --teal:#2a9d8f;--teal-pale:#e6f5f3;
+  --red:#e84040;--red-pale:#fdf0f0;
+  --bg:#faf5ee;--white:#ffffff;--warm:#fefcf8;
+  --text:#2d2010;--ts:#5c4a30;--tm:#9a8570;
+  --line:#e8ddd0;--shadow:0 2px 16px rgba(139,94,60,0.07);--shadow-lg:0 8px 32px rgba(139,94,60,0.13);
+  --amber:#c8762a;--wd:#4a3020;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);font-size:15px;font-weight:400;min-height:100vh}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#7a3a10 0%,#c8762a 55%,#e8a040 100%);padding:40px 20px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);font-size:12px;letter-spacing:3px;padding:5px 16px;border-radius:20px;margin-bottom:18px;text-transform:uppercase;font-weight:400;border:1px solid rgba(255,255,255,0.2)}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:32px;font-weight:600;color:#fff;letter-spacing:2px;margin-bottom:8px;position:relative}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:13px;letter-spacing:2px;position:relative}
+
+/* INTRO CARD */
+.intro-card{background:var(--white);margin:0 16px;border-radius:20px;padding:28px 24px;box-shadow:var(--shadow-lg);position:relative;margin-top:-20px;border-left:4px solid var(--o)}
+.intro-card p{font-size:14.5px;color:var(--ts);line-height:2;font-weight:300}
+.intro-card p+p{margin-top:10px}
+.intro-card strong{color:var(--o);font-weight:500}
+.intro-card em{font-style:normal;color:var(--text);font-weight:400}
+.fit-tag{color:var(--o);font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;display:block}
+.fit-list{list-style:none;padding:0;margin:10px 0}
+.fit-list li{font-size:14px;color:var(--ts);padding:6px 0 6px 18px;position:relative;font-weight:300;line-height:1.6}
+.fit-list li::before{content:'✦';position:absolute;left:0;color:var(--teal);font-size:10px;top:8px}
+.fit-foot{margin-top:12px;font-size:14.5px;color:var(--text);font-weight:500}
+.cred-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.cred{background:var(--op);color:var(--o);font-size:12px;padding:4px 12px;border-radius:20px;font-weight:400;letter-spacing:.5px}
+.form-meta{display:flex;justify-content:space-between;align-items:center;margin:18px 0 0;font-size:12px;color:var(--tm);padding-top:14px;border-top:1px solid var(--line)}
+.required-note{color:var(--red)}
+
+/* STEP CARD */
+.page-wrap{padding:16px 16px 0}
+.step-card{background:var(--white);border-radius:20px;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
+.step-header{background:linear-gradient(90deg,var(--wd) 0%,var(--amber) 100%);padding:12px 22px;display:flex;align-items:center;gap:10px}
+.step-badge{background:rgba(255,255,255,0.25);color:#fff;font-size:11px;font-weight:500;padding:3px 12px;border-radius:20px;letter-spacing:1px}
+.step-title{color:#fff;font-size:14px;font-weight:500;letter-spacing:.5px}
+.step-body{padding:24px 22px}
+.step-desc{font-size:13.5px;color:var(--ts);margin-bottom:22px;line-height:1.8;font-weight:300}
+.step-desc strong{color:var(--o);font-weight:500}
+
+/* FIELD */
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+.f-label{font-size:14px;color:var(--text);font-weight:500;margin-bottom:4px}
+.f-label .req{color:var(--red);font-size:13px;margin-left:2px}
+.f-hint{font-size:12.5px;color:var(--tm);margin-bottom:10px;font-weight:300;line-height:1.6}
+.f-input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--warm);font-family:inherit;font-size:14.5px;color:var(--text);font-weight:300;transition:all .2s;outline:none}
+.f-input:focus{border-color:var(--o);box-shadow:0 0 0 3px rgba(200,118,42,0.1)}
+.f-input::placeholder{color:var(--tm);font-weight:300}
+textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
+.f-select{width:100%;padding:13px 40px 13px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--warm);font-family:inherit;font-size:14.5px;color:var(--text);font-weight:300;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3e%3cpath d='M1 1L6 6L11 1' stroke='%23c8762a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer;outline:none;transition:all .2s}
+.f-select:focus{border-color:var(--o);box-shadow:0 0 0 3px rgba(200,118,42,0.1)}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:500px){.row-2{grid-template-columns:1fr}}
+
+/* CHECKBOX / RADIO CARDS */
+.option-list{display:flex;flex-direction:column;gap:8px}
+.opt-card{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:all .2s;background:var(--warm);user-select:none}
+.opt-card:hover{border-color:var(--ol);background:var(--op)}
+.opt-card.selected{border-color:var(--o);background:var(--op)}
+.opt-card input{display:none}
+.opt-box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--line);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff}
+.opt-card.selected .opt-box{background:var(--o);border-color:var(--o)}
+.opt-box::after{content:'';width:5px;height:9px;border:2px solid white;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);display:none}
+.opt-card.selected .opt-box::after{display:block}
+.opt-radio{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff}
+.opt-card.selected .opt-radio{border-color:var(--o)}
+.opt-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--o);display:none}
+.opt-card.selected .opt-radio::after{display:block}
+.opt-text .opt-main{font-size:14.5px;color:var(--text);font-weight:400;line-height:1.5}
+.opt-text .opt-sub{font-size:12.5px;color:var(--tm);margin-top:2px;font-weight:300}
+.opt-badge{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;letter-spacing:.5px}
+.badge-free{background:#e6f5f0;color:#2a8a70}
+.badge-paid{background:var(--op);color:var(--amber)}
+.badge-ai{background:linear-gradient(135deg,#fef3e7,#fde8d0);color:var(--wd)}
+
+/* PLAN EXPAND */
+.plan-detail{display:none;margin-top:10px;padding:12px 14px;background:rgba(200,118,42,0.04);border-radius:10px;border:1px solid rgba(200,118,42,0.12)}
+.plan-detail ul{list-style:none;padding:0}
+.plan-detail ul li{font-size:13px;color:var(--ts);padding:4px 0 4px 14px;position:relative;font-weight:300;line-height:1.6}
+.plan-detail ul li::before{content:'';position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
+.plan-detail ul li strong{color:var(--wd);font-weight:500}
+
+/* ── WD 天賦題 ────────────────────────────────────── */
+.wd-intro{background:linear-gradient(135deg,var(--op),#fef6ec);border:1px solid var(--ol);border-radius:14px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;color:var(--ts);line-height:1.8;font-weight:300}
+.wd-intro strong{color:var(--o);font-weight:500}
+.wd-q{margin-bottom:20px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
+.wd-q:last-child{margin-bottom:0}
+.wd-q-head{background:var(--op);padding:12px 16px;border-bottom:1px solid var(--line)}
+.wd-q-num{font-size:11px;color:var(--amber);letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+.wd-q-text{font-size:14px;color:var(--text);font-weight:500;line-height:1.6}
+.wd-opts{padding:10px}
+.wd-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white);margin-bottom:7px}
+.wd-opt:last-child{margin-bottom:0}
+.wd-opt:hover{border-color:var(--ol);background:var(--op)}
+.wd-opt.active{border-color:var(--amber);background:var(--op)}
+.wd-opt input{display:none}
+.wd-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.wd-opt.active .wd-dot{border-color:var(--amber)}
+.wd-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber);display:none}
+.wd-opt.active .wd-dot::after{display:block}
+.wd-opt-body{flex:1}
+.wd-opt-text{font-size:13.5px;color:var(--ts);font-weight:300;line-height:1.65}
+.wd-opt-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:4px;letter-spacing:.5px}
+.wd-opt-tag.gen{background:#fef3e5;color:#a06520}
+.wd-opt-tag.fire{background:#fde8e8;color:#c0392b}
+.wd-opt-tag.rhythm{background:#e8f5e8;color:#2a7a4a}
+.wd-opt-tag.steel{background:#e8f0fb;color:#2a5a9a}
+
+/* GCAL */
+.gcal-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--op),#fef6ec);border:1.5px solid var(--ol);border-radius:14px;padding:16px 18px;text-decoration:none;transition:all .2s;margin-bottom:18px}
+.gcal-card:hover{border-color:var(--amber);box-shadow:var(--shadow)}
+.gcal-icon-wrap{width:44px;height:44px;background:var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gcal-info .gcal-t{font-size:14px;color:var(--text);font-weight:500}
+.gcal-info .gcal-s{font-size:12px;color:var(--tm);margin-top:3px}
+.gcal-arrow{margin-left:auto;font-size:20px;color:var(--amber)}
+
+/* INCOME RADIO */
+.income-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:480px){.income-opts{grid-template-columns:1fr}}
+
+/* SUBMIT */
+.submit-area{padding:8px 16px 40px}
+.clear-btn{display:block;text-align:center;color:var(--tm);font-size:13px;padding:12px;cursor:pointer;margin-bottom:6px;text-decoration:none;transition:color .2s}
+.clear-btn:hover{color:var(--red)}
+.submit-btn{width:100%;padding:18px;background:linear-gradient(90deg,var(--wd) 0%,var(--amber) 100%);color:#fff;border:none;border-radius:16px;font-family:inherit;font-size:16px;font-weight:500;letter-spacing:2px;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(200,118,42,0.3)}
+.submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,118,42,0.35)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.submit-note{text-align:center;margin-top:14px;font-size:12.5px;color:var(--tm);line-height:1.8}
+.submit-note strong{color:var(--ts);font-weight:400}
+.error-msg{color:var(--red);font-size:13px;margin-top:12px;text-align:center;display:none;padding:10px;background:var(--red-pale);border-radius:10px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(10,20,60,0.4);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:#fff;border-radius:24px;padding:40px 32px;max-width:400px;width:100%;text-align:center;box-shadow:var(--shadow-lg)}
+.modal-icon{font-size:44px;margin-bottom:18px}
+.modal h2{font-family:'Noto Serif TC',serif;color:var(--text);margin-bottom:12px;font-size:20px;font-weight:500}
+.modal p{color:var(--ts);font-size:14px;margin-bottom:24px;line-height:1.9;font-weight:300}
+.modal-btn{background:linear-gradient(90deg,var(--wd),var(--amber));color:#fff;border:none;padding:12px 32px;border-radius:24px;font-family:inherit;font-size:14px;cursor:pointer;letter-spacing:1px}
+
+@media(max-width:480px){
+  .hero h1{font-size:26px}
+  .step-body{padding:20px 16px}
+  .intro-card{margin:0 10px;padding:22px 18px}
+  .page-wrap{padding:12px 10px 0}
+  .submit-area{padding:8px 10px 36px}
+}
+/* ════ BOOKING PAGE (送出後全螢幕) ════════════════════ */
+.booking-page{
+  display:none;position:fixed;inset:0;
+  background:var(--bg);overflow-y:auto;z-index:200;
+}
+.booking-page.show{display:block}
+.bp-inner{max-width:520px;margin:0 auto;padding:32px 20px 60px}
+
+.bp-confirm{
+  display:flex;align-items:center;gap:14px;
+  background:#fff;border-radius:16px;padding:16px 20px;
+  border-left:4px solid #4caf50;margin-bottom:28px;
+  box-shadow:var(--shadow);
+}
+.bp-check{
+  width:36px;height:36px;border-radius:50%;
+  background:#4caf50;color:#fff;font-size:18px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.bp-confirm-title{font-size:14px;font-weight:600;color:#2a5a2a}
+.bp-confirm-sub{font-size:12.5px;color:var(--tm);margin-top:2px}
+
+.bp-hero{text-align:center;margin-bottom:28px}
+.bp-step-tag{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--wd),var(--amber));
+  color:#fff;font-size:11px;font-weight:500;letter-spacing:2px;
+  padding:4px 16px;border-radius:20px;margin-bottom:14px;
+}
+.bp-title{
+  font-family:'Noto Serif TC',serif;font-size:26px;font-weight:600;
+  color:var(--text);letter-spacing:1px;margin-bottom:10px;
+}
+.bp-desc{font-size:14px;color:var(--ts);line-height:1.8;font-weight:300}
+
+.bp-gcal-btn{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,#7a3a10,#c8762a);
+  border-radius:16px;padding:18px 22px;
+  text-decoration:none;margin-bottom:28px;
+  box-shadow:0 4px 20px rgba(200,118,42,0.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.bp-gcal-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,118,42,0.4)}
+.bp-gcal-icon{
+  width:48px;height:48px;background:rgba(255,255,255,0.15);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.bp-gcal-text{flex:1}
+.bp-gcal-main{color:#fff;font-size:15px;font-weight:600;margin-bottom:3px}
+.bp-gcal-sub{color:rgba(255,255,255,0.7);font-size:12px}
+.bp-gcal-arrow{color:rgba(255,255,255,0.8);font-size:22px;flex-shrink:0}
+
+.bp-fill-section{
+  background:#fff;border-radius:20px;padding:24px 20px;
+  box-shadow:var(--shadow);
+}
+.bp-fill-title{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px}
+.bp-fill-hint{font-size:13px;color:var(--tm);margin-bottom:20px;font-weight:300}
+.bp-field{margin-bottom:18px}
+.bp-label{font-size:13.5px;color:var(--text);font-weight:500;margin-bottom:8px}
+.bp-input{
+  width:100%;padding:12px 16px;
+  border:1.5px solid var(--line);border-radius:12px;
+  background:var(--warm);font-family:inherit;font-size:14px;
+  color:var(--text);font-weight:300;outline:none;transition:border-color .2s;
+}
+.bp-input:focus{border-color:var(--amber)}
+.bp-textarea{min-height:80px;resize:vertical;line-height:1.7}
+
+.bp-format-group{display:flex;gap:8px}
+.bp-format-opt{
+  flex:1;border:1.5px solid var(--line);border-radius:12px;
+  padding:12px 8px;cursor:pointer;transition:all .2s;
+  text-align:center;background:var(--warm);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.bp-format-opt:has(input:checked){border-color:var(--amber);background:var(--op)}
+.bp-format-opt input{display:none}
+.bp-fmt-icon{font-size:20px}
+.bp-fmt-main{font-size:12.5px;font-weight:500;color:var(--text)}
+.bp-fmt-sub{font-size:11px;color:var(--tm)}
+
+.bp-submit-btn{
+  width:100%;padding:16px;margin-top:8px;
+  background:linear-gradient(90deg,var(--wd),var(--amber));
+  color:#fff;border:none;border-radius:14px;
+  font-family:inherit;font-size:15px;font-weight:500;
+  letter-spacing:1px;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 16px rgba(200,118,42,0.25);
+}
+.bp-submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,118,42,0.35)}
+.bp-submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.bp-skip{
+  text-align:center;margin-top:12px;font-size:13px;
+  color:var(--tm);cursor:pointer;padding:8px;
+  text-decoration:underline;text-underline-offset:3px;
+}
+.bp-skip:hover{color:var(--ts)}
+
+.bp-footer-note{
+  text-align:center;margin-top:24px;font-size:12px;
+  color:var(--tm);line-height:1.8;font-weight:300;
+}
+
+/* 完成頁 */
+.bp-done{
+  text-align:center;padding:60px 20px;display:none;
+}
+.bp-done.show{display:block}
+.bp-done-icon{font-size:56px;margin-bottom:20px}
+.bp-done-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:500;color:var(--text);margin-bottom:12px}
+.bp-done-text{font-size:14px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:28px}
+.bp-done-btn{
+  display:inline-block;background:linear-gradient(90deg,var(--wd),var(--amber));
+  color:#fff;padding:14px 32px;border-radius:24px;
+  font-size:14px;font-weight:500;letter-spacing:1px;
+  text-decoration:none;cursor:pointer;border:none;font-family:inherit;
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ 職涯與心靈諮詢預約</div>
+  <h1>CAREER BLUEPRINT</h1>
+  <p class="hero-sub">重新定義你的職涯方向</p>
+</div>
+
+<!-- INTRO -->
+<div class="intro-card">
+  <p>哈囉，我是 <strong>Mike 主任</strong>，謝謝你來預約諮詢 😊<br>
+  職涯定位顧問已有 <strong>10 多年</strong>的經驗。<br>
+  我會用<strong>心理學</strong>結合適合你／妳的工具（例如：Wealth Dynamics 能量分析、數字易經、Holland⋯⋯等），快速協助你看見並解決目前的痛點。</p>
+  <p>這些年幫助過超過<em>千位</em>來訪者，<br>幫他們找回職場方向、改善人際困擾、也協助他們找到屬於自己的收入模式。</p>
+  <span class="fit-tag">如果你目前有以下狀況，這次的諮詢非常適合你：</span>
+  <ul class="fit-list">
+    <li>想<strong>轉換跑道</strong>，不知道適合什麼工作</li>
+    <li><strong>職場人際關係</strong>讓你很困擾，想換環境</li>
+    <li>長期<strong>職業倦怠</strong>，工作提不起勁</li>
+    <li>想<strong>增加收入</strong>，不知道從何開始</li>
+  </ul>
+  <div class="fit-foot">那這次的諮詢體驗你會超有收穫 😊</div>
+  <div class="cred-row">
+    <span class="cred">TQUK 英國心理諮商師認證</span>
+    <span class="cred">10 年人資顧問／企業培訓</span>
+    <span class="cred">Wealth Dynamics 老師</span>
+    <span class="cred">數字易經老師</span>
+    <span class="cred">業界約聘講師</span>
+  </div>
+  <div class="form-meta">
+    <span class="required-note">* 表示必填欄位</span>
+    <span>預計填寫時間 3-5 分鐘</span>
+  </div>
+</div>
+
+<form id="consultForm">
+<div class="page-wrap">
+
+<!-- ════════════════════════════════════════
+     STEP 1 · 先讓我認識你
+════════════════════════════════════════ -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 1</span>
+    <span class="step-title">先讓我認識你</span>
+  </div>
+  <div class="step-body">
+    <p class="step-desc">這些是聯繫用的基本資料，填完我才知道要把報告寄給誰 😄</p>
+
+    <div class="field">
+      <div class="f-label">你的名字／稱呼 <span class="req">*</span></div>
+      <input type="text" class="f-input" name="name" placeholder="想讓我怎麼稱呼你呢？" required/>
+    </div>
+
+    <div class="field">
+      <div class="f-label">Email <span class="req">*</span></div>
+      <div class="f-hint">報告會寄到這裡，請確認填寫正確</div>
+      <input type="email" class="f-input" name="email" placeholder="your@email.com" required/>
+    </div>
+
+    <div class="row-2">
+      <div class="field">
+        <div class="f-label">年齡區間 <span class="req">*</span></div>
+        <select class="f-select" name="age" required>
+          <option value="" disabled selected>請選擇</option>
+          <option>18-24</option><option>25-29</option><option>30-34</option>
+          <option>35-39</option><option>40-49</option><option>50 歲以上</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="f-label">工作年資</div>
+        <select class="f-select" name="experience">
+          <option value="" disabled selected>請選擇</option>
+          <option>未滿 1 年</option><option>1-3 年</option><option>3-5 年</option>
+          <option>5-10 年</option><option>10-15 年</option><option>15 年以上</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="f-label">目前工作領域 <span class="req">*</span></div>
+      <select class="f-select" name="industry" required>
+        <option value="" disabled selected>請選擇</option>
+        <option>學生／應屆畢業</option><option>業務／行銷</option><option>管理／主管職</option>
+        <option>科技／工程</option><option>設計／創意</option><option>金融／顧問</option>
+        <option>教育／公職</option><option>服務業</option><option>創業者</option>
+        <option>自由工作者</option><option>轉職中</option><option>其他</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STEP 2 · 聊聊你的現狀
+════════════════════════════════════════ -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 2</span>
+    <span class="step-title">聊聊你的現狀</span>
+  </div>
+  <div class="step-body">
+    <p class="step-desc">這 4 題是讓我先了解你的現況，<strong>沒有標準答案</strong>，就像在跟朋友聊天一樣輕鬆回答就好 😊</p>
+
+    <!-- Q1 工作現況 -->
+    <div class="field">
+      <div class="f-label">① 你目前在做什麼工作？大概做多久了呢？<span class="req">*</span></div>
+      <div class="f-hint">簡單說說就好，例如：「在科技公司做業務，大概 3 年了」</div>
+      <textarea class="f-input" name="jobDesc" placeholder="例如：在一家傳統製造業公司做業務，做了快 5 年了，最近有點想換換環境..." required></textarea>
+    </div>
+
+    <!-- Q2 收入區間 -->
+    <div class="field">
+      <div class="f-label">② 目前這份工作的月收入大概落在？<span class="req">*</span></div>
+      <div class="option-list income-opts" id="incomeGroup">
+        <label class="opt-card">
+          <input type="radio" name="incomeRange" value="3萬~5萬">
+          <div class="opt-radio"></div>
+          <div class="opt-text"><div class="opt-main">3 萬 ～ 5 萬</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="radio" name="incomeRange" value="5萬~8萬">
+          <div class="opt-radio"></div>
+          <div class="opt-text"><div class="opt-main">5 萬 ～ 8 萬</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="radio" name="incomeRange" value="8萬~12萬">
+          <div class="opt-radio"></div>
+          <div class="opt-text"><div class="opt-main">8 萬 ～ 12 萬</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="radio" name="incomeRange" value="12萬以上">
+          <div class="opt-radio"></div>
+          <div class="opt-text"><div class="opt-main">12 萬以上</div></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Q3 社交生活 -->
+    <div class="field">
+      <div class="f-label">③ 下班後，你的日常生活圈大概是什麼樣子？</div>
+      <div class="f-hint">可以複選，多選也沒關係</div>
+      <div class="option-list" id="socialGroup">
+        <label class="opt-card">
+          <input type="checkbox" value="下班回家，社交圈比較小">
+          <div class="opt-box"></div>
+          <div class="opt-text"><div class="opt-main">🏠 下班通常直接回家，社交圈比較小</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="checkbox" value="會去打桌遊、運動或社團">
+          <div class="opt-box"></div>
+          <div class="opt-text"><div class="opt-main">🎲 會去打桌遊、運動或參與社團，認識新朋友</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="checkbox" value="會去上課學習、自我充實">
+          <div class="opt-box"></div>
+          <div class="opt-text"><div class="opt-main">📚 會去上課學習、自我充實</div></div>
+        </label>
+        <label class="opt-card">
+          <input type="checkbox" value="已經有在經營副業">
+          <div class="opt-box"></div>
+          <div class="opt-text"><div class="opt-main">💼 已經有在經營一些副業了</div></div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Q4 未來目標 -->
+    <div class="field">
+      <div class="f-label">④ 對於未來 1～3 年的自己，你最大的期待是什麼？<span class="req">*</span></div>
+      <div class="f-hint">不論是收入、職涯、生活方式，說說你心裡最真實的渴望</div>
+      <textarea class="f-input" name="futureGoal" placeholder="例如：希望收入能翻倍、想找到自己真正有熱情的工作方向、希望有更多時間陪家人..." required></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STEP 3 · 天賦能量測驗（6 題）
+════════════════════════════════════════ -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 3</span>
+    <span class="step-title">職場直覺 6 題 ✦</span>
+  </div>
+  <div class="step-body">
+
+    <div class="wd-intro">
+      這 6 題請憑<strong>第一直覺</strong>勾選，不要想太多 😄<br>
+      Mike 會根據你的選擇，幫你找出你最適合的工作方式和收入模式。
+    </div>
+
+    <!-- Q5 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 1 / 6</div>
+        <div class="wd-q-text">碰到團隊要挑戰一個全新、沒人做過的任務時，你通常是哪種人？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd1" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">點子王！馬上興奮地想各種新點子和突破口</div></label>
+        <label class="wd-opt"><input type="radio" name="wd1" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">啦啦隊！立刻召集大家、炒熱氣氛，把大家的熱情帶起來</div></label>
+        <label class="wd-opt"><input type="radio" name="wd1" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">穩定器！保持冷靜，務實地看看手邊有多少時間人手，按部就班來</div></label>
+        <label class="wd-opt"><input type="radio" name="wd1" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">糾察隊！專注研究流程和潛在風險，規劃出最精準的執行計畫</div></label>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 2 / 6</div>
+        <div class="wd-q-text">在跨部門溝通或跟客戶開會時，你覺得自己哪種能力最強？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd2" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">提出令人驚豔的創意或解決方案</div></label>
+        <label class="wd-opt"><input type="radio" name="wd2" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">讀懂人心，用親和力和幽默感跟所有人打成一片</div></label>
+        <label class="wd-opt"><input type="radio" name="wd2" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">觀察敏銳，會看準最好的時機才發表意見</div></label>
+        <label class="wd-opt"><input type="radio" name="wd2" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">拿出具體的證據與邏輯數據，有條理地說服對方</div></label>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 3 / 6</div>
+        <div class="wd-q-text">談到職涯與財富，你內心最嚮往哪一種狀態？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd3" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">擁有絕對的自由，能不斷創造自己的新專案或作品</div></label>
+        <label class="wd-opt"><input type="radio" name="wd3" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">擁有強大的人脈，能透過「跟厲害的人合作」來賺錢</div></label>
+        <label class="wd-opt"><input type="radio" name="wd3" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">在穩定的環境下，靠敏銳的眼光累積資產與穩定變現</div></label>
+        <label class="wd-opt"><input type="radio" name="wd3" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">建立一套自動化的系統或流程，靠紀律和數字持續獲利</div></label>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 4 / 6</div>
+        <div class="wd-q-text">當工作壓力很大、進度不如預期時，你的直覺反應通常是？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd4" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">腦袋停不下來，開始想下一個新計劃，但容易三分鐘熱度</div></label>
+        <label class="wd-opt"><input type="radio" name="wd4" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">情緒起伏大，想趕快找身邊的朋友或夥伴訴苦、聊聊天</div></label>
+        <label class="wd-opt"><input type="radio" name="wd4" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">容易內耗、不敢輕易改變，默默憋在心裡配合大局</div></label>
+        <label class="wd-opt"><input type="radio" name="wd4" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">變得很理性、防備心重，非要把細節的對錯搞清楚</div></label>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 5 / 6</div>
+        <div class="wd-q-text">在職場上，你最受不了跟哪一種特質的同事共事？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd5" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">思想僵化、做事老套又拒絕改變的人</div></label>
+        <label class="wd-opt"><input type="radio" name="wd5" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">孤僻冷冰冰、不講人情味、很難溝通的人</div></label>
+        <label class="wd-opt"><input type="radio" name="wd5" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">喜歡亂改節奏、打破穩定、急功近利的人</div></label>
+        <label class="wd-opt"><input type="radio" name="wd5" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">說話沒憑沒據、做事沒邏輯、不看細節的人</div></label>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="wd-q">
+      <div class="wd-q-head">
+        <div class="wd-q-num">題 6 / 6</div>
+        <div class="wd-q-text">你覺得自己目前在工作上，最常卡住的「小盲區」是什麼？</div>
+      </div>
+      <div class="wd-opts">
+        <label class="wd-opt"><input type="radio" name="wd6" value="A"><div class="wd-dot"></div>
+          <div class="wd-opt-text">想法很多但執行力不夠，常常開了頭就沒下文</div></label>
+        <label class="wd-opt"><input type="radio" name="wd6" value="B"><div class="wd-dot"></div>
+          <div class="wd-opt-text">太容易受別人的情緒或人情世故影響，不夠理性</div></label>
+        <label class="wd-opt"><input type="radio" name="wd6" value="C"><div class="wd-dot"></div>
+          <div class="wd-opt-text">做事步伐太慢、怕改變，常常錯失最好的轉型時機</div></label>
+        <label class="wd-opt"><input type="radio" name="wd6" value="D"><div class="wd-dot"></div>
+          <div class="wd-opt-text">太追求完美，把自己綁在瑣事裡，缺乏大局觀</div></label>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STEP 4 · 選擇方案
+════════════════════════════════════════ -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 4</span>
+    <span class="step-title">選擇你想要的服務</span>
+  </div>
+  <div class="step-body">
+    <p class="step-desc">第一次接觸<strong>完全免費</strong>，先聊聊看合不合拍 😊 點選方案可以展開服務說明。</p>
+    <div class="option-list" id="planGroup">
+
+      <label class="opt-card" data-plan="report">
+        <input type="checkbox" value="report">
+        <div class="opt-box"></div>
+        <div class="opt-text">
+          <div class="opt-main">✨ 免費職涯策略診斷報告</div>
+          <div class="opt-sub">根據你的 6 題測驗結果自動生成，送出表單即可收到</div>
+          <div class="plan-detail" id="detail-report">
+            <ul>
+              <li><strong>能量類型解析：</strong>找出你的「出廠設定」與職場最佳位置</li>
+              <li><strong>現況卡點診斷：</strong>用數據說話，打破你的線性努力盲點</li>
+              <li><strong>主動＋被動收入建議：</strong>依你的特質量身定制增收方向</li>
+              <li><strong>下一步行動指南：</strong>具體可落地的改變起點</li>
+            </ul>
+          </div>
+        </div>
+        <span class="opt-badge badge-ai">免費</span>
+      </label>
+
+      <label class="opt-card" data-plan="A">
+        <input type="checkbox" value="A">
+        <div class="opt-box"></div>
+        <div class="opt-text">
+          <div class="opt-main">體驗諮詢・30 分鐘</div>
+          <div class="opt-sub">先聊聊，讓 Mike 親自幫你看清楚目前的卡點</div>
+          <div class="plan-detail" id="detail-A">
+            <ul>
+              <li><strong>現狀釐清：</strong>把心裡模糊的感覺，整理成清楚的問題</li>
+              <li><strong>能量落地：</strong>告訴你報告裡的特質，在你的現況下怎麼用</li>
+              <li><strong>3 個即戰行動：</strong>給你這週就能開始做的具體建議</li>
+            </ul>
+          </div>
+        </div>
+        <span class="opt-badge badge-free">NT FREE</span>
+      </label>
+
+      <label class="opt-card" data-plan="B">
+        <input type="checkbox" value="B">
+        <div class="opt-box"></div>
+        <div class="opt-text">
+          <div class="opt-main">深度盤點：翻轉現況・60 分鐘</div>
+          <div class="opt-sub">適合真的想全面改變、找回職場熱情或增加收入的你</div>
+          <div class="plan-detail" id="detail-B">
+            <ul>
+              <li><strong>深度挖掘：</strong>用多元工具找出你真正的核心優勢</li>
+              <li><strong>收入增長路徑：</strong>主動＋被動收入的具體規劃</li>
+              <li><strong>人際與職場策略：</strong>搞定讓你最耗能的那個問題</li>
+              <li><strong>專屬諮詢報告書：</strong>完整的諮詢紀錄與行動計畫</li>
+            </ul>
+          </div>
+        </div>
+        <span class="opt-badge badge-paid">NT 1,500</span>
+      </label>
+
+    </div>
+  </div>
+</div>
+
+</div><!-- /page-wrap -->
+
+<div class="submit-area">
+  <span class="clear-btn" onclick="clearForm()">清除表單</span>
+  <button type="submit" class="submit-btn" id="submitBtn">送出 ✨</button>
+  <div class="submit-note">
+    送出後下一步會引導你預約時間 📅<br>
+    <strong>所有資訊僅用於諮詢用途，不會分享給第三方。</strong>
+  </div>
+  <div class="error-msg" id="errorMsg"></div>
+</div>
+
+</form>
+
+<!-- ════════════════════════════════════════
+     送出成功後：預約頁面（全螢幕接管）
+════════════════════════════════════════ -->
+<div class="booking-page" id="bookingPage">
+  <div class="bp-inner">
+
+    <!-- 頂部確認 -->
+    <div class="bp-confirm">
+      <div class="bp-check">✓</div>
+      <div>
+        <div class="bp-confirm-title">資料已收到！</div>
+        <div class="bp-confirm-sub" id="bpName">謝謝你 😊</div>
+      </div>
+    </div>
+
+    <!-- 主標題 -->
+    <div class="bp-hero">
+      <div class="bp-step-tag">最後一步</div>
+      <h2 class="bp-title">選個時間，跟 Mike 聊聊 📅</h2>
+      <p class="bp-desc">你的資料已經存好了，現在只需要選一個你方便的時段——整個流程大概 1 分鐘完成。</p>
+    </div>
+
+    <!-- Google 行事曆按鈕 -->
+    <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bp-gcal-btn" id="bpGcalBtn">
+      <div class="bp-gcal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="white" stroke-width="1.8"/>
+          <path d="M3 9h18" stroke="white" stroke-width="1.8"/>
+          <path d="M8 2v4M16 2v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="8" y="13" width="3" height="3" rx=".5" fill="white"/>
+        </svg>
+      </div>
+      <div class="bp-gcal-text">
+        <div class="bp-gcal-main">點我預約諮詢時段</div>
+        <div class="bp-gcal-sub">Google 行事曆・選好即自動確認</div>
+      </div>
+      <div class="bp-gcal-arrow">↗</div>
+    </a>
+
+    <!-- 預約完成後回填 -->
+    <div class="bp-fill-section">
+      <div class="bp-fill-title">請填寫以下資訊 👇</div>
+      <div class="bp-fill-hint">這樣我才能提前準備，讓我們的諮詢更有效率</div>
+
+      <div class="bp-field">
+        <div class="bp-label">偏好的諮詢方式</div>
+        <div class="bp-format-group">
+          <label class="bp-format-opt" id="bpFmt1">
+            <input type="radio" name="bpFormat" value="線上視訊">
+            <div class="bp-fmt-icon">💻</div>
+            <div class="bp-fmt-text">
+              <div class="bp-fmt-main">線上視訊</div>
+              <div class="bp-fmt-sub">Google Meet</div>
+            </div>
+          </label>
+          <label class="bp-format-opt" id="bpFmt2">
+            <input type="radio" name="bpFormat" value="電話">
+            <div class="bp-fmt-icon">📞</div>
+            <div class="bp-fmt-text">
+              <div class="bp-fmt-main">電話</div>
+              <div class="bp-fmt-sub">Mike 主動撥</div>
+            </div>
+          </label>
+          <label class="bp-format-opt" id="bpFmt3">
+            <input type="radio" name="bpFormat" value="實體見面">
+            <div class="bp-fmt-icon">🤝</div>
+            <div class="bp-fmt-text">
+              <div class="bp-fmt-main">實體見面</div>
+              <div class="bp-fmt-sub">地點另約</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="bp-field">
+        <div class="bp-label">想先跟 Mike 說的話（選填）</div>
+        <textarea class="bp-input bp-textarea" id="bpNotes" placeholder="例如：我最近在考慮換工作，但不確定時機對不對，希望先聊聊這個方向..."></textarea>
+      </div>
+
+      <button class="bp-submit-btn" id="bpSubmitBtn" onclick="submitBooking()">
+        完成預約確認 ✓
+      </button>
+      <div class="bp-skip" onclick="skipBooking()">還沒預約，先跳過，之後再說</div>
+    </div>
+
+    <!-- 底部安心說明 -->
+    <div class="bp-footer-note">
+      🔒 所有資訊僅用於諮詢，不會分享給第三方 · Mike 會在 24 小時內確認你的預約
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Firebase 動態載入（避免 module 作用域問題）───────
+const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
+let db, fbCollection, fbAddDoc, fbServerTimestamp, fbDoc, fbUpdateDoc;
+
+async function initFb(){
+  if(db) return;
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  const mod=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+  db=mod.getFirestore(initializeApp(fbCfg));
+  fbCollection=mod.collection; fbAddDoc=mod.addDoc; fbServerTimestamp=mod.serverTimestamp;
+  fbDoc=mod.doc; fbUpdateDoc=mod.updateDoc;
+}
+
+// ── opt-card 互動（checkbox + radio）────────────────
+document.querySelectorAll('.option-list').forEach(group => {
+  group.querySelectorAll('.opt-card').forEach(card => {
+    const inp = card.querySelector('input');
+    if (!inp) return;
+    card.addEventListener('click', () => {
+      if (inp.type === 'checkbox') {
+        inp.checked = !inp.checked;
+        card.classList.toggle('selected', inp.checked);
+        const plan = card.dataset.plan;
+        if (plan) {
+          const detail = document.getElementById('detail-' + plan);
+          if (detail) detail.style.display = inp.checked ? 'block' : 'none';
+        }
+      } else {
+        const name = inp.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+          i.closest('.opt-card').classList.remove('selected');
+        });
+        inp.checked = true;
+        card.classList.add('selected');
+      }
+    });
+  });
+});
+
+// ── WD 題互動 ────────────────────────────────────────
+document.querySelectorAll('.wd-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    const inp = opt.querySelector('input');
+    const name = inp.name;
+    document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+      i.closest('.wd-opt').classList.remove('active');
+    });
+    inp.checked = true;
+    opt.classList.add('active');
+  });
+});
+
+// ── 清除表單 ─────────────────────────────────────────
+window.clearForm = () => {
+  if (!confirm('確定要清除所有填寫內容？')) return;
+  document.getElementById('consultForm').reset();
+  document.querySelectorAll('.opt-card.selected').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.wd-opt.active').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.plan-detail').forEach(d => d.style.display = 'none');
+};
+
+// ── 格式選項互動 ──────────────────────────────────────
+document.querySelectorAll('.bp-format-opt').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.bp-format-opt').forEach(o => o.style.borderColor='');
+    opt.querySelector('input').checked = true;
+  });
+});
+
+// ── 送出表單 ──────────────────────────────────────────
+let savedDocId = null;
+let savedFormData = null;
+
+document.getElementById('consultForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const errMsg = document.getElementById('errorMsg');
+  btn.disabled = true;
+  btn.textContent = '送出中...';
+  errMsg.style.display = 'none';
+
+  const selectedPlans = [...document.querySelectorAll('#planGroup .opt-card.selected')]
+    .map(c => c.querySelector('input').value);
+
+  const wd = {
+    q1: document.querySelector('input[name="wd1"]:checked')?.value || '',
+    q2: document.querySelector('input[name="wd2"]:checked')?.value || '',
+    q3: document.querySelector('input[name="wd3"]:checked')?.value || '',
+    q4: document.querySelector('input[name="wd4"]:checked')?.value || '',
+    q5: document.querySelector('input[name="wd5"]:checked')?.value || '',
+    q6: document.querySelector('input[name="wd6"]:checked')?.value || '',
+  };
+  const wdCounts = {A:0,B:0,C:0,D:0};
+  Object.values(wd).forEach(v=>{if(wdCounts[v]!==undefined)wdCounts[v]++;});
+  const wdSorted = Object.entries(wdCounts).sort((a,b)=>b[1]-a[1]);
+  const wdTypeMap = {A:'發電機',B:'火焰',C:'節奏',D:'鋼鐵'};
+  const wdPrimary = wdTypeMap[wdSorted[0][0]]||'';
+  const wdSecondary = wdSorted[1][1]>0?wdTypeMap[wdSorted[1][0]]:'';
+
+  savedFormData = {
+    name: document.querySelector('[name="name"]').value.trim(),
+    email: document.querySelector('[name="email"]').value.trim(),
+    age: document.querySelector('[name="age"]').value||'',
+    experience: document.querySelector('[name="experience"]').value||'',
+    industry: document.querySelector('[name="industry"]').value||'',
+    jobDesc: document.querySelector('[name="jobDesc"]').value.trim(),
+    incomeRange: document.querySelector('input[name="incomeRange"]:checked')?.value||'',
+    socialLife: [...document.querySelectorAll('#socialGroup .selected input')].map(i=>i.value),
+    futureGoal: document.querySelector('[name="futureGoal"]').value.trim(),
+    wd, wdCounts, wdPrimary, wdSecondary,
+    wdLabel: wdSecondary?`${wdPrimary} × ${wdSecondary}`:wdPrimary,
+    plans: selectedPlans,
+    plan: selectedPlans.includes('B')?'B':selectedPlans.includes('A')?'A':'',
+    wantsReport: selectedPlans.includes('report'),
+    appointmentTime: '',
+    format: '',
+    notes: '',
+    status: 'pending',
+    report: '',
+  };
+
+  try {
+    await initFb();
+    // createdAt 要在 initFb 之後才能呼叫
+    savedFormData.createdAt = fbServerTimestamp();
+    const docRef = await fbAddDoc(fbCollection(db,'bookings'), savedFormData);
+    savedDocId = docRef.id;
+    document.querySelector('form').style.display = 'none';
+    const bp = document.getElementById('bookingPage');
+    bp.classList.add('show');
+    document.getElementById('bpName').textContent = `${savedFormData.name}，謝謝你 😊`;
+    window.scrollTo(0,0);
+  } catch (err) {
+    console.error('Firebase 寫入失敗:', err.code, err.message);
+    errMsg.textContent = err.code==='permission-denied'
+      ? '❌ Firebase 權限不足，請確認 Firestore 安全規則。'
+      : `❌ 送出失敗：${err.message}`;
+    errMsg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '送出 ✨';
+  }
+});
+
+// ── 完成預約確認 ───────────────────────────────────────
+window.submitBooking = async () => {
+  const btn = document.getElementById('bpSubmitBtn');
+  const format = document.querySelector('input[name="bpFormat"]:checked')?.value||'';
+  const notes = document.getElementById('bpNotes').value.trim();
+  if (!savedDocId) { showDonePage(); return; }
+  btn.disabled = true;
+  btn.textContent = '更新中...';
+  try {
+    await initFb();
+    await fbUpdateDoc(fbDoc(db,'bookings',savedDocId), { format, notes });
+  } catch(e) {
+    console.warn('更新預約資料失敗（主資料已存好）:', e.message);
+  }
+  showDonePage();
+};
+
+// ── 跳過預約 ──────────────────────────────────────────
+window.skipBooking = () => showDonePage();
+
+// ── 完成頁 ────────────────────────────────────────────
+function showDonePage() {
+  const bp = document.getElementById('bookingPage');
+  const wantsReport = savedFormData?.wantsReport;
+  // 報告連結：相容 Netlify 的 report.html
+  const reportLink = `${location.origin}/report.html?id=${savedDocId}`;
+  bp.innerHTML = `
+    <div class="bp-inner">
+      <div class="bp-done show">
+        <div class="bp-done-icon">🌿</div>
+        <div class="bp-done-title">太好了，一切都搞定了！</div>
+        <div class="bp-done-text">
+          你的資料 Mike 主任都收到了 😊<br>
+          ${wantsReport ? '你的職涯策略診斷報告已生成，<br>點下方按鈕立即查看。<br><br>' : ''}
+          Mike 主任會在 <strong>24 小時內</strong>透過 Email 與你確認，<br>
+          期待在諮詢室見到你！
+        </div>
+        ${wantsReport && savedDocId
+          ? `<a href="${reportLink}" target="_blank" class="bp-done-btn">查看我的診斷報告 →</a>`
+          : `<div class="bp-done-btn" onclick="document.getElementById('bookingPage').style.display='none'">好的，期待與你相見 ✨</div>`
+        }
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
