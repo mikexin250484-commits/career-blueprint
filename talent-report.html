@@ -90,8 +90,35 @@
   }
   .foot-note{text-align:center; color:#9c8062; font-size:11px; margin-top:24px;}
 
+  /* ── 預約資訊填寫 overlay ── */
+  .booking-overlay{display:none;position:fixed;inset:0;background:rgba(20,12,4,.55);z-index:300;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 16px;}
+  .booking-overlay.show{display:flex;}
+  .booking-panel{background:var(--card);border-radius:20px;padding:26px 22px;max-width:440px;width:100%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .bk-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:18px;color:var(--sub);cursor:pointer;line-height:1;}
+  .bk-title{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+  .bk-desc{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:18px;}
+  .bk-gcal-btn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--bg1),var(--gold-dark));border-radius:14px;padding:14px 16px;text-decoration:none;margin-bottom:20px;}
+  .bk-gcal-icon{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .bk-gcal-text{flex:1;}
+  .bk-gcal-main{color:#fff;font-size:13.5px;font-weight:700;}
+  .bk-gcal-sub{color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;}
+  .bk-gcal-arrow{color:rgba(255,255,255,.8);font-size:18px;}
+  .bk-field{margin-bottom:16px;}
+  .bk-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .bk-format-group{display:flex;gap:8px;}
+  .bk-format-opt{flex:1;border:1.5px solid #f0e4d0;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fffaf3;}
+  .bk-format-opt:has(input:checked){border-color:var(--gold);background:rgba(232,163,61,.1);}
+  .bk-format-opt input{display:none;}
+  .bk-fmt-icon{font-size:18px;}
+  .bk-fmt-main{font-size:11.5px;font-weight:600;color:var(--ink);}
+  .bk-textarea{width:100%;min-height:70px;border:1.5px solid #f0e4d0;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:13.5px;color:var(--ink);resize:vertical;outline:none;background:#fffaf3;}
+  .bk-textarea:focus{border-color:var(--gold);}
+  .bk-submit{width:100%;padding:15px;background:linear-gradient(90deg,var(--bg1),var(--gold-dark));color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
+  .bk-submit:disabled{opacity:.6;cursor:not-allowed;}
+  .bk-note{text-align:center;font-size:11.5px;color:var(--sub);margin-top:12px;line-height:1.7;}
+
   @media print{
-    .screen-nav,.nav-spacer{display:none !important;}
+    .screen-nav,.nav-spacer,.booking-overlay{display:none !important;}
     body{background:#fff !important;}
     .wrap{max-width:100%;}
     .cta-block .btn-line, .cta-block .btn-outline, .foot-note{display:none;}
@@ -198,11 +225,46 @@
       <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作發展</span>
       <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>天賦定位</span>
     </div>
-    <a class="btn-line" id="rp-cta" href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" rel="noopener">領取我的免費30分鐘諮詢 →</a>
+    <button class="btn-line" id="rp-cta" onclick="openBooking()">領取我的免費30分鐘諮詢 →</button>
     <button class="btn-outline" onclick="window.print()">下載 / 列印 PDF 報告</button>
   </div>
 
   <p class="foot-note">天賦順流系統 · 本報告結果僅供自我探索參考</p>
+</div>
+
+<!-- 預約資訊填寫 overlay -->
+<div class="booking-overlay" id="bookingOverlay">
+  <div class="booking-panel">
+    <button class="bk-close" onclick="closeBooking()">✕</button>
+    <div class="bk-title">選個時間，跟 Mike 聊聊 📅</div>
+    <div class="bk-desc">先選一個你方便的時段，再告訴我怎麼跟你聯繫，整個流程大概 1 分鐘完成。</div>
+    <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bk-gcal-btn">
+      <div class="bk-gcal-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="white" stroke-width="1.8"/>
+          <path d="M3 9h18" stroke="white" stroke-width="1.8"/>
+          <path d="M8 2v4M16 2v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="8" y="13" width="3" height="3" rx=".5" fill="white"/>
+        </svg>
+      </div>
+      <div class="bk-gcal-text"><div class="bk-gcal-main">點我預約諮詢時段</div><div class="bk-gcal-sub">Google 行事曆・選好即自動確認</div></div>
+      <div class="bk-gcal-arrow">↗</div>
+    </a>
+    <div class="bk-field">
+      <div class="bk-label">偏好的諮詢方式</div>
+      <div class="bk-format-group">
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="線上視訊"><div class="bk-fmt-icon">💻</div><div class="bk-fmt-main">線上視訊</div></label>
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="電話"><div class="bk-fmt-icon">📞</div><div class="bk-fmt-main">電話</div></label>
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="實體見面"><div class="bk-fmt-icon">🤝</div><div class="bk-fmt-main">當面</div></label>
+      </div>
+    </div>
+    <div class="bk-field">
+      <div class="bk-label">想先跟 Mike 說的話（選填）</div>
+      <textarea class="bk-textarea" id="bkNotes" placeholder="例如：想多了解自己卡在哪個環節..."></textarea>
+    </div>
+    <button class="bk-submit" id="bkSubmitBtn" onclick="submitBookingInfo()">完成預約確認 ✓</button>
+    <div class="bk-note">🔒 所有資訊僅用於諮詢，不會分享給第三方</div>
+  </div>
 </div>
 
 <script>
@@ -213,6 +275,14 @@
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
+let db;
+async function initFb(){
+  if(db)return db;
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  const {getFirestore}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+  db=getFirestore(initializeApp(fbCfg));
+  return db;
+}
 
 const ENERGY_LABEL = { generator:"發電機", flame:"火焰", rhythm:"節奏", steel:"鋼鐵" };
 const ENERGY_COLOR = { generator:"#d9622b", flame:"#c9483a", rhythm:"#8a9a5b", steel:"#7a6a52" };
@@ -402,10 +472,8 @@ const DEMO = { name:"範例個案・小明", roleKey:"creator", scoreGenerator:9
 async function load(){
   if(!docId){renderReport(DEMO);return;}
   try{
-    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
-    const {getFirestore,doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
-    const app=initializeApp(fbCfg);
-    const db=getFirestore(app);
+    await initFb();
+    const {doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
     const snap=await getDoc(fsDoc(db,'talentClients',docId));
     if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#f5e6d3">找不到此報告。</p>';return;}
     window._reportRaw=snap.data();window._reportId=docId;
@@ -424,6 +492,27 @@ window.openEmailModal=()=>{
   const subj=encodeURIComponent(`${d.name} 的天賦順流報告出爐了！｜Mike 主任`);
   const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《天賦順流報告》出爐了！\n天賦角色：${role.name}\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
   window.open(`mailto:${d.email||''}?subject=${subj}&body=${body}`);
+};
+
+/* ══ 預約資訊填寫 overlay ══ */
+window.openBooking=()=>{ document.getElementById('bookingOverlay').classList.add('show'); };
+window.closeBooking=()=>{ document.getElementById('bookingOverlay').classList.remove('show'); };
+
+window.submitBookingInfo=async()=>{
+  const btn=document.getElementById('bkSubmitBtn');
+  const format=document.querySelector('input[name="bkFormat"]:checked')?.value||'';
+  const notes=document.getElementById('bkNotes').value.trim();
+  btn.disabled=true;btn.textContent='處理中...';
+  if(window._reportId){
+    try{
+      await initFb();
+      const {doc:fsDoc,updateDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+      await updateDoc(fsDoc(db,'talentClients',window._reportId),{format,notes});
+    }catch(e){console.warn('儲存預約資訊失敗（不影響預約本身）:',e.message);}
+  }
+  btn.disabled=false;btn.textContent='完成預約確認 ✓';
+  closeBooking();
+  window.open('https://calendar.app.google/y7pFfnC2HXbyvydP9','_blank');
 };
 
 load();

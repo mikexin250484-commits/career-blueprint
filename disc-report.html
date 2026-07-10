@@ -38,6 +38,7 @@
   .role-hero{text-align:center; margin-bottom:24px;}
   .role-tag{display:inline-block; background:rgba(79,143,219,.18); color:var(--accent); border:1px solid var(--accent-dark);
     padding:5px 14px; border-radius:999px; font-size:12px; margin-bottom:12px;}
+  .role-animal-emoji{font-size:52px; line-height:1; margin-bottom:4px;}
   .role-name{color:#fff; font-size:34px; font-weight:900; margin-bottom:6px;}
   .role-people{color:#cfe0f0; font-size:13px;}
 
@@ -82,8 +83,8 @@
   .cta-block .cta-topics{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
   .cta-block .topic-chip{background:rgba(255,255,255,.08); border:1px solid rgba(79,143,219,.4); color:#e7f0f8; font-size:12px; padding:6px 13px; border-radius:999px;}
   .btn-line{
-    display:block; background:var(--line); color:#fff; text-decoration:none; font-weight:800; font-size:15.5px;
-    border-radius:14px; padding:16px; box-shadow:0 8px 20px rgba(0,195,0,.35); margin-bottom:10px;
+    display:block; width:100%; background:var(--line); color:#fff; text-decoration:none; font-weight:800; font-size:15.5px;
+    border-radius:14px; padding:16px; box-shadow:0 8px 20px rgba(0,195,0,.35); margin-bottom:10px; border:none; cursor:pointer; font-family:inherit;
   }
   .btn-outline{
     display:block; background:transparent; color:var(--accent); text-decoration:none; font-weight:700; font-size:14px;
@@ -91,8 +92,35 @@
   }
   .foot-note{text-align:center; color:#7d93a8; font-size:11px; margin-top:24px;}
 
+  /* ── 預約資訊填寫 overlay ── */
+  .booking-overlay{display:none;position:fixed;inset:0;background:rgba(10,16,22,.55);z-index:300;align-items:flex-start;justify-content:center;overflow-y:auto;padding:40px 16px;}
+  .booking-overlay.show{display:flex;}
+  .booking-panel{background:var(--card);border-radius:20px;padding:26px 22px;max-width:440px;width:100%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.35);}
+  .bk-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:18px;color:var(--sub);cursor:pointer;line-height:1;}
+  .bk-title{font-size:19px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+  .bk-desc{font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:18px;}
+  .bk-gcal-btn{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--bg1),var(--accent-dark));border-radius:14px;padding:14px 16px;text-decoration:none;margin-bottom:20px;}
+  .bk-gcal-icon{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .bk-gcal-text{flex:1;}
+  .bk-gcal-main{color:#fff;font-size:13.5px;font-weight:700;}
+  .bk-gcal-sub{color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;}
+  .bk-gcal-arrow{color:rgba(255,255,255,.8);font-size:18px;}
+  .bk-field{margin-bottom:16px;}
+  .bk-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .bk-format-group{display:flex;gap:8px;}
+  .bk-format-opt{flex:1;border:1.5px solid #e4edf5;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fafcfe;}
+  .bk-format-opt:has(input:checked){border-color:var(--accent);background:rgba(79,143,219,.08);}
+  .bk-format-opt input{display:none;}
+  .bk-fmt-icon{font-size:18px;}
+  .bk-fmt-main{font-size:11.5px;font-weight:600;color:var(--ink);}
+  .bk-textarea{width:100%;min-height:70px;border:1.5px solid #e4edf5;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:13.5px;color:var(--ink);resize:vertical;outline:none;background:#fafcfe;}
+  .bk-textarea:focus{border-color:var(--accent);}
+  .bk-submit{width:100%;padding:15px;background:linear-gradient(90deg,var(--bg1),var(--accent-dark));color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer;letter-spacing:.5px;}
+  .bk-submit:disabled{opacity:.6;cursor:not-allowed;}
+  .bk-note{text-align:center;font-size:11.5px;color:var(--sub);margin-top:12px;line-height:1.7;}
+
   @media print{
-    .screen-nav,.nav-spacer{display:none !important;}
+    .screen-nav,.nav-spacer,.booking-overlay{display:none !important;}
     body{background:#fff !important;}
     .wrap{max-width:100%;}
     .cta-block .btn-line, .cta-block .btn-outline, .foot-note{display:none;}
@@ -120,6 +148,7 @@
 
   <div class="role-hero">
     <div class="role-tag" id="rp-tag">—</div>
+    <div class="role-animal-emoji" id="rp-animal-emoji">—</div>
     <div class="role-name" id="rp-role">—</div>
     <div class="role-people" id="rp-people">—</div>
   </div>
@@ -190,11 +219,46 @@
       <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作發展</span>
       <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>行為定位</span>
     </div>
-    <a class="btn-line" id="rp-cta" href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" rel="noopener">領取我的免費30分鐘諮詢 →</a>
+    <button class="btn-line" id="rp-cta" onclick="openBooking()">領取我的免費30分鐘諮詢 →</button>
     <button class="btn-outline" onclick="window.print()">下載 / 列印 PDF 報告</button>
   </div>
 
   <p class="foot-note">DISC 行為風格系統 · 本報告結果僅供自我探索參考</p>
+</div>
+
+<!-- 預約資訊填寫 overlay -->
+<div class="booking-overlay" id="bookingOverlay">
+  <div class="booking-panel">
+    <button class="bk-close" onclick="closeBooking()">✕</button>
+    <div class="bk-title" id="bkTitle">選個時間，跟 Mike 聊聊 📅</div>
+    <div class="bk-desc">先選一個你方便的時段，再告訴我怎麼跟你聯繫，整個流程大概 1 分鐘完成。</div>
+    <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bk-gcal-btn">
+      <div class="bk-gcal-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="white" stroke-width="1.8"/>
+          <path d="M3 9h18" stroke="white" stroke-width="1.8"/>
+          <path d="M8 2v4M16 2v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="8" y="13" width="3" height="3" rx=".5" fill="white"/>
+        </svg>
+      </div>
+      <div class="bk-gcal-text"><div class="bk-gcal-main">點我預約諮詢時段</div><div class="bk-gcal-sub">Google 行事曆・選好即自動確認</div></div>
+      <div class="bk-gcal-arrow">↗</div>
+    </a>
+    <div class="bk-field">
+      <div class="bk-label">偏好的諮詢方式</div>
+      <div class="bk-format-group">
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="線上視訊"><div class="bk-fmt-icon">💻</div><div class="bk-fmt-main">線上視訊</div></label>
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="電話"><div class="bk-fmt-icon">📞</div><div class="bk-fmt-main">電話</div></label>
+        <label class="bk-format-opt"><input type="radio" name="bkFormat" value="實體見面"><div class="bk-fmt-icon">🤝</div><div class="bk-fmt-main">當面</div></label>
+      </div>
+    </div>
+    <div class="bk-field">
+      <div class="bk-label">想先跟 Mike 說的話（選填）</div>
+      <textarea class="bk-textarea" id="bkNotes" placeholder="例如：想多了解自己在團隊裡的溝通盲點..."></textarea>
+    </div>
+    <button class="bk-submit" id="bkSubmitBtn" onclick="submitBookingInfo()">完成預約確認 ✓</button>
+    <div class="bk-note">🔒 所有資訊僅用於諮詢，不會分享給第三方</div>
+  </div>
 </div>
 
 <script>
@@ -205,12 +269,24 @@
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
+let db;
+async function initFb(){
+  if(db)return db;
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  const {getFirestore}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+  db=getFirestore(initializeApp(fbCfg));
+  return db;
+}
 
 const TYPE_LABEL = { D:"指揮型", I:"社交型", S:"穩健型", C:"謹慎型" };
 const TYPE_COLOR = { D:"#c0392b", I:"#d4a017", S:"#4a7a52", C:"#3a5a8a" };
 
+/* 每個 DISC 屬性對應一種代表動物，讓風格更直覺好記 */
+const ANIMAL = { D:{name:'老鷹',emoji:'🦅'}, I:{name:'孔雀',emoji:'🦚'}, S:{name:'無尾熊',emoji:'🐨'}, C:{name:'貓頭鷹',emoji:'🦉'} };
+
 const DISC={
-  D:{name:'指揮型',people:'目標驅動 · 天生的決策者',icon:'🦁',
+  D:{name:'指揮型',people:'目標驅動 · 天生的決策者',
+    animalDesc:'老鷹飛得高、看得遠，鎖定目標之後絕不回頭，是天生的開創者與領導者——這正是你的行為風格縮影。',
     heroDesc:'你是那種丟給你一個目標，會立刻想辦法解決、而且通常最快看到結果的人。你不喜歡拖泥帶水，遇到問題你的第一反應是「動起來」，而不是「再討論一下」。在很多人還在猶豫的時候，你已經做出決定、往前走了。',
     strengths:['決斷力強，不輕易猶豫','天生的目標導向','敢承擔風險','危機處理冷靜果斷','推動事情往前的行動力'],
     blind:'說個直接的：你的盲區是「太直接、不夠耐心」。你講話單刀直入、做事講求效率，但這常常讓身邊步調比較慢的人覺得被壓迫，甚至誤會你不近人情。你不是真的不在乎別人的感受，你只是把「解決問題」排在「照顧情緒」前面——這個順序，值得你重新想一想。',
@@ -219,10 +295,11 @@ const DISC={
     commMine:'你最容易在「別人需要被理解、而不是被解決」的時候踩雷。你急著給答案、給方向，卻忽略了對方可能只是想被聽見。',
     mineBreak:'練習在給建議前先問一句：「你是想聽我的建議，還是想先讓我聽你說完？」這個小動作，能讓你的直接被感受成「在乎」，而不是「壓迫」。',
     roles:[{r:'面對主管',t:'直接報告結果和數字，不需要鋪陳太多，主管會欣賞你的效率。'},{r:'面對同事',t:'記得放慢一點，確認大家真的跟上了，而不是只有你自己往前衝。'},{r:'面對客戶',t:'你的自信會讓客戶感到專業可靠，但記得多留一點空間讓對方表達疑慮。'}],
-    match:'穩健型和謹慎型的人——他們的耐心和嚴謹，正好補上你的弱項，而你的行動力能帶著他們一起往前衝。',
+    match:'穩健型（無尾熊）和謹慎型（貓頭鷹）的人——他們的耐心和嚴謹，正好補上你的弱項，而你的行動力能帶著他們一起往前衝。',
     actions:[{num:'01',title:'這週練習「先聽完再回應」',desc:'在下一次會議或對話中，刻意等對方講完再開口，觀察自己有沒有更耐心接住對方的意思。'},{num:'02',title:'找一個能幫你補位的夥伴',desc:'找一個穩健型或謹慎型的人，讓他們幫你把關團隊的情緒溫度和執行細節，補上你天生比較弱的那一塊。'},{num:'03',title:'把「贏」的定義擴大',desc:'這週試著把一次「讓團隊都覺得舒服」的合作，也算作一種成功，而不只是看結果。'}],
     top:'這週選一個你正在推動的專案，主動問身邊一位夥伴：「我這樣推進的方式，你會覺得有壓力嗎？」聽真實的答案，而不是禮貌性的回應。'},
-  I:{name:'社交型',people:'人脈磁鐵 · 天生的感染者',icon:'🌟',
+  I:{name:'社交型',people:'人脈磁鐵 · 天生的感染者',
+    animalDesc:'孔雀天生舞台感，色彩繽紛、魅力四射，走到哪都吸引目光——這正是你的行為風格縮影。',
     heroDesc:'你走進任何場合，都有辦法在很短時間內讓大家喜歡你、想跟你多聊幾句。你的超能力不是最懂技術，而是「讓人願意信任你、跟你合作」。這種能力在職場上，比大多數硬實力都珍貴。',
     strengths:['天生讓人覺得親切','擅長讀懂氣氛','用熱情感染團隊','建立關係的速度飛快','把沉悶的事情變有趣'],
     blind:'直說了：你的盲區是「太怕讓人失望」。你很難拒絕別人，答應了太多事，最後把自己的時間和精力耗在維持表面和諧上，反而沒空做真正重要的事。',
@@ -231,10 +308,11 @@ const DISC={
     commMine:'你最容易在「需要精確和數據」的場合踩雷。你想到什麼就說什麼，情緒感染力強，但有些人要的是條理，不是即興發揮。',
     mineBreak:'每次發言前，先問自己一句：「我能不能把這個想法濃縮成三個重點？」練習這個習慣，你的想法會更容易被嚴謹型的人接受。',
     roles:[{r:'面對主管',t:'用結果和具體成效包裝你的想法，而不只是「我覺得這樣做很有趣」。'},{r:'面對同事',t:'你天生是團隊的潤滑劑，但注意別讓自己變成大家的情緒垃圾桶，適度設立界線。'},{r:'面對客戶',t:'你建立信任的速度是所有類型裡最快的，善用這點深耕長期關係。'}],
-    match:'謹慎型和穩健型的人——謹慎型幫你把關細節，穩健型給你一個穩定的後盾，讓你的熱情有地方安放。',
+    match:'謹慎型（貓頭鷹）和穩健型（無尾熊）的人——謹慎型幫你把關細節，穩健型給你一個穩定的後盾，讓你的熱情有地方安放。',
     actions:[{num:'01',title:'這週練習說一次「不」',desc:'找一件你本來想答應、但其實會犧牲自己時間的事，練習溫和但堅定地拒絕。'},{num:'02',title:'找一個能幫你補位的夥伴',desc:'找一個謹慎型或穩健型的人，讓他們幫你把關細節和後續追蹤，補上你天生比較弱的那一塊。'},{num:'03',title:'把一個「還沒完成」的計畫重新撿起來',desc:'你身邊一定有一個曾經很興奮、後來沒下文的專案，這週回頭看看它卡在哪。'}],
     top:'這週列出你目前答應的所有事，圈出其中一件其實你不想做的，練習好好拒絕它。'},
-  S:{name:'穩健型',people:'團隊基石 · 值得信賴的夥伴',icon:'🌿',
+  S:{name:'穩健型',people:'團隊基石 · 值得信賴的夥伴',
+    animalDesc:'無尾熊溫和緩慢、忠誠可靠，喜歡待在熟悉安穩的環境裡——這正是你的行為風格縮影。',
     heroDesc:'你是那種「大家都很慶幸有你在」的人。你不是最高調的那個，但你往往是把事情穩穩落地、讓大家安心的那個。你天生擅長傾聽，也很少讓人感覺到壓力。',
     strengths:['耐心十足，值得信賴','擅長傾聽和支持他人','情緒穩定不易崩潰','做事扎實有始有終','團隊裡的穩定力量'],
     blind:'說個也許你自己也隱約知道的事：你太怕改變、太怕起衝突了。這讓你常常把真實想法藏在心裡，久而久之累積成內耗，也讓機會在你猶豫的時候溜走。',
@@ -243,10 +321,11 @@ const DISC={
     commMine:'你最容易在「需要立刻表態」的場合踩雷。你習慣先觀察、再決定，但有時候別人需要的是你當下的立場，而不是完美的沉默。',
     mineBreak:'練習「先給暫時的立場，再補充」：說「我目前傾向 A，但想再想想」，讓對話能往前推進，而不是一直沉默。',
     roles:[{r:'面對主管',t:'主動讓主管知道你的進度，不要讓你的穩定被誤解成「沒有想法」。'},{r:'面對同事',t:'你是讓大家安心的那個人，但要注意別把「配合」變成「委屈自己」。'},{r:'面對客戶',t:'你給客戶的安全感是你最大的資產，強調你的可靠和一致性。'}],
-    match:'指揮型和社交型的人——指揮型能推著你踏出舒適圈，社交型能幫你在人際上多一些開拓。',
+    match:'指揮型（老鷹）和社交型（孔雀）的人——指揮型能推著你踏出舒適圈，社交型能幫你在人際上多一些開拓。',
     actions:[{num:'01',title:'這週練習說出一次真實的想法',desc:'找一個你平常會選擇沉默的場合，練習說出你真正的意見，哪怕只是一小步。'},{num:'02',title:'找一個能拉你前進的夥伴',desc:'找一個指揮型或社交型的人，讓他們幫你把想法推向行動、拉你走出舒適圈。'},{num:'03',title:'給自己一個「小改變」的實驗',desc:'這個月，刻意做一件你一直想做但覺得「時機還沒到」的小事。'}],
     top:'這週在一次會議或對話中，主動先開口表達立場，而不是等別人問你才說。'},
-  C:{name:'謹慎型',people:'邏輯專家 · 品質的把關者',icon:'🧭',
+  C:{name:'謹慎型',people:'邏輯專家 · 品質的把關者',
+    animalDesc:'貓頭鷹冷靜理性、觀察入微，在暗處也能看清楚全局——這正是你的行為風格縮影。',
     heroDesc:'你是那種別人吵成一團、你安靜坐下來列出重點就解決問題的人。你最厲害的地方是把複雜的事情拆解成清楚的邏輯和步驟，讓混亂變得有秩序。',
     strengths:['邏輯清晰，分析力強','注重細節不馬虎','做決定精準嚴謹','高標準把關品質','系統化思考的天賦'],
     blind:'直說一件你可能不太願意承認的事：你太追求完美了，容易卡在細節裡動不了。你習慣蒐集更多資料才敢行動，導致很多「先做再調整」的機會，被你變成了無止盡的準備。',
@@ -255,7 +334,7 @@ const DISC={
     commMine:'你最容易在「需要快速回應」的場合踩雷。你習慣想清楚再說，但有時候別人要的是當下的表態，而不是完美答案。',
     mineBreak:'練習「先給方向，再補細節」：說「我的初步判斷是 X，讓我再確認細節」，讓對話先往前推進。',
     roles:[{r:'面對主管',t:'定期給簡短的進度更新，別讓沉默被誤解成「沒在動」。'},{r:'面對同事',t:'你是讓大家安心的把關者，但要注意別讓「高標準」變成「難合作」。'},{r:'面對客戶',t:'你的專業細節是最大的信任來源，強調你的準確和一致性。'}],
-    match:'社交型和指揮型的人——社交型幫你補上人際的溫度，指揮型能推你把分析化為行動。',
+    match:'社交型（孔雀）和指揮型（老鷹）的人——社交型幫你補上人際的溫度，指揮型能推你把分析化為行動。',
     actions:[{num:'01',title:'設一個「可接受的最低標準」',desc:'選一件你分析很久的事，設定一個門檻，達到就先行動，而不是等到完美。'},{num:'02',title:'找一個能推你一把的夥伴',desc:'找一個指揮型或社交型的人，幫你在「準備」和「行動」之間抓平衡。'},{num:'03',title:'練習分享一個「還沒完全確定」的想法',desc:'這週在會議中主動提出一個尚未完全驗證、但值得討論的觀點。'}],
     top:'這週選一件你已經分析超過一週的事，設定一個「先做出第一版」的期限，然後行動。'}
 };
@@ -312,16 +391,18 @@ function buildRadar(scores){
 
 function renderReport(data){
   const pt = DISC[data.primary] || DISC.D;
+  const animal = ANIMAL[data.primary] || ANIMAL.D;
   const name = data.name || "你";
   const label = data.label || (data.secondary ? `${TYPE_LABEL[data.primary]} × ${TYPE_LABEL[data.secondary]}` : TYPE_LABEL[data.primary]);
 
   document.getElementById("rp-name").textContent = name;
   document.getElementById("rp-date").textContent = fmtDate(data.date);
   document.getElementById("navName").textContent = `${name} 的報告`;
-  document.getElementById("rp-tag").textContent = pt.people;
-  document.getElementById("rp-role").textContent = label;
-  document.getElementById("rp-people").textContent = pt.icon + "　" + pt.name;
-  document.getElementById("rp-hook").textContent = pt.heroDesc;
+  document.getElementById("rp-tag").textContent = `${label} · 你的行為風格`;
+  document.getElementById("rp-animal-emoji").textContent = animal.emoji;
+  document.getElementById("rp-role").textContent = `${animal.name}型`;
+  document.getElementById("rp-people").textContent = pt.people;
+  document.getElementById("rp-hook").textContent = `${pt.animalDesc} ${pt.heroDesc}`;
   fillBulletList("rp-strength", pt.strengths, ICON_CHECK);
   document.getElementById("rp-blindspot").textContent = pt.blind;
   document.getElementById("rp-comm").innerHTML = `<b>溝通優勢：</b>${pt.commStrength}<br><br><b>最容易踩的地雷：</b>${pt.commMine}<br><br><b>破解方法：</b>${pt.mineBreak}`;
@@ -338,7 +419,7 @@ function renderReport(data){
   sorted.forEach(e=>{
     const item = document.createElement("div");
     item.className = "li";
-    item.innerHTML = `<span class="dot" style="background:${TYPE_COLOR[e]}"></span>${TYPE_LABEL[e]} ${scores[e]}`;
+    item.innerHTML = `<span class="dot" style="background:${TYPE_COLOR[e]}"></span>${ANIMAL[e].emoji} ${TYPE_LABEL[e]} ${scores[e]}`;
     legend.appendChild(item);
   });
 
@@ -348,7 +429,7 @@ function renderReport(data){
     const row = document.createElement("div");
     row.className = "ebar-row";
     row.innerHTML = `
-      <div class="ebar-label">${TYPE_LABEL[e]}</div>
+      <div class="ebar-label">${ANIMAL[e].emoji} ${TYPE_LABEL[e]}</div>
       <div class="ebar-track"><div class="ebar-fill" style="width:${scores[e]/20*100}%; background:${TYPE_COLOR[e]}"></div></div>
       <div class="ebar-score">${scores[e]}</div>`;
     barsWrap.appendChild(row);
@@ -371,10 +452,8 @@ const DEMO = { name:"範例個案・小明", primary:"D", secondary:"C", label:"
 async function load(){
   if(!docId){renderReport(DEMO);return;}
   try{
-    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
-    const {getFirestore,doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
-    const app=initializeApp(fbCfg);
-    const db=getFirestore(app);
+    await initFb();
+    const {doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
     const snap=await getDoc(fsDoc(db,'discClients',docId));
     if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#e7f0f8">找不到此報告。</p>';return;}
     window._reportRaw=snap.data();window._reportId=docId;
@@ -393,6 +472,27 @@ window.openEmailModal=()=>{
   const subj=encodeURIComponent(`${d.name} 的 DISC 行為風格報告出爐了！｜Mike 主任`);
   const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《DISC 行為風格報告》出爐了！\n行為風格：${label}\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
   window.open(`mailto:${d.email||''}?subject=${subj}&body=${body}`);
+};
+
+/* ══ 預約資訊填寫 overlay ══ */
+window.openBooking=()=>{ document.getElementById('bookingOverlay').classList.add('show'); };
+window.closeBooking=()=>{ document.getElementById('bookingOverlay').classList.remove('show'); };
+
+window.submitBookingInfo=async()=>{
+  const btn=document.getElementById('bkSubmitBtn');
+  const format=document.querySelector('input[name="bkFormat"]:checked')?.value||'';
+  const notes=document.getElementById('bkNotes').value.trim();
+  btn.disabled=true;btn.textContent='處理中...';
+  if(window._reportId){
+    try{
+      await initFb();
+      const {doc:fsDoc,updateDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+      await updateDoc(fsDoc(db,'discClients',window._reportId),{format,notes});
+    }catch(e){console.warn('儲存預約資訊失敗（不影響預約本身）:',e.message);}
+  }
+  btn.disabled=false;btn.textContent='完成預約確認 ✓';
+  closeBooking();
+  window.open('https://calendar.app.google/y7pFfnC2HXbyvydP9','_blank');
 };
 
 load();
