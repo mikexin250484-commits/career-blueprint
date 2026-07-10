@@ -850,7 +850,8 @@ async function load(){
 window.openEmailModal=()=>{
   if(!window._reportData){alert('預覽模式，請從後台開啟報告後再寄送。');return;}
   const d=window._reportData;
-  const url=`${location.origin}/report?id=${window._reportId}`;
+  // 用目前頁面自己的路徑組網址，自動適應網域根目錄或子路徑(如 GitHub Pages)部署
+  const url=`${location.origin}${location.pathname}?id=${window._reportId}`;
   const subj=encodeURIComponent(`${d.name} 的職涯策略診斷報告｜Career Blueprint`);
   const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《職涯策略診斷報告》出爐了！\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
   window.open(`mailto:${d.email}?subject=${subj}&body=${body}`);

@@ -926,8 +926,8 @@ window.skipBooking = () => showDonePage();
 function showDonePage() {
   const bp = document.getElementById('bookingPage');
   const wantsReport = savedFormData?.wantsReport;
-  // 報告連結：相容 Netlify 的 report.html
-  const reportLink = `${location.origin}/report.html?id=${savedDocId}`;
+  // 報告連結：用相對路徑，不管部署在網域根目錄還是子路徑(如 GitHub Pages)都能正確連到同資料夾的 report.html
+  const reportLink = `report.html?id=${savedDocId}`;
   bp.innerHTML = `
     <div class="bp-inner">
       <div class="bp-done show">

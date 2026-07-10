@@ -399,13 +399,11 @@ tr:hover td{background:#faf9f5}
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 let db,allBookings=[],allDiscClients=[],currentFilter='all',currentDocId=null,currentSource='bookings',searchQuery='';
 
-// 報告頁的基礎 URL（部署後請改成正式域名）
-const REPORT_BASE = location.hostname==='localhost'||location.protocol==='file:'
-  ? 'file:///Users/mike/Downloads/report.html'
-  : `${location.origin}/report.html`;
-const DISC_REPORT_BASE = location.hostname==='localhost'||location.protocol==='file:'
-  ? 'file:///Users/mike/Downloads/disc-report.html'
-  : `${location.origin}/disc-report.html`;
+// 報告頁的基礎 URL：自動抓「目前這個頁面所在的資料夾」，
+// 不管部署在網域根目錄（Netlify）還是子路徑（GitHub Pages 的 /repo-name/）都能正確組出網址
+const BASE_DIR = location.href.replace(/admin-upgraded\.html.*$/, '');
+const REPORT_BASE = BASE_DIR + 'report.html';
+const DISC_REPORT_BASE = BASE_DIR + 'disc-report.html';
 
 async function initFirebase(){
   const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");

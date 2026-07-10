@@ -494,7 +494,8 @@ window.skipBooking=()=>showDonePage();
 
 function showDonePage(){
   const bp=document.getElementById('bookingPage');
-  const reportLink=`${location.origin}/disc-report.html?id=${savedDocId}`;
+  // 用相對路徑，不管部署在網域根目錄還是子路徑(如 GitHub Pages)都能正確連到同資料夾的 disc-report.html
+  const reportLink=`disc-report.html?id=${savedDocId}`;
   bp.innerHTML=`
     <div class="bp-inner">
       <div class="bp-done show">
