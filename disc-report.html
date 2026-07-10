@@ -6,14 +6,14 @@
 <title>DISC．行為風格深度解析報告書</title>
 <style>
   :root{
-    --bg1:#16232f; --bg2:#28455c; --accent:#4f8fdb; --accent-dark:#2d5f96;
+    --bg1:#2c5c88; --bg2:#4f8fc4; --accent:#f0a93c; --accent-dark:#c97f1f;
     --ink:#16232f; --card:#ffffff; --sub:#7d93a8; --line:#00c300;
     --D:#c0392b; --I:#d4a017; --S:#4a7a52; --C:#3a5a8a;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
-    background:linear-gradient(160deg,var(--bg1),var(--bg2) 60%,#3a5a78);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2) 60%,#8fcbe8);
     min-height:100vh; color:var(--ink); display:flex; justify-content:center; -webkit-font-smoothing:antialiased;
   }
   .wrap{width:100%; max-width:520px; padding:30px 20px 50px;}
@@ -36,7 +36,7 @@
   .cover .date{color:#9fb6cc; font-size:12px;}
 
   .role-hero{text-align:center; margin-bottom:24px;}
-  .role-tag{display:inline-block; background:rgba(79,143,219,.18); color:var(--accent); border:1px solid var(--accent-dark);
+  .role-tag{display:inline-block; background:rgba(240,169,60,.18); color:var(--accent); border:1px solid var(--accent-dark);
     padding:5px 14px; border-radius:999px; font-size:12px; margin-bottom:12px;}
   .role-animal-emoji{font-size:52px; line-height:1; margin-bottom:4px;}
   .role-name{color:#fff; font-size:34px; font-weight:900; margin-bottom:6px;}
@@ -52,7 +52,7 @@
 
   .section-label{display:flex; align-items:center; gap:7px; color:var(--accent); font-size:12px; letter-spacing:2px; margin:26px 0 10px; padding-left:2px;}
   .sec-icon{width:15px; height:15px; flex-shrink:0;}
-  .hook-card{background:linear-gradient(135deg,#16232f,#28455c); border-radius:18px; padding:20px; margin-bottom:14px;}
+  .hook-card{background:linear-gradient(135deg,var(--bg1),var(--bg2)); border-radius:18px; padding:20px; margin-bottom:14px;}
   .hook-card p{color:#e7f0f8; font-size:14.5px; line-height:1.9;}
   .card{background:var(--card); border-radius:18px; padding:20px; margin-bottom:14px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
   .card h3{font-size:14px; color:var(--accent-dark); margin-bottom:8px; font-weight:800;}
@@ -74,14 +74,14 @@
   .bullet-list.strength .li-icon{color:var(--accent-dark);}
   .bullet-list.blindspot .li-icon{color:#c0392b;}
 
-  .cta-block{background:rgba(255,255,255,.08); border:1.5px dashed rgba(79,143,219,.55); border-radius:18px; padding:26px 22px; text-align:center; margin-top:22px;}
-  .gift-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(79,143,219,.18); color:var(--accent); border:1px solid var(--accent-dark);
+  .cta-block{background:rgba(255,255,255,.08); border:1.5px dashed rgba(240,169,60,.55); border-radius:18px; padding:26px 22px; text-align:center; margin-top:22px;}
+  .gift-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(240,169,60,.18); color:var(--accent); border:1px solid var(--accent-dark);
     padding:6px 16px; border-radius:999px; font-size:11.5px; letter-spacing:1px; margin-bottom:16px;}
   .gift-badge svg{width:14px; height:14px;}
   .cta-block .cta-title{color:#fff; font-size:17px; font-weight:800; margin-bottom:10px; line-height:1.5;}
   .cta-block p{color:#dbe8f5; font-size:13.5px; line-height:1.85; margin-bottom:20px;}
   .cta-block .cta-topics{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
-  .cta-block .topic-chip{background:rgba(255,255,255,.08); border:1px solid rgba(79,143,219,.4); color:#e7f0f8; font-size:12px; padding:6px 13px; border-radius:999px;}
+  .cta-block .topic-chip{background:rgba(255,255,255,.08); border:1px solid rgba(240,169,60,.4); color:#e7f0f8; font-size:12px; padding:6px 13px; border-radius:999px;}
   .btn-line{
     display:block; width:100%; background:var(--line); color:#fff; text-decoration:none; font-weight:800; font-size:15.5px;
     border-radius:14px; padding:16px; box-shadow:0 8px 20px rgba(0,195,0,.35); margin-bottom:10px; border:none; cursor:pointer; font-family:inherit;
@@ -109,7 +109,7 @@
   .bk-label{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
   .bk-format-group{display:flex;gap:8px;}
   .bk-format-opt{flex:1;border:1.5px solid #e4edf5;border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fafcfe;}
-  .bk-format-opt:has(input:checked){border-color:var(--accent);background:rgba(79,143,219,.08);}
+  .bk-format-opt:has(input:checked){border-color:var(--accent);background:rgba(240,169,60,.08);}
   .bk-format-opt input{display:none;}
   .bk-fmt-icon{font-size:18px;}
   .bk-fmt-main{font-size:11.5px;font-weight:600;color:var(--ink);}
@@ -282,11 +282,11 @@ const TYPE_LABEL = { D:"指揮型", I:"社交型", S:"穩健型", C:"謹慎型" 
 const TYPE_COLOR = { D:"#c0392b", I:"#d4a017", S:"#4a7a52", C:"#3a5a8a" };
 
 /* 每個 DISC 屬性對應一種代表動物，讓風格更直覺好記 */
-const ANIMAL = { D:{name:'老鷹',emoji:'🦅'}, I:{name:'孔雀',emoji:'🦚'}, S:{name:'無尾熊',emoji:'🐨'}, C:{name:'貓頭鷹',emoji:'🦉'} };
+const ANIMAL = { D:{name:'老虎',emoji:'🐯'}, I:{name:'孔雀',emoji:'🦚'}, S:{name:'無尾熊',emoji:'🐨'}, C:{name:'貓頭鷹',emoji:'🦉'} };
 
 const DISC={
   D:{name:'指揮型',people:'目標驅動 · 天生的決策者',
-    animalDesc:'老鷹飛得高、看得遠，鎖定目標之後絕不回頭，是天生的開創者與領導者——這正是你的行為風格縮影。',
+    animalDesc:'老虎天生霸氣十足、行動力強，鎖定目標就勇往直前，是森林之王般的存在——這正是你的行為風格縮影。',
     heroDesc:'你是那種丟給你一個目標，會立刻想辦法解決、而且通常最快看到結果的人。你不喜歡拖泥帶水，遇到問題你的第一反應是「動起來」，而不是「再討論一下」。在很多人還在猶豫的時候，你已經做出決定、往前走了。',
     strengths:['決斷力強，不輕易猶豫','天生的目標導向','敢承擔風險','危機處理冷靜果斷','推動事情往前的行動力'],
     blind:'說個直接的：你的盲區是「太直接、不夠耐心」。你講話單刀直入、做事講求效率，但這常常讓身邊步調比較慢的人覺得被壓迫，甚至誤會你不近人情。你不是真的不在乎別人的感受，你只是把「解決問題」排在「照顧情緒」前面——這個順序，值得你重新想一想。',
@@ -321,7 +321,7 @@ const DISC={
     commMine:'你最容易在「需要立刻表態」的場合踩雷。你習慣先觀察、再決定，但有時候別人需要的是你當下的立場，而不是完美的沉默。',
     mineBreak:'練習「先給暫時的立場，再補充」：說「我目前傾向 A，但想再想想」，讓對話能往前推進，而不是一直沉默。',
     roles:[{r:'面對主管',t:'主動讓主管知道你的進度，不要讓你的穩定被誤解成「沒有想法」。'},{r:'面對同事',t:'你是讓大家安心的那個人，但要注意別把「配合」變成「委屈自己」。'},{r:'面對客戶',t:'你給客戶的安全感是你最大的資產，強調你的可靠和一致性。'}],
-    match:'指揮型（老鷹）和社交型（孔雀）的人——指揮型能推著你踏出舒適圈，社交型能幫你在人際上多一些開拓。',
+    match:'指揮型（老虎）和社交型（孔雀）的人——指揮型能推著你踏出舒適圈，社交型能幫你在人際上多一些開拓。',
     actions:[{num:'01',title:'這週練習說出一次真實的想法',desc:'找一個你平常會選擇沉默的場合，練習說出你真正的意見，哪怕只是一小步。'},{num:'02',title:'找一個能拉你前進的夥伴',desc:'找一個指揮型或社交型的人，讓他們幫你把想法推向行動、拉你走出舒適圈。'},{num:'03',title:'給自己一個「小改變」的實驗',desc:'這個月，刻意做一件你一直想做但覺得「時機還沒到」的小事。'}],
     top:'這週在一次會議或對話中，主動先開口表達立場，而不是等別人問你才說。'},
   C:{name:'謹慎型',people:'邏輯專家 · 品質的把關者',
@@ -334,7 +334,7 @@ const DISC={
     commMine:'你最容易在「需要快速回應」的場合踩雷。你習慣想清楚再說，但有時候別人要的是當下的表態，而不是完美答案。',
     mineBreak:'練習「先給方向，再補細節」：說「我的初步判斷是 X，讓我再確認細節」，讓對話先往前推進。',
     roles:[{r:'面對主管',t:'定期給簡短的進度更新，別讓沉默被誤解成「沒在動」。'},{r:'面對同事',t:'你是讓大家安心的把關者，但要注意別讓「高標準」變成「難合作」。'},{r:'面對客戶',t:'你的專業細節是最大的信任來源，強調你的準確和一致性。'}],
-    match:'社交型（孔雀）和指揮型（老鷹）的人——社交型幫你補上人際的溫度，指揮型能推你把分析化為行動。',
+    match:'社交型（孔雀）和指揮型（老虎）的人——社交型幫你補上人際的溫度，指揮型能推你把分析化為行動。',
     actions:[{num:'01',title:'設一個「可接受的最低標準」',desc:'選一件你分析很久的事，設定一個門檻，達到就先行動，而不是等到完美。'},{num:'02',title:'找一個能推你一把的夥伴',desc:'找一個指揮型或社交型的人，幫你在「準備」和「行動」之間抓平衡。'},{num:'03',title:'練習分享一個「還沒完全確定」的想法',desc:'這週在會議中主動提出一個尚未完全驗證、但值得討論的觀點。'}],
     top:'這週選一件你已經分析超過一週的事，設定一個「先做出第一版」的期限，然後行動。'}
 };
@@ -375,7 +375,7 @@ function buildRadar(scores){
     svg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.18)" stroke-width="1"/>`;
   });
   const dataPts = order.map(e=> pt(e, rMax * Math.min(scores[e]/20,1)).join(",")).join(" ");
-  svg += `<polygon points="${dataPts}" fill="rgba(79,143,219,.35)" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  svg += `<polygon points="${dataPts}" fill="rgba(240,169,60,.35)" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>`;
   order.forEach(e=>{
     const [x,y] = pt(e, rMax * Math.min(scores[e]/20,1));
     svg += `<circle cx="${x}" cy="${y}" r="4" fill="${TYPE_COLOR[e]}" stroke="#fff" stroke-width="1.5"/>`;
