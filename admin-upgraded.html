@@ -13,6 +13,7 @@
   --text:#3d4a3d;--text-s:#7a8a7a;--text-m:#a3ad9d;
   --line:#e3dccd;--shadow:0 1px 8px rgba(107,128,104,0.08);
   --disc:#5a4a8a;--disc-pale:#ece8f5;
+  --talent:#b5651d;--talent-pale:#fdf3e7;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans TC',sans-serif;background:#f0f3ee;color:var(--text);font-size:13px;min-height:100vh}
@@ -49,7 +50,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f0f3ee;color:var(--text);
 .page{display:none}.page.active{display:block}
 
 /* ── STATS ── */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
 .stat-card{background:var(--warm);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
 .stat-label{font-size:11px;color:var(--text-m);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
 .stat-value{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:500;color:#3d4a3d;line-height:1}
@@ -83,6 +84,7 @@ tr:hover td{background:#faf9f5}
 .badge.no-report{background:#f8f7f3;color:var(--text-m);border:1px solid var(--line)}
 .badge.emailed{background:#e8f0fb;color:#2a5a9a;border:1px solid #b0c8f0}
 .badge.disc{background:var(--disc-pale);color:var(--disc);border:1px solid #d0c8e8}
+.badge.talent{background:var(--talent-pale);color:var(--talent);border:1px solid #e0c0a0}
 .topic-pill{display:inline-block;background:#f0f3ee;color:var(--text-s);border-radius:10px;padding:2px 7px;font-size:10px;margin:1px;border:1px solid var(--line)}
 .btn-group-cell{display:flex;gap:5px;flex-wrap:wrap}
 .action-btn{background:transparent;border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--text-s);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
@@ -128,6 +130,7 @@ tr:hover td{background:#faf9f5}
 .dp-btn.blue{background:transparent;border:1px solid #2a6aa0;color:#2a6aa0}
 .dp-btn.blue:hover{background:#e8f0fb}
 .dp-disc-tag{display:inline-block;background:linear-gradient(90deg,var(--disc),#7a6ab0);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:4px;letter-spacing:1px}
+.dp-talent-tag{display:inline-block;background:linear-gradient(90deg,var(--amber-dark),var(--amber));color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:4px;letter-spacing:1px}
 
 /* ── EMAIL MODAL ── */
 .email-modal-bg{position:fixed;inset:0;background:rgba(61,74,61,.35);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
@@ -196,6 +199,11 @@ tr:hover td{background:#faf9f5}
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>DISC 測驗客戶
         <span class="sb-badge" id="sbCountDisc">0</span>
       </div>
+      <div class="sb-section">天賦順流測驗</div>
+      <div class="sb-item" onclick="showPage('talent',this)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5l1.8 5.4H15l-4.4 3.4 1.7 5.4L8 12.3l-4.3 3.4 1.7-5.4L1 6.9h5.2z"/></svg>天賦順流客戶
+        <span class="sb-badge" id="sbCountTalent">0</span>
+      </div>
     </nav>
     <div class="sb-footer">
       <div class="sb-avatar">
@@ -223,6 +231,7 @@ tr:hover td{background:#faf9f5}
           <div class="stat-card"><div class="stat-label">待確認</div><div class="stat-value" id="st-pending">—</div><div class="stat-sub"><span class="stat-dot" style="background:#e8a84a"></span>需要回覆</div></div>
           <div class="stat-card"><div class="stat-label">Plan B 收入</div><div class="stat-value" id="st-income">—</div><div class="stat-sub"><span class="stat-dot" style="background:#8fa882"></span>NT$1,500 / 場</div></div>
           <div class="stat-card"><div class="stat-label">DISC 測驗人數</div><div class="stat-value" id="st-disc">—</div><div class="stat-sub"><span class="stat-dot" style="background:#5a4a8a"></span>累計完成人數</div></div>
+          <div class="stat-card"><div class="stat-label">天賦順流人數</div><div class="stat-value" id="st-talent">—</div><div class="stat-sub"><span class="stat-dot" style="background:#b5651d"></span>累計完成人數</div></div>
         </div>
         <div class="table-card">
           <div class="table-header"><div class="table-title">最新預約</div><div style="font-size:11px;color:var(--text-m)">即時同步 Firebase</div></div>
@@ -258,6 +267,17 @@ tr:hover td{background:#faf9f5}
             <div style="font-size:11px;color:var(--text-m)">獨立於職涯諮詢客戶名單，即時同步 Firebase (discClients)</div>
           </div>
           <div id="discTable"></div>
+        </div>
+      </div>
+
+      <!-- 天賦順流測驗客戶 -->
+      <div class="page" id="page-talent">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">天賦順流測驗客戶</div>
+            <div style="font-size:11px;color:var(--text-m)">獨立於職涯諮詢客戶名單，即時同步 Firebase (talentClients)</div>
+          </div>
+          <div id="talentTable"></div>
         </div>
       </div>
     </div>
@@ -360,6 +380,56 @@ tr:hover td{background:#faf9f5}
   </div>
 </div>
 
+<!-- DETAIL PANEL（天賦順流測驗客戶） -->
+<div class="detail-overlay" id="talentDetailOverlay" onclick="maybeCloseTalent(event)">
+  <div class="detail-panel">
+    <div class="dp-header">
+      <div class="dp-avatar" id="tdpAvatar"></div>
+      <div>
+        <div class="dp-name" id="tdpName"></div>
+        <div class="dp-email" id="tdpEmail"></div>
+        <div class="dp-talent-tag" id="tdpTalentTag"></div>
+      </div>
+      <button class="dp-close" onclick="closeTalentDetail()">✕</button>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">基本資料</div>
+      <div class="dp-row"><span class="dp-row-label">LINE 暱稱</span><span class="dp-row-val" id="tdpLine"></span></div>
+      <div class="dp-row"><span class="dp-row-label">生日</span><span class="dp-row-val" id="tdpBirthday"></span></div>
+      <div class="dp-row"><span class="dp-row-label">卡關描述</span><span class="dp-row-val" id="tdpPain"></span></div>
+      <div class="dp-row"><span class="dp-row-label">建立時間</span><span class="dp-row-val" id="tdpCreated"></span></div>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">天賦能量分數（20 題）</div>
+      <div class="dp-row"><span class="dp-row-label">發電機</span><span class="dp-row-val" id="tdpGenerator"></span></div>
+      <div class="dp-row"><span class="dp-row-label">火焰</span><span class="dp-row-val" id="tdpFlame"></span></div>
+      <div class="dp-row"><span class="dp-row-label">節奏</span><span class="dp-row-val" id="tdpRhythm"></span></div>
+      <div class="dp-row"><span class="dp-row-label">鋼鐵</span><span class="dp-row-val" id="tdpSteel"></span></div>
+    </div>
+
+    <div class="dp-section">
+      <div class="dp-section-title">諮詢資訊</div>
+      <div class="dp-row"><span class="dp-row-label">諮詢方式</span><span class="dp-row-val" id="tdpFormat"></span></div>
+      <div class="dp-row"><span class="dp-row-label">Email 狀態</span><span class="dp-row-val" id="tdpEmailSent"></span></div>
+    </div>
+
+    <div class="dp-section" id="tdpNotesSection">
+      <div class="dp-section-title">備註</div>
+      <div class="dp-notes" id="tdpNotes"></div>
+    </div>
+
+    <div class="dp-btn-row">
+      <button class="dp-btn secondary" onclick="closeTalentDetail()">關閉</button>
+      <button class="dp-btn danger" id="tdpDeleteBtn">刪除</button>
+      <button class="dp-btn amber" id="tdpReportBtn">📋 報告</button>
+      <button class="dp-btn blue" id="tdpEmailBtn">📧 寄信</button>
+      <button class="dp-btn primary" id="tdpActionBtn" style="display:none"></button>
+    </div>
+  </div>
+</div>
+
 <!-- EMAIL MODAL（共用） -->
 <div class="email-modal-bg" id="emailModalBg">
   <div class="email-modal">
@@ -397,13 +467,14 @@ tr:hover td{background:#faf9f5}
 <script>
 /* ══ FIREBASE ═══════════════════════════════════════════════════════ */
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
-let db,allBookings=[],allDiscClients=[],currentFilter='all',currentDocId=null,currentSource='bookings',searchQuery='';
+let db,allBookings=[],allDiscClients=[],allTalentClients=[],currentFilter='all',currentDocId=null,currentSource='bookings',searchQuery='';
 
 // 報告頁的基礎 URL：自動抓「目前這個頁面所在的資料夾」，
 // 不管部署在網域根目錄（Netlify）還是子路徑（GitHub Pages 的 /repo-name/）都能正確組出網址
 const BASE_DIR = location.href.replace(/admin-upgraded\.html.*$/, '');
 const REPORT_BASE = BASE_DIR + 'report.html';
 const DISC_REPORT_BASE = BASE_DIR + 'disc-report.html';
+const TALENT_REPORT_BASE = BASE_DIR + 'talent-report.html';
 
 async function initFirebase(){
   const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
@@ -416,24 +487,28 @@ async function initFirebase(){
 
 /* ══ LOAD ═══════════════════════════════════════════════════════════ */
 window.loadBookings=async()=>{
-  setTableLoading('dashboardTable');setTableLoading('clientsTable');setTableLoading('discTable');
+  setTableLoading('dashboardTable');setTableLoading('clientsTable');setTableLoading('discTable');setTableLoading('talentTable');
   try{
     if(!db)await initFirebase();
     const {collection,getDocs}=window._fb;
-    const [snap,discSnap]=await Promise.all([
+    const [snap,discSnap,talentSnap]=await Promise.all([
       getDocs(collection(db,'bookings')),
-      getDocs(collection(db,'discClients'))
+      getDocs(collection(db,'discClients')),
+      getDocs(collection(db,'talentClients'))
     ]);
     allBookings=snap.docs.map(d=>({id:d.id,...d.data()}));
     allBookings.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
     allDiscClients=discSnap.docs.map(d=>({id:d.id,...d.data()}));
     allDiscClients.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+    allTalentClients=talentSnap.docs.map(d=>({id:d.id,...d.data()}));
+    allTalentClients.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
     renderAll();
   }catch(e){
     const msg=`<div class="table-empty" style="color:#c0392b">❌ ${e.message}</div>`;
     document.getElementById('dashboardTable').innerHTML=msg;
     document.getElementById('clientsTable').innerHTML=msg;
     document.getElementById('discTable').innerHTML=msg;
+    document.getElementById('talentTable').innerHTML=msg;
   }
 };
 
@@ -475,16 +550,19 @@ function renderAll(){
   document.getElementById('sbCountConfirmed').textContent=confirmed;
   document.getElementById('sbCountDone').textContent=done;
   document.getElementById('sbCountDisc').textContent=allDiscClients.length;
+  document.getElementById('sbCountTalent').textContent=allTalentClients.length;
   document.getElementById('st-total').textContent=allBookings.length;
   document.getElementById('st-pending').textContent=pending;
   document.getElementById('st-income').textContent=`NT$${(planBDone*1500).toLocaleString()}`;
   document.getElementById('st-disc').textContent=allDiscClients.length;
+  document.getElementById('st-talent').textContent=allTalentClients.length;
   renderTable('dashboardTable',allBookings.slice(0,20));
   renderTable('clientsTable',getFiltered(currentFilter));
   renderTable('pendingTable',getFiltered('pending'));
   renderTable('confirmedTable',getFiltered('confirmed'));
   renderTable('doneTable',getFiltered('done'));
   renderDiscTable('discTable',allDiscClients);
+  renderTalentTable('talentTable',allTalentClients);
 }
 
 function setTableLoading(id){document.getElementById(id).innerHTML=`<div class="table-empty"><div class="loading-spinner"></div>載入中...</div>`;}
@@ -602,7 +680,92 @@ async function advanceDiscStatus(id,current){
 function openDiscReportInNewTab(id){window.open(`${DISC_REPORT_BASE}?id=${id}`,'_blank');}
 
 document.getElementById('ddpDeleteBtn').addEventListener('click',()=>{
+  currentSource='discClients';
   document.getElementById('deleteModalText').textContent='刪除後無法還原，此筆 DISC 測驗資料將從 Firebase 永久移除。';
+  document.getElementById('deleteModal').classList.add('show');
+});
+
+/* ══ 天賦順流 TABLE ══════════════════════════════════════════════════ */
+function renderTalentTable(containerId,rows){
+  const el=document.getElementById(containerId);
+  if(!rows.length){el.innerHTML=`<div class="table-empty">目前沒有天賦順流測驗資料</div>`;return;}
+  el.innerHTML=`<table>
+    <thead><tr><th>客戶</th><th>LINE 暱稱</th><th>天賦角色</th><th>狀態</th><th>操作</th></tr></thead>
+    <tbody>${rows.map(r=>talentRowHTML(r)).join('')}</tbody>
+  </table>`;
+  el.querySelectorAll('[data-talent-view-id]').forEach(btn=>btn.addEventListener('click',()=>openTalentDetail(btn.dataset.talentViewId)));
+  el.querySelectorAll('[data-talent-email-id]').forEach(btn=>btn.addEventListener('click',()=>openEmailModal(btn.dataset.talentEmailId,'talentClients')));
+}
+
+function talentRowHTML(r){
+  const label=r.label||'未完成';
+  const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
+  return`<tr>
+    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
+    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div></div></div></td>
+    <td>${r.lineName||'—'}</td>
+    <td><span class="badge talent">${label}</span> ${emailBadge}</td>
+    <td>${statusBadge(r.status)}</td>
+    <td><div class="btn-group-cell">
+      <button class="action-btn" data-talent-view-id="${r.id}">查看</button>
+      <button class="action-btn email" data-talent-email-id="${r.id}">📧 寄報告</button>
+    </div></td>
+  </tr>`;
+}
+
+window.openTalentDetail=(id)=>{
+  const r=allTalentClients.find(b=>b.id===id);if(!r)return;
+  currentDocId=id;currentSource='talentClients';
+  document.getElementById('tdpAvatar').textContent=(r.name||'?')[0];
+  document.getElementById('tdpName').textContent=r.name||'—';
+  document.getElementById('tdpEmail').textContent=r.email||'—';
+  document.getElementById('tdpTalentTag').textContent=r.label||'未完成';
+  document.getElementById('tdpLine').textContent=r.lineName||'—';
+  document.getElementById('tdpBirthday').textContent=r.birthday||'—';
+  document.getElementById('tdpPain').textContent=r.painPoint||'—';
+  const ts=r.createdAt?.seconds?new Date(r.createdAt.seconds*1000):null;
+  document.getElementById('tdpCreated').textContent=ts?ts.toLocaleString('zh-TW'):'—';
+  const c=r.counts||{generator:0,flame:0,rhythm:0,steel:0};
+  const total=20;
+  document.getElementById('tdpGenerator').textContent=`${c.generator||0} / ${total}（${Math.round((c.generator||0)/total*100)}%）`;
+  document.getElementById('tdpFlame').textContent=`${c.flame||0} / ${total}（${Math.round((c.flame||0)/total*100)}%）`;
+  document.getElementById('tdpRhythm').textContent=`${c.rhythm||0} / ${total}（${Math.round((c.rhythm||0)/total*100)}%）`;
+  document.getElementById('tdpSteel').textContent=`${c.steel||0} / ${total}（${Math.round((c.steel||0)/total*100)}%）`;
+  document.getElementById('tdpFormat').textContent=r.format||'尚未填寫';
+  document.getElementById('tdpEmailSent').innerHTML=r.emailSentAt
+    ?`<span style="color:#2a7a4a">✓ 已寄送（${new Date(r.emailSentAt).toLocaleDateString('zh-TW')}）</span>`
+    :'<span style="color:#a3ad9d">尚未寄送</span>';
+  if(r.notes){document.getElementById('tdpNotesSection').style.display='block';document.getElementById('tdpNotes').textContent=r.notes;}
+  else{document.getElementById('tdpNotesSection').style.display='none';}
+  const rBtn=document.getElementById('tdpReportBtn');
+  rBtn.onclick=()=>{closeTalentDetail();openTalentReportInNewTab(id);};
+  document.getElementById('tdpEmailBtn').onclick=()=>{closeTalentDetail();openEmailModal(id,'talentClients');};
+  const aBtn=document.getElementById('tdpActionBtn');
+  if(r.status==='pending'){aBtn.textContent='✓ 確認預約';aBtn.style.display='block';aBtn.onclick=()=>advanceTalentStatus(id,'pending');}
+  else if(r.status==='confirmed'){aBtn.textContent='✓ 標記完成';aBtn.style.display='block';aBtn.onclick=()=>advanceTalentStatus(id,'confirmed');}
+  else{aBtn.style.display='none';}
+  document.getElementById('talentDetailOverlay').classList.add('show');
+};
+window.closeTalentDetail=()=>document.getElementById('talentDetailOverlay').classList.remove('show');
+window.maybeCloseTalent=(e)=>{if(e.target===document.getElementById('talentDetailOverlay'))closeTalentDetail();};
+
+async function advanceTalentStatus(id,current){
+  const next=current==='pending'?'confirmed':'done';
+  try{
+    const {doc,updateDoc}=window._fb;
+    await updateDoc(doc(db,'talentClients',id),{status:next});
+    const idx=allTalentClients.findIndex(b=>b.id===id);
+    if(idx>-1)allTalentClients[idx].status=next;
+    renderAll();closeTalentDetail();
+    showToast(next==='confirmed'?'✓ 已確認預約':'✓ 已標記完成');
+  }catch(e){showToast('更新失敗：'+e.message);}
+}
+
+function openTalentReportInNewTab(id){window.open(`${TALENT_REPORT_BASE}?id=${id}`,'_blank');}
+
+document.getElementById('tdpDeleteBtn').addEventListener('click',()=>{
+  currentSource='talentClients';
+  document.getElementById('deleteModalText').textContent='刪除後無法還原，此筆天賦順流測驗資料將從 Firebase 永久移除。';
   document.getElementById('deleteModal').classList.add('show');
 });
 
@@ -669,10 +832,10 @@ function openReportInNewTab(id){
 /* ══ EMAIL MODAL（共用，依 source 切換文案與連結）══════════════════════ */
 window.openEmailModal=(id,source)=>{
   source=source||'bookings';
-  const list=source==='discClients'?allDiscClients:allBookings;
+  const list=source==='discClients'?allDiscClients:source==='talentClients'?allTalentClients:allBookings;
   const r=list.find(b=>b.id===id);if(!r)return;
   currentDocId=id;currentSource=source;
-  const reportUrl=source==='discClients'?`${DISC_REPORT_BASE}?id=${id}`:`${REPORT_BASE}?id=${id}`;
+  const reportUrl=source==='discClients'?`${DISC_REPORT_BASE}?id=${id}`:source==='talentClients'?`${TALENT_REPORT_BASE}?id=${id}`:`${REPORT_BASE}?id=${id}`;
   document.getElementById('emSub').textContent=`寄送至：${r.email||'（未知）'}`;
   document.getElementById('emTo').value=r.email||'';
 
@@ -692,6 +855,33 @@ window.openEmailModal=(id,source)=>{
 ✦ 主導風格深度解析
 ✦ 人際溝通優勢與地雷
 ✦ 行動起點建議
+
+點選以下連結查看你的專屬報告：
+${reportUrl}
+
+本月僅開放 3 個 1-on-1 策略複診名額，
+建議儘早預約：
+https://calendar.app.google/y7pFfnC2HXbyvydP9
+
+期待在諮詢室見到你 😊
+Mike 主任`;
+  }else if(source==='talentClients'){
+    const label=r.label||'未完成';
+    document.getElementById('emSubject').value=`${r.name||'您'} 的天賦順流報告出爐了！｜Mike 主任`;
+    document.getElementById('emBody').value=
+`嗨 ${r.name||'您'}，
+
+感謝你完成天賦順流測驗 😊
+
+你的《天賦順流報告》已完成！
+天賦角色：${label}
+
+報告包含：
+✦ 你的天賦辨識與能量雷達圖
+✦ 核心優勢與卡關盲點
+✦ 人際關係模式
+✦ 適合的工作類型與收入方程式
+✦ 團隊協作定位（黃金三角）
 
 點選以下連結查看你的專屬報告：
 ${reportUrl}
@@ -749,6 +939,9 @@ window.doSendEmail=async()=>{
     if(currentSource==='discClients'){
       const idx=allDiscClients.findIndex(b=>b.id===currentDocId);
       if(idx>-1)allDiscClients[idx].emailSentAt=sentAt;
+    }else if(currentSource==='talentClients'){
+      const idx=allTalentClients.findIndex(b=>b.id===currentDocId);
+      if(idx>-1)allTalentClients[idx].emailSentAt=sentAt;
     }else{
       const idx=allBookings.findIndex(b=>b.id===currentDocId);
       if(idx>-1)allBookings[idx].emailSentAt=sentAt;
@@ -773,6 +966,9 @@ document.getElementById('confirmDeleteBtn').addEventListener('click',async()=>{
     if(currentSource==='discClients'){
       allDiscClients=allDiscClients.filter(b=>b.id!==currentDocId);
       closeDiscDetail();
+    }else if(currentSource==='talentClients'){
+      allTalentClients=allTalentClients.filter(b=>b.id!==currentDocId);
+      closeTalentDetail();
     }else{
       allBookings=allBookings.filter(b=>b.id!==currentDocId);
       closeDetail();
@@ -784,7 +980,7 @@ document.getElementById('confirmDeleteBtn').addEventListener('click',async()=>{
 });
 
 /* ══ NAV ════════════════════════════════════════════════════════════ */
-const pageTitles={dashboard:'總覽',clients:'所有客戶',pending:'待確認',confirmed:'已確認',done:'已完成',disc:'DISC 測驗客戶'};
+const pageTitles={dashboard:'總覽',clients:'所有客戶',pending:'待確認',confirmed:'已確認',done:'已完成',disc:'DISC 測驗客戶',talent:'天賦順流測驗客戶'};
 window.showPage=(name,el)=>{
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');

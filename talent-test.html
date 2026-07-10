@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>天賦順流測驗｜Mike 主任</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --o:#c8762a;--om:#d98530;--ol:#e89a50;--op:#fdf3e7;
+  --teal:#2a9d8f;--teal-pale:#e6f5f3;
+  --red:#e84040;--red-pale:#fdf0f0;
+  --bg:#faf5ee;--white:#ffffff;--warm:#fefcf8;
+  --text:#2d2010;--ts:#5c4a30;--tm:#9a8570;
+  --line:#e8ddd0;--shadow:0 2px 16px rgba(139,94,60,0.07);--shadow-lg:0 8px 32px rgba(139,94,60,0.13);
+  --amber:#c8762a;--dark:#4a3020;
+  --generator:#d9622b;--flame:#c9483a;--rhythm:#8a9a5b;--steel:#7a6a52;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);font-size:15px;font-weight:400;min-height:100vh}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#3a2418 0%,#6b4226 55%,#c8762a 100%);padding:40px 20px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);font-size:12px;letter-spacing:3px;padding:5px 16px;border-radius:20px;margin-bottom:18px;text-transform:uppercase;font-weight:400;border:1px solid rgba(255,255,255,0.2)}
+.hero h1{font-family:'Noto Serif TC',serif;font-size:30px;font-weight:600;color:#fff;letter-spacing:2px;margin-bottom:8px;position:relative}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:13px;letter-spacing:2px;position:relative}
+.hero-preview{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:20px auto 0;position:relative}
+.hp-item{background:rgba(255,255,255,.08);border-radius:10px;padding:10px 4px;text-align:center}
+.hp-item .dot{width:9px;height:9px;border-radius:50%;margin:0 auto 5px}
+.hp-item p{font-size:11px;color:rgba(255,255,255,.75)}
+
+/* INTRO CARD */
+.intro-card{background:var(--white);margin:0 16px;border-radius:20px;padding:26px 24px;box-shadow:var(--shadow-lg);position:relative;margin-top:-20px;border-left:4px solid var(--o)}
+.intro-card p{font-size:14.5px;color:var(--ts);line-height:2;font-weight:300}
+.intro-card p+p{margin-top:10px}
+.intro-card strong{color:var(--o);font-weight:500}
+.progress-wrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--tm);margin-bottom:6px}
+.progress-bar{background:#f0e5d5;border-radius:6px;height:8px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--dark),var(--amber));border-radius:6px;width:0%;transition:width .3s}
+
+/* STEP CARD */
+.page-wrap{padding:16px 16px 0}
+.step-card{background:var(--white);border-radius:20px;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
+.step-header{background:linear-gradient(90deg,var(--dark) 0%,var(--amber) 100%);padding:12px 22px;display:flex;align-items:center;gap:10px}
+.step-badge{background:rgba(255,255,255,0.25);color:#fff;font-size:11px;font-weight:500;padding:3px 12px;border-radius:20px;letter-spacing:1px}
+.step-title{color:#fff;font-size:14px;font-weight:500;letter-spacing:.5px}
+.step-body{padding:24px 22px}
+.step-desc{font-size:13.5px;color:var(--ts);margin-bottom:22px;line-height:1.8;font-weight:300}
+.step-desc strong{color:var(--o);font-weight:500}
+
+/* FIELD */
+.field{margin-bottom:22px}
+.field:last-child{margin-bottom:0}
+.f-label{font-size:14px;color:var(--text);font-weight:500;margin-bottom:4px}
+.f-label .req{color:var(--red);font-size:13px;margin-left:2px}
+.f-hint{font-size:12.5px;color:var(--tm);margin-bottom:10px;font-weight:300;line-height:1.6}
+.f-input{width:100%;padding:13px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--warm);font-family:inherit;font-size:14.5px;color:var(--text);font-weight:300;transition:all .2s;outline:none}
+.f-input:focus{border-color:var(--o);box-shadow:0 0 0 3px rgba(200,118,42,0.1)}
+.f-input::placeholder{color:var(--tm);font-weight:300}
+textarea.f-input{min-height:76px;resize:vertical;line-height:1.7}
+
+/* ── 天賦題 ────────────────────────────────────── */
+.dq-intro{background:linear-gradient(135deg,var(--op),#fef6ec);border:1px solid var(--ol);border-radius:14px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;color:var(--ts);line-height:1.8;font-weight:300}
+.dq-intro strong{color:var(--o);font-weight:500}
+.dq{margin-bottom:20px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:20px}
+.dq:last-child{margin-bottom:0}
+.dq-head{background:var(--op);padding:12px 16px;border-bottom:1px solid var(--line)}
+.dq-num{font-size:11px;color:var(--amber);letter-spacing:2px;font-weight:500;text-transform:uppercase;margin-bottom:4px}
+.dq-text{font-size:14px;color:var(--text);font-weight:500;line-height:1.6}
+.dq-opts{padding:10px}
+.dq-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;transition:all .2s;background:var(--white);margin-bottom:7px}
+.dq-opt:last-child{margin-bottom:0}
+.dq-opt:hover{border-color:var(--ol);background:var(--op)}
+.dq-opt.active{border-color:var(--amber);background:var(--op)}
+.dq-opt input{display:none}
+.dq-dot{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--line);flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.dq-opt.active .dq-dot{border-color:var(--amber)}
+.dq-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber);display:none}
+.dq-opt.active .dq-dot::after{display:block}
+.dq-opt-text{font-size:13.5px;color:var(--ts);font-weight:300;line-height:1.65;flex:1}
+
+/* SUBMIT */
+.submit-area{padding:8px 16px 40px}
+.submit-btn{width:100%;padding:18px;background:linear-gradient(90deg,var(--dark) 0%,var(--amber) 100%);color:#fff;border:none;border-radius:16px;font-family:inherit;font-size:16px;font-weight:500;letter-spacing:2px;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(200,118,42,0.3)}
+.submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,118,42,0.35)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.submit-note{text-align:center;margin-top:14px;font-size:12.5px;color:var(--tm);line-height:1.8}
+.error-msg{color:var(--red);font-size:13px;margin-top:12px;text-align:center;display:none;padding:10px;background:var(--red-pale);border-radius:10px}
+
+/* BOOKING PAGE（借用既有預約流程樣式） */
+.booking-page{display:none;position:fixed;inset:0;background:var(--bg);overflow-y:auto;z-index:200}
+.booking-page.show{display:block}
+.bp-inner{max-width:520px;margin:0 auto;padding:32px 20px 60px}
+.bp-confirm{display:flex;align-items:center;gap:14px;background:#fff;border-radius:16px;padding:16px 20px;border-left:4px solid #4caf50;margin-bottom:28px;box-shadow:var(--shadow)}
+.bp-check{width:36px;height:36px;border-radius:50%;background:#4caf50;color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bp-confirm-title{font-size:14px;font-weight:600;color:#2a5a2a}
+.bp-confirm-sub{font-size:12.5px;color:var(--tm);margin-top:2px}
+.bp-hero{text-align:center;margin-bottom:28px}
+.bp-step-tag{display:inline-block;background:linear-gradient(90deg,var(--dark),var(--amber));color:#fff;font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 16px;border-radius:20px;margin-bottom:14px}
+.bp-title{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:600;color:var(--text);letter-spacing:1px;margin-bottom:10px}
+.bp-desc{font-size:14px;color:var(--ts);line-height:1.8;font-weight:300}
+.bp-gcal-btn{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#7a3a10,#c8762a);border-radius:16px;padding:18px 22px;text-decoration:none;margin-bottom:28px;box-shadow:0 4px 20px rgba(200,118,42,0.35);transition:transform .2s,box-shadow .2s}
+.bp-gcal-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,118,42,0.4)}
+.bp-gcal-icon{width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bp-gcal-text{flex:1}
+.bp-gcal-main{color:#fff;font-size:15px;font-weight:600;margin-bottom:3px}
+.bp-gcal-sub{color:rgba(255,255,255,0.7);font-size:12px}
+.bp-gcal-arrow{color:rgba(255,255,255,0.8);font-size:22px;flex-shrink:0}
+.bp-fill-section{background:#fff;border-radius:20px;padding:24px 20px;box-shadow:var(--shadow)}
+.bp-fill-title{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px}
+.bp-fill-hint{font-size:13px;color:var(--tm);margin-bottom:20px;font-weight:300}
+.bp-field{margin-bottom:18px}
+.bp-label{font-size:13.5px;color:var(--text);font-weight:500;margin-bottom:8px}
+.bp-input{width:100%;padding:12px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--warm);font-family:inherit;font-size:14px;color:var(--text);font-weight:300;outline:none;transition:border-color .2s}
+.bp-input:focus{border-color:var(--amber)}
+.bp-textarea{min-height:80px;resize:vertical;line-height:1.7}
+.bp-format-group{display:flex;gap:8px}
+.bp-format-opt{flex:1;border:1.5px solid var(--line);border-radius:12px;padding:12px 8px;cursor:pointer;transition:all .2s;text-align:center;background:var(--warm);display:flex;flex-direction:column;align-items:center;gap:6px}
+.bp-format-opt:has(input:checked){border-color:var(--amber);background:var(--op)}
+.bp-format-opt input{display:none}
+.bp-fmt-icon{font-size:20px}
+.bp-fmt-main{font-size:12.5px;font-weight:500;color:var(--text)}
+.bp-fmt-sub{font-size:11px;color:var(--tm)}
+.bp-submit-btn{width:100%;padding:16px;margin-top:8px;background:linear-gradient(90deg,var(--dark),var(--amber));color:#fff;border:none;border-radius:14px;font-family:inherit;font-size:15px;font-weight:500;letter-spacing:1px;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(200,118,42,0.25)}
+.bp-submit-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,118,42,0.35)}
+.bp-submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.bp-skip{text-align:center;margin-top:12px;font-size:13px;color:var(--tm);cursor:pointer;padding:8px;text-decoration:underline;text-underline-offset:3px}
+.bp-skip:hover{color:var(--ts)}
+.bp-footer-note{text-align:center;margin-top:24px;font-size:12px;color:var(--tm);line-height:1.8;font-weight:300}
+.bp-done{text-align:center;padding:60px 20px;display:none}
+.bp-done.show{display:block}
+.bp-done-icon{font-size:56px;margin-bottom:20px}
+.bp-done-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:500;color:var(--text);margin-bottom:12px}
+.bp-done-text{font-size:14px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:28px}
+.bp-done-btn{display:inline-block;background:linear-gradient(90deg,var(--dark),var(--amber));color:#fff;padding:14px 32px;border-radius:24px;font-size:14px;font-weight:500;letter-spacing:1px;text-decoration:none;cursor:pointer;border:none;font-family:inherit}
+
+@media(max-width:480px){
+  .hero h1{font-size:24px}
+  .step-body{padding:20px 16px}
+  .intro-card{margin:0 10px;padding:22px 18px}
+  .page-wrap{padding:12px 10px 0}
+  .submit-area{padding:8px 10px 36px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ 天賦順流系統</div>
+  <h1>天賦順流測驗</h1>
+  <p class="hero-sub">3 分鐘，找到你的天賦致富腳本</p>
+  <div class="hero-preview">
+    <div class="hp-item"><div class="dot" style="background:var(--generator)"></div><p>發電機</p></div>
+    <div class="hp-item"><div class="dot" style="background:var(--flame)"></div><p>火焰</p></div>
+    <div class="hp-item"><div class="dot" style="background:var(--rhythm)"></div><p>節奏</p></div>
+    <div class="hp-item"><div class="dot" style="background:var(--steel)"></div><p>鋼鐵</p></div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="intro-card">
+  <p>哈囉，我是 <strong>Mike 主任</strong> 😊<br>
+  這份測驗會透過 20 題強迫選擇題，幫你看懂自己的<strong>天賦能量落在哪裡</strong>——以及卡住你的到底是什麼。</p>
+  <p>每一題請憑<strong>第一直覺</strong>作答，沒有標準答案，測完會產生你的專屬天賦順流報告書（共 8 種原型）。</p>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>作答進度</span><span id="progressText">0 / 20</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<form id="talentForm">
+<div class="page-wrap">
+
+<!-- STEP 1 · 基本資料 -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 1</span>
+    <span class="step-title">先讓我認識你</span>
+  </div>
+  <div class="step-body">
+    <div class="field">
+      <div class="f-label">你的名字 <span class="req">*</span></div>
+      <input type="text" class="f-input" name="name" placeholder="怎麼稱呼你" required/>
+    </div>
+    <div class="field">
+      <div class="f-label">LINE 暱稱 <span class="req">*</span></div>
+      <div class="f-hint">方便加好友時對照</div>
+      <input type="text" class="f-input" name="lineName" placeholder="LINE 暱稱" required/>
+    </div>
+    <div class="field">
+      <div class="f-label">Email（選填）</div>
+      <input type="email" class="f-input" name="email" placeholder="you@example.com"/>
+    </div>
+    <div class="field">
+      <div class="f-label">生日（選填）</div>
+      <input type="date" class="f-input" name="birthday"/>
+    </div>
+    <div class="field">
+      <div class="f-label">最近在事業／人生上卡住的地方（選填）</div>
+      <textarea class="f-input" name="painPoint" placeholder="隨便寫，不用想太多"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 · 20題 -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">STEP 2</span>
+    <span class="step-title">天賦直覺 20 題 ✦</span>
+  </div>
+  <div class="step-body">
+    <div class="dq-intro">
+      這 20 題請憑<strong>第一直覺</strong>勾選，不用想太多，也沒有對錯之分 😄<br>
+      每一題選出「最像你」的那一句就可以了。
+    </div>
+    <div id="questionList"></div>
+  </div>
+</div>
+
+</div><!-- /page-wrap -->
+
+<div class="submit-area">
+  <button type="submit" class="submit-btn" id="submitBtn">送出 ✨</button>
+  <div class="submit-note">
+    送出後會引導你預約諮詢時間 📅<br>
+    所有資訊僅用於諮詢用途，不會分享給第三方。
+  </div>
+  <div class="error-msg" id="errorMsg"></div>
+</div>
+</form>
+
+<!-- 送出成功後：預約頁面 -->
+<div class="booking-page" id="bookingPage">
+  <div class="bp-inner">
+    <div class="bp-confirm">
+      <div class="bp-check">✓</div>
+      <div><div class="bp-confirm-title">資料已收到！</div><div class="bp-confirm-sub" id="bpName">謝謝你 😊</div></div>
+    </div>
+    <div class="bp-hero">
+      <div class="bp-step-tag">最後一步</div>
+      <h2 class="bp-title">選個時間，跟 Mike 聊聊 📅</h2>
+      <p class="bp-desc">你的天賦順流報告已經生成，現在只需要選一個你方便的時段——整個流程大概 1 分鐘完成。</p>
+    </div>
+    <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bp-gcal-btn" id="bpGcalBtn">
+      <div class="bp-gcal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="2" stroke="white" stroke-width="1.8"/>
+          <path d="M3 9h18" stroke="white" stroke-width="1.8"/>
+          <path d="M8 2v4M16 2v4" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="8" y="13" width="3" height="3" rx=".5" fill="white"/>
+        </svg>
+      </div>
+      <div class="bp-gcal-text"><div class="bp-gcal-main">點我預約諮詢時段</div><div class="bp-gcal-sub">Google 行事曆・選好即自動確認</div></div>
+      <div class="bp-gcal-arrow">↗</div>
+    </a>
+    <div class="bp-fill-section">
+      <div class="bp-fill-title">請填寫以下資訊 👇</div>
+      <div class="bp-fill-hint">這樣我才能提前準備，讓我們的諮詢更有效率</div>
+      <div class="bp-field">
+        <div class="bp-label">偏好的諮詢方式</div>
+        <div class="bp-format-group">
+          <label class="bp-format-opt"><input type="radio" name="bpFormat" value="線上視訊"><div class="bp-fmt-icon">💻</div><div class="bp-fmt-main">線上視訊</div><div class="bp-fmt-sub">Google Meet</div></label>
+          <label class="bp-format-opt"><input type="radio" name="bpFormat" value="電話"><div class="bp-fmt-icon">📞</div><div class="bp-fmt-main">電話</div><div class="bp-fmt-sub">Mike 主動撥</div></label>
+          <label class="bp-format-opt"><input type="radio" name="bpFormat" value="實體見面"><div class="bp-fmt-icon">🤝</div><div class="bp-fmt-main">實體見面</div><div class="bp-fmt-sub">地點另約</div></label>
+        </div>
+      </div>
+      <div class="bp-field">
+        <div class="bp-label">想先跟 Mike 說的話（選填）</div>
+        <textarea class="bp-input bp-textarea" id="bpNotes" placeholder="例如：想多了解自己卡在哪個環節..."></textarea>
+      </div>
+      <button class="bp-submit-btn" id="bpSubmitBtn" onclick="submitBooking()">完成預約確認 ✓</button>
+      <div class="bp-skip" onclick="skipBooking()">還沒預約，先跳過，之後再說</div>
+    </div>
+    <div class="bp-footer-note">🔒 所有資訊僅用於諮詢，不會分享給第三方 · Mike 會在 24 小時內確認你的預約</div>
+  </div>
+</div>
+
+<script>
+/* ══ 20 題題庫：energy 對應 generator/flame/rhythm/steel ═══ */
+const QUESTIONS=[
+  { q:"開會的時候，你最常做的事是？", opts:[
+    {v:'generator',t:'腦內閃過一堆新點子，忍不住打斷大家丟出來'},
+    {v:'flame',t:'觀察大家的表情氣氛，適時緩和一下場子'},
+    {v:'rhythm',t:'安靜聽到最後，才慢慢說出你觀察到的重點'},
+    {v:'steel',t:'直接列出123，把邏輯講清楚、抓出漏洞'} ]},
+  { q:"剛決定要創業，你的第一步通常是？", opts:[
+    {v:'flame',t:'先打給幾個朋友聊聊，看誰要一起玩'},
+    {v:'rhythm',t:'先觀察市場上大家在幹嘛，等對的時機出手'},
+    {v:'steel',t:'先做一份完整的計畫書跟數據分析'},
+    {v:'generator',t:'先想像做出來後會多酷，馬上動手做原型'} ]},
+  { q:"卡關卡住的時候，你的反應是？", opts:[
+    {v:'rhythm',t:'先冷靜下來，一步一步拆解問題'},
+    {v:'steel',t:'打開試算表，找出到底是哪個環節出錯'},
+    {v:'generator',t:'換個方向重新想，反正舊的不喜歡就丟掉'},
+    {v:'flame',t:'找人聊聊、抱怨一下，聊完就沒事了'} ]},
+  { q:"理想的工作環境是？", opts:[
+    {v:'steel',t:'安靜、有效率、數據說話不用廢話'},
+    {v:'generator',t:'沒人管我、自由發揮，隨時能冒出新東西'},
+    {v:'flame',t:'團隊感很強、大家感情好、一起打拼'},
+    {v:'rhythm',t:'步調穩定、流程清楚、不用一直救火'} ]},
+  { q:"放假的時候，你最想做的事？", opts:[
+    {v:'flame',t:'揪一群朋友聚會、開趴、聊到深夜'},
+    {v:'generator',t:'說走就走的旅行，行程隨性最爽'},
+    {v:'steel',t:'一個人整理東西、規劃下一步、做研究'},
+    {v:'rhythm',t:'待在熟悉的地方，照著自己的步調休息'} ]},
+  { q:"面對失敗，你心裡的OS通常是？", opts:[
+    {v:'rhythm',t:'「我是不是哪個步驟沒做好」，默默檢討'},
+    {v:'flame',t:'「還好有朋友挺我」，靠關係走出低潮'},
+    {v:'generator',t:'「下一個點子一定更屌」，馬上轉頭做別的'},
+    {v:'steel',t:'「數據到底哪裡出問題」，回頭找原因'} ]},
+  { q:"社交場合裡，你比較像？", opts:[
+    {v:'generator',t:'講話最大聲、點子最多那個，全場焦點'},
+    {v:'flame',t:'到處打招呼、跟誰都聊得起來那個'},
+    {v:'rhythm',t:'找個角落，跟一兩個人深聊那個'},
+    {v:'steel',t:'觀察全場、話不多但一開口就切中要點那個'} ]},
+  { q:"你管理時間的方式比較像？", opts:[
+    {v:'flame',t:'誰找我誰優先，人情比時間表重要'},
+    {v:'rhythm',t:'照表操課，該做什麼時候做什麼'},
+    {v:'steel',t:'用工具排好優先順序，效率至上'},
+    {v:'generator',t:'靈感來了就衝，計畫表對我來說像裝飾品'} ]},
+  { q:"學一個新技能時，你會？", opts:[
+    {v:'rhythm',t:'找教學步驟照著練，穩紮穩打'},
+    {v:'steel',t:'先研究原理架構，搞懂邏輯才開始動手'},
+    {v:'generator',t:'直接上手亂試，邊做邊學最快'},
+    {v:'flame',t:'找同好一起學，互相督促比較有動力'} ]},
+  { q:"被稱讚的時候，你最開心聽到哪句？", opts:[
+    {v:'steel',t:'「你分析得也太清楚了吧」'},
+    {v:'generator',t:'「你點子也太多了吧，超有創意」'},
+    {v:'flame',t:'「跟你在一起就是開心，你人超好」'},
+    {v:'rhythm',t:'「你做事真的很讓人放心」'} ]},
+  { q:"被批評的時候，你的第一反應是？", opts:[
+    {v:'flame',t:'心裡會受傷，很在意對方是不是不喜歡我'},
+    {v:'generator',t:'有點不耐煩，直接想反駁換個角度講'},
+    {v:'steel',t:'想知道具體是哪裡不對，數據佐證比較有說服力'},
+    {v:'rhythm',t:'先消化一下，晚點再回應比較不會衝動'} ]},
+  { q:"選合作夥伴，你最在意？", opts:[
+    {v:'rhythm',t:'對方要靠得住，講好的事情會做到'},
+    {v:'flame',t:'對方要合得來，處得舒服比什麼都重要'},
+    {v:'generator',t:'對方腦袋要靈活，能跟上我天馬行空的想法'},
+    {v:'steel',t:'對方要專業，做事有條理有方法'} ]},
+  { q:"花錢的時候，你比較像？", opts:[
+    {v:'generator',t:'想買就買，衝動消費常常發生'},
+    {v:'flame',t:'花在跟朋友的相聚或送禮上很甘願'},
+    {v:'rhythm',t:'該花的花、該省的省，照計畫走'},
+    {v:'steel',t:'花錢前會做功課，算清楚投報率'} ]},
+  { q:"你心中「成功」比較接近？", opts:[
+    {v:'flame',t:'身邊有一群一起打拼的夥伴'},
+    {v:'rhythm',t:'生活穩定、心安，一步步往前走'},
+    {v:'steel',t:'打造出一套不用自己盯也能運作的系統'},
+    {v:'generator',t:'做出全世界沒人做過的事'} ]},
+  { q:"拖延症發作的時候，通常是因為？", opts:[
+    {v:'rhythm',t:'還沒抓到對的時機，怕做錯'},
+    {v:'steel',t:'資訊還不夠完整，怕做了是白做'},
+    {v:'generator',t:'這件事太無聊、太重複，沒新鮮感'},
+    {v:'flame',t:'沒人陪我一起做，提不起勁'} ]},
+  { q:"對「計畫」這件事，你的態度是？", opts:[
+    {v:'steel',t:'計畫一定要寫清楚，照著執行才安心'},
+    {v:'generator',t:'計畫趕不上變化，走一步算一步'},
+    {v:'flame',t:'計畫是死的，人跟感覺是活的'},
+    {v:'rhythm',t:'計畫要有，但也要留彈性慢慢調'} ]},
+  { q:"你最怕聽到別人說你？", opts:[
+    {v:'flame',t:'「你是不是太黏人/太在意別人眼光了」'},
+    {v:'generator',t:'「你這個人怎麼都靜不下來」'},
+    {v:'steel',t:'「你也太不近人情了吧」'},
+    {v:'rhythm',t:'「你動作也太慢了吧」'} ]},
+  { q:"開始一個新專案，你第一個興奮點是？", opts:[
+    {v:'rhythm',t:'想到終於可以把亂的東西理順'},
+    {v:'steel',t:'想到可以把流程優化到最有效率'},
+    {v:'generator',t:'想像它未來會長成什麼樣子'},
+    {v:'flame',t:'想到可以跟誰一起做、認識誰'} ]},
+  { q:"團隊合作時，你最容易扮演的角色是？", opts:[
+    {v:'generator',t:'丟點子的那個人'},
+    {v:'flame',t:'炒熱氣氛、凝聚感情的那個人'},
+    {v:'rhythm',t:'默默把事情做完、收尾的那個人'},
+    {v:'steel',t:'抓錯抓漏、把關品質的那個人'} ]},
+  { q:"十年後，你最想擁有的是？", opts:[
+    {v:'flame',t:'一群交心多年、彼此支持的夥伴'},
+    {v:'rhythm',t:'一個穩定、不用天天焦慮的生活'},
+    {v:'steel',t:'一套就算你去旅行三個月也能自動賺錢的系統'},
+    {v:'generator',t:'一個又一個從0到1做出來的作品'} ]}
+];
+
+/* ══ 渲染題目 ══ */
+const listEl=document.getElementById('questionList');
+QUESTIONS.forEach((item,i)=>{
+  const qNum=i+1;
+  const div=document.createElement('div');
+  div.className='dq';
+  div.innerHTML=`
+    <div class="dq-head">
+      <div class="dq-num">題 ${qNum} / 20</div>
+      <div class="dq-text">${item.q}</div>
+    </div>
+    <div class="dq-opts">
+      ${item.opts.map(o=>`
+        <label class="dq-opt">
+          <input type="radio" name="q${qNum}" value="${o.v}">
+          <div class="dq-dot"></div>
+          <div class="dq-opt-text">${o.t}</div>
+        </label>`).join('')}
+    </div>`;
+  listEl.appendChild(div);
+});
+
+document.querySelectorAll('.dq-opt').forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    const inp=opt.querySelector('input');
+    document.querySelectorAll(`input[name="${inp.name}"]`).forEach(i=>i.closest('.dq-opt').classList.remove('active'));
+    inp.checked=true;
+    opt.classList.add('active');
+    updateProgress();
+  });
+});
+
+function updateProgress(){
+  const answered=QUESTIONS.filter((_,i)=>document.querySelector(`input[name="q${i+1}"]:checked`)).length;
+  document.getElementById('progressText').textContent=`${answered} / 20`;
+  document.getElementById('progressFill').style.width=(answered/20*100)+'%';
+}
+
+/* ══ 主能量 + 次能量 → 角色（跟 talent-report.html 保持一致）══ */
+const ROLE_MAP={
+  generator:{ flame:"creator", rhythm:"creator", steel:"mechanic" },
+  flame:{ generator:"star", rhythm:"supporter", steel:"supporter" },
+  rhythm:{ flame:"matchmaker", generator:"merchant", steel:"merchant" },
+  steel:{ rhythm:"accumulator", generator:"landlord", flame:"landlord" }
+};
+const ROLE_NAME={ creator:"創作者", mechanic:"技師", star:"明星", supporter:"支持者", matchmaker:"媒合者", merchant:"商人", accumulator:"積蓄者", landlord:"地主" };
+
+function calcTalent(answers){
+  const counts={generator:0,flame:0,rhythm:0,steel:0};
+  const firstSeen={generator:999,flame:999,rhythm:999,steel:999};
+  Object.entries(answers).forEach(([qKey,v])=>{
+    if(counts[v]!==undefined){
+      counts[v]++;
+      const qi=parseInt(qKey.replace('q',''),10);
+      if(firstSeen[v]===999)firstSeen[v]=qi;
+    }
+  });
+  const sorted=Object.keys(counts).sort((a,b)=>{
+    if(counts[b]!==counts[a])return counts[b]-counts[a];
+    return firstSeen[a]-firstSeen[b];
+  });
+  const primary=sorted[0],secondary=sorted[1];
+  const roleKey=ROLE_MAP[primary][secondary];
+  return{counts,primary,secondary,roleKey,label:ROLE_NAME[roleKey]};
+}
+
+/* ══ Firebase（沿用同一個 career-b5a20 專案，新 collection：talentClients）══ */
+const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
+let db,fbCollection,fbAddDoc,fbServerTimestamp,fbDoc,fbUpdateDoc;
+async function initFb(){
+  if(db)return;
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  const mod=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+  db=mod.getFirestore(initializeApp(fbCfg));
+  fbCollection=mod.collection;fbAddDoc=mod.addDoc;fbServerTimestamp=mod.serverTimestamp;
+  fbDoc=mod.doc;fbUpdateDoc=mod.updateDoc;
+}
+
+/* ══ 送出 ══ */
+let savedDocId=null,savedFormData=null;
+document.getElementById('talentForm').addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const btn=document.getElementById('submitBtn');
+  const errMsg=document.getElementById('errorMsg');
+  const answers={};
+  for(let i=1;i<=20;i++){
+    const val=document.querySelector(`input[name="q${i}"]:checked`)?.value;
+    if(!val){errMsg.textContent=`❌ 請完成第 ${i} 題再送出`;errMsg.style.display='block';document.querySelectorAll('.dq')[i-1]?.scrollIntoView({behavior:'smooth',block:'center'});return;}
+    answers['q'+i]=val;
+  }
+  const name=document.querySelector('[name="name"]').value.trim();
+  const lineName=document.querySelector('[name="lineName"]').value.trim();
+  if(!name||!lineName){errMsg.textContent='❌ 姓名跟 LINE 暱稱要先填一下喔';errMsg.style.display='block';window.scrollTo({top:0,behavior:'smooth'});return;}
+  errMsg.style.display='none';
+  btn.disabled=true;btn.textContent='送出中...';
+
+  const t=calcTalent(answers);
+  savedFormData={
+    name,lineName,
+    email:document.querySelector('[name="email"]').value.trim(),
+    birthday:document.querySelector('[name="birthday"]').value||'',
+    painPoint:document.querySelector('[name="painPoint"]').value.trim(),
+    answers,counts:t.counts,primary:t.primary,secondary:t.secondary,roleKey:t.roleKey,label:t.label,
+    format:'',notes:'',status:'pending',emailSentAt:null
+  };
+  try{
+    await initFb();
+    savedFormData.createdAt=fbServerTimestamp();
+    const docRef=await fbAddDoc(fbCollection(db,'talentClients'),savedFormData);
+    savedDocId=docRef.id;
+    document.getElementById('talentForm').style.display='none';
+    const bp=document.getElementById('bookingPage');
+    bp.classList.add('show');
+    document.getElementById('bpName').textContent=`${savedFormData.name}，謝謝你 😊`;
+    window.scrollTo(0,0);
+  }catch(err){
+    console.error('Firebase 寫入失敗:',err.code,err.message);
+    errMsg.textContent=err.code==='permission-denied'?'❌ Firebase 權限不足，請確認 Firestore 安全規則。':`❌ 送出失敗：${err.message}`;
+    errMsg.style.display='block';
+  }finally{
+    btn.disabled=false;btn.textContent='送出 ✨';
+  }
+});
+
+document.querySelectorAll('.bp-format-opt').forEach(opt=>{
+  opt.addEventListener('click',()=>opt.querySelector('input').checked=true);
+});
+
+window.submitBooking=async()=>{
+  const btn=document.getElementById('bpSubmitBtn');
+  const format=document.querySelector('input[name="bpFormat"]:checked')?.value||'';
+  const notes=document.getElementById('bpNotes').value.trim();
+  if(!savedDocId){showDonePage();return;}
+  btn.disabled=true;btn.textContent='更新中...';
+  try{
+    await initFb();
+    await fbUpdateDoc(fbDoc(db,'talentClients',savedDocId),{format,notes});
+  }catch(e){console.warn('更新預約資料失敗（主資料已存好）:',e.message);}
+  showDonePage();
+};
+window.skipBooking=()=>showDonePage();
+
+function showDonePage(){
+  const bp=document.getElementById('bookingPage');
+  // 用相對路徑，不管部署在網域根目錄還是子路徑(如 GitHub Pages)都能正確連到同資料夾的 talent-report.html
+  const reportLink=`talent-report.html?id=${savedDocId}`;
+  bp.innerHTML=`
+    <div class="bp-inner">
+      <div class="bp-done show">
+        <div class="bp-done-icon">🔥</div>
+        <div class="bp-done-title">太好了，一切都搞定了！</div>
+        <div class="bp-done-text">
+          你的天賦順流報告已經生成 😊<br>
+          Mike 主任會在 <strong>24 小時內</strong>透過 Email 與你確認，<br>
+          期待在諮詢室見到你！
+        </div>
+        <a href="${reportLink}" target="_blank" class="bp-done-btn">查看我的天賦報告 →</a>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>

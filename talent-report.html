@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>天賦順流．深度解析報告書</title>
+<style>
+  :root{
+    --bg1:#3a2418; --bg2:#6b4226; --gold:#e8a33d; --gold-dark:#c17f2b;
+    --ink:#3a2418; --card:#ffffff; --sub:#a68a6d; --line:#00c300;
+    --generator:#d9622b; --flame:#c9483a; --rhythm:#8a9a5b; --steel:#7a6a52;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2) 60%,#8a5a3a);
+    min-height:100vh; color:var(--ink); display:flex; justify-content:center; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%; max-width:520px; padding:30px 20px 50px;}
+
+  /* 頂部固定列（後台檢視用：寄信 / 列印） */
+  .screen-nav{position:fixed;top:0;left:0;right:0;background:rgba(43,24,10,0.96);backdrop-filter:blur(8px);padding:10px 18px;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.2)}
+  .screen-nav .nav-title{color:rgba(255,255,255,0.9);font-size:12.5px;font-weight:600;letter-spacing:.5px;flex:1}
+  .screen-nav .nav-name{color:rgba(255,255,255,0.6);font-size:11.5px}
+  .nav-btn{padding:6px 14px;border-radius:20px;font-family:inherit;font-size:11.5px;cursor:pointer;transition:all .2s;letter-spacing:.5px;border:none}
+  .nav-btn.print-btn{background:var(--gold);color:#2a1b0a;font-weight:700}
+  .nav-btn.email{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+  .nav-spacer{height:44px}
+
+  /* 封面 */
+  .cover{text-align:center; padding:20px 0 30px;}
+  .cover .kicker{color:var(--gold); font-size:12px; letter-spacing:3px; margin-bottom:14px;}
+  .cover .to{color:#e8d5b7; font-size:14px; margin-bottom:6px;}
+  .cover .to b{color:#fff;}
+  .cover h1{color:#fff; font-size:24px; line-height:1.6; margin-bottom:8px;}
+  .cover .date{color:#c4a983; font-size:12px;}
+
+  .role-hero{text-align:center; margin-bottom:24px;}
+  .role-tag{display:inline-block; background:rgba(232,163,61,.15); color:var(--gold); border:1px solid var(--gold-dark);
+    padding:5px 14px; border-radius:999px; font-size:12px; margin-bottom:12px;}
+  .role-name{color:#fff; font-size:34px; font-weight:900; margin-bottom:6px;}
+  .role-people{color:#e8d5b7; font-size:13px;}
+
+  .energy-bars{background:rgba(255,255,255,.06); border-radius:16px; padding:18px; margin-bottom:20px;}
+  .ebar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .ebar-row:last-child{margin-bottom:0;}
+  .ebar-label{width:52px; font-size:12px; color:#ecdcc4; flex-shrink:0;}
+  .ebar-track{flex:1; height:10px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden;}
+  .ebar-fill{height:100%; border-radius:999px;}
+  .ebar-score{width:22px; font-size:12px; color:#e8d5b7; text-align:right;}
+
+  .section-label{display:flex; align-items:center; gap:7px; color:var(--gold); font-size:12px; letter-spacing:2px; margin:26px 0 10px; padding-left:2px;}
+  .sec-icon{width:15px; height:15px; flex-shrink:0;}
+  .hook-card{background:linear-gradient(135deg,#3a2418,#6b4226); border-radius:18px; padding:20px; margin-bottom:14px;}
+  .hook-card p{color:#f5e6d3; font-size:14.5px; line-height:1.9;}
+  .card{background:var(--card); border-radius:18px; padding:20px; margin-bottom:14px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .card h3{font-size:14px; color:var(--gold-dark); margin-bottom:8px; font-weight:800;}
+  .card p{font-size:14px; line-height:1.85; color:var(--ink);}
+  .card p+p{margin-top:10px;}
+
+  /* 雷達圖 */
+  .radar-wrap{display:flex; justify-content:center; align-items:center; background:rgba(255,255,255,.06); border-radius:16px; padding:14px; margin-bottom:12px;}
+  .radar-legend{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:20px;}
+  .radar-legend .li{display:flex; align-items:center; gap:5px; font-size:11.5px; color:#ecdcc4;}
+  .radar-legend .dot{width:8px; height:8px; border-radius:50%;}
+
+  /* 條列小項目 */
+  .bullet-list{list-style:none; margin:0; padding:0;}
+  .bullet-list li{display:flex; align-items:flex-start; gap:9px; font-size:14px; line-height:1.7; color:var(--ink); padding:8px 0;}
+  .bullet-list li:not(:last-child){border-bottom:1px dashed #f0e4d0;}
+  .bullet-list .li-icon{width:17px; height:17px; flex-shrink:0; margin-top:2px;}
+  .bullet-list.strength .li-icon{color:var(--gold-dark);}
+  .bullet-list.blindspot .li-icon{color:var(--flame);}
+
+  .cta-block{background:rgba(255,255,255,.08); border:1.5px dashed rgba(232,163,61,.55); border-radius:18px; padding:26px 22px; text-align:center; margin-top:22px;}
+  .gift-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(232,163,61,.15); color:var(--gold); border:1px solid var(--gold-dark);
+    padding:6px 16px; border-radius:999px; font-size:11.5px; letter-spacing:1px; margin-bottom:16px;}
+  .gift-badge svg{width:14px; height:14px;}
+  .cta-block .cta-title{color:#fff; font-size:17px; font-weight:800; margin-bottom:10px; line-height:1.5;}
+  .cta-block p{color:#ecdcc4; font-size:13.5px; line-height:1.85; margin-bottom:20px;}
+  .cta-block .cta-topics{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
+  .cta-block .topic-chip{background:rgba(255,255,255,.08); border:1px solid rgba(232,163,61,.4); color:#f5e6d3; font-size:12px; padding:6px 13px; border-radius:999px;}
+  .btn-line{
+    display:block; background:var(--line); color:#fff; text-decoration:none; font-weight:800; font-size:15.5px;
+    border-radius:14px; padding:16px; box-shadow:0 8px 20px rgba(0,195,0,.35); margin-bottom:10px;
+  }
+  .btn-outline{
+    display:block; background:transparent; color:var(--gold); text-decoration:none; font-weight:700; font-size:14px;
+    border:1.5px solid var(--gold-dark); border-radius:14px; padding:13px; cursor:pointer; font-family:inherit; width:100%;
+  }
+  .foot-note{text-align:center; color:#9c8062; font-size:11px; margin-top:24px;}
+
+  @media print{
+    .screen-nav,.nav-spacer{display:none !important;}
+    body{background:#fff !important;}
+    .wrap{max-width:100%;}
+    .cta-block .btn-line, .cta-block .btn-outline, .foot-note{display:none;}
+    .hook-card, .role-hero, .cover, .energy-bars, .radar-wrap, .cta-block{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-nav">
+  <div class="nav-title">天賦順流報告</div>
+  <div class="nav-name" id="navName">載入中...</div>
+  <button class="nav-btn email" onclick="openEmailModal()">📧 寄送 Email</button>
+  <button class="nav-btn print-btn" onclick="window.print()">🖨 列印 / PDF</button>
+</div>
+<div class="nav-spacer"></div>
+
+<div class="wrap">
+
+  <div class="cover">
+    <div class="kicker">天賦順流系統 · 深度解析報告書</div>
+    <div class="to">獻給　<b id="rp-name">—</b></div>
+    <div class="date" id="rp-date">產出日期：—</div>
+  </div>
+
+  <div class="role-hero">
+    <div class="role-tag" id="rp-tag">—</div>
+    <div class="role-name" id="rp-role">—</div>
+    <div class="role-people" id="rp-people">—</div>
+  </div>
+
+  <div class="radar-wrap"><svg id="radar-svg" viewBox="0 0 240 240" width="220" height="220"></svg></div>
+  <div class="radar-legend" id="radar-legend"></div>
+  <div class="energy-bars" id="energy-bars"></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.6h7.6z"/></svg>
+    你的天賦辨識
+  </div>
+  <div class="hook-card"><p id="rp-hook">—</p></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    核心優勢
+  </div>
+  <div class="card"><ul class="bullet-list strength" id="rp-strength"></ul></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    卡關盲點
+  </div>
+  <div class="card"><ul class="bullet-list blindspot" id="rp-blindspot"></ul></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    人際關係模式
+  </div>
+  <div class="card">
+    <p id="rp-relationship">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    適合的工作類型
+  </div>
+  <div class="card">
+    <p id="rp-career">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    你的收入成長方程式
+  </div>
+  <div class="card">
+    <p id="rp-income">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    團隊協作定位．黃金三角
+  </div>
+  <div class="card">
+    <p style="font-size:12.5px; color:var(--sub); margin-bottom:10px;">補充說明：上面的「<span id="rp-role-inline">—</span>」是你的天賦角色；下面講的是另一套「黃金三角」團隊分工模型，用來看你適合在團隊裡站哪個位置，不是第二個身份。</p>
+    <p id="rp-triangle">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    你的專屬操練指令
+  </div>
+  <div class="card">
+    <p id="rp-practice">—</p>
+  </div>
+
+  <div class="cta-block">
+    <div class="gift-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M20 12v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9"/><path d="M7.5 7a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"/><path d="M16.5 7a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg>
+      給你的專屬贈禮
+    </div>
+    <div class="cta-title">謝謝你，願意花這幾分鐘好好認識自己</div>
+    <p>這不是一般的銷售邀約，是我想送給認真面對自己的你的一份禮物——<b id="rp-consultant-name">Mike 主任</b> 親自花<b>免費30分鐘</b>分析給你聽，一對一看懂報告裡點到的卡關，找到屬於你的下一步。</p>
+    <div class="cta-topics">
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>人際情感</span>
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作發展</span>
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>天賦定位</span>
+    </div>
+    <a class="btn-line" id="rp-cta" href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" rel="noopener">領取我的免費30分鐘諮詢 →</a>
+    <button class="btn-outline" onclick="window.print()">下載 / 列印 PDF 報告</button>
+  </div>
+
+  <p class="foot-note">天賦順流系統 · 本報告結果僅供自我探索參考</p>
+</div>
+
+<script>
+/* =========================================================
+   這個版本從 Firebase Firestore 讀取資料（collection: talentClients），
+   走 ?id= 這個網址參數，跟 disc-report.html 讀 discClients 的方式完全一樣。
+   ========================================================= */
+const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
+const params=new URLSearchParams(location.search);
+const docId=params.get('id');
+
+const ENERGY_LABEL = { generator:"發電機", flame:"火焰", rhythm:"節奏", steel:"鋼鐵" };
+const ENERGY_COLOR = { generator:"#d9622b", flame:"#c9483a", rhythm:"#8a9a5b", steel:"#7a6a52" };
+
+const ROLES = {
+  creator:{ name:"創作者", people:"代表人物：賈伯斯、馬斯克", tag:"發電機系", primary:"generator",
+    hook:"你是【創作者】—— 你的腦袋隨時在跑0到1的新畫面，別人還在想「這樣行得通嗎」，你已經想到下一個點子去了。",
+    strength:["靈感反應極快，看得到別人看不到的未來藍圖","樂觀有遠見，敢想別人不敢想的可能性","一有畫面就想動手，行動力比想像中快"],
+    blindspot:["太容易沉浸在自己的世界，忽略身邊人的節奏","沒耐心處理細節與重複性事務，容易半途而廢","想法一直換新、缺乏收斂，計畫常停在「很酷的點子」階段"],
+    relationship:"你在關係裡是那個丟點子、帶風向的人，親密感建立得快，但深度需要練習：容易因為興奮分享想法而忽略對方當下的情緒，朋友或伴侶常覺得跟你相處很有趣，但也常覺得「你好像沒有真的在聽我說話」。建議先花30秒單純回應對方的感受，再丟你的新點子。",
+    career:"適合站在最前端做0到1的位置：產品創辦人、創意總監、研發前期概念設計、新事業開發。不適合長期待在需要重複執行、細節維護的崗位，那會磨損你的天賦。",
+    income:"你的收入方程式是「點子數量 × 落地速度」，不是「點子有多厲害」。多數創作者卡在收入，不是想法不夠好，是同一個想法想了半年還沒上市。找一個技師或地主型的夥伴幫你把想法變成產品，收入才會真的動起來。" },
+  mechanic:{ name:"技師", people:"代表人物：祖克柏、貝佐斯", tag:"發電機系", primary:"generator",
+    hook:"你是【技師】—— 你的天賦是把複雜的東西拆解到最簡單，別人還在混亂中打轉，你已經找到那個最有效率的解法。",
+    strength:["擅長把複雜的東西拆解到最簡單","效率極高，能一口氣把混亂的流程理順","邏輯清晰，總能快速找到問題核心"],
+    blindspot:["表達太尖銳，容易讓人覺得在挑毛病","缺乏彈性，堅持「我的方法比較有效率」","不擅長處理情緒面的溝通，容易卡在人際關係"],
+    relationship:"你在關係裡習慣先看到問題再看到人，容易在對方還沒問之前就直接給解法，這在工作上是效率，在感情或友情裡卻常讓人覺得不被理解，只被「修正」。身邊的人是不是常說「我只是想抱怨一下，不用你幫我解決」？",
+    career:"適合技術負責人、產品經理、營運優化、系統整合類的職位，任何需要把複雜流程簡化的位置都很對你的胃口。不適合需要大量情緒安撫、模糊處理人際關係的崗位。",
+    income:"你的收入方程式是「效率提升幅度 × 影響的規模」。你天生擅長把一件事做得更快更省，但如果只優化自己的產出，天花板很低；找到能讓你優化「別人的系統」或「一整個團隊的流程」的位置，收入才會被放大。" },
+  star:{ name:"明星", people:"代表人物：歐普拉、貝克漢", tag:"火焰系", primary:"flame",
+    hook:"你是【明星】—— 你天生就有舞台感，站在人群面前，大家的目光自然會被你吸走，你很清楚形象跟氛圍怎麼經營。",
+    strength:["天生舞台感，站出來就是全場焦點","懂得經營形象與氛圍，品牌感極強","感染力強，容易帶動團隊士氣"],
+    blindspot:["太在意自我意識，容易流於炫技","享受被關注卻少了深層連結","不容易聽進建議，容易變得孤單"],
+    relationship:"你在關係裡很自然地成為焦點，別人會因為你的存在而感覺熱鬧、有活力，但你也容易把「被看見」當成安全感的來源，一旦對方的關注減少，你會不自覺地想拿回鎂光燈，這在親密關係裡容易被解讀為「太自我」。",
+    career:"適合品牌代言、業務銷售、主持／講師，任何需要站在台前建立信任感的角色。不適合長期待在幕後、沒有觀眾也沒有回饋的崗位，那會讓你失去動力。",
+    income:"你的收入方程式是「曝光量 × 信任轉換率」。你不缺被看見的機會，缺的是把「喜歡你」轉換成「相信你、跟你買單」的能力；多花時間經營深度內容而不只是氛圍，收入才會從「人氣」變成「營收」。" },
+  supporter:{ name:"支持者", people:"代表人物：嚴長壽、巴爾默", tag:"火焰系", primary:"flame",
+    hook:"你是【支持者】—— 你天生就懂得怎麼把人照顧好，團隊有你在，大家會覺得很安心，你的忠誠度是別人學不來的天賦。",
+    strength:["善於支持他人，是團隊最可靠的後盾","高度忠誠，一旦認定就全力以赴","細心體貼，總能注意到別人沒發現的需求"],
+    blindspot:["情緒容易被環境牽動，精力常花在閒聊上","粗心大意，容易在細節上出錯","太照顧別人，忘了照顧自己，難以獨處充電"],
+    relationship:"你在關係裡是那個記得所有人生日、默默把大家照顧好的人，忠誠度極高，但你常常把自己的需求放到最後，容易在關係裡累積委屈卻不說，直到有一天突然爆發或心力交瘁地抽離。",
+    career:"適合客戶成功、人資、社群經營、幕僚／特助類的角色，任何需要「把人照顧好讓團隊順利運作」的位置都很適合你。不適合需要長時間獨立作業、缺乏人際互動的崗位。",
+    income:"你的收入方程式是「被信任的深度 × 你敢開口的次數」。你的天賦很值錢，但你常常忘了幫自己收費，或不好意思提出合理的報酬；學會把「支持別人」這件事明碼標價，是你收入翻倍的關鍵。" },
+  matchmaker:{ name:"媒合者", people:"代表人物：川普、孫正義", tag:"節奏系", primary:"rhythm",
+    hook:"你是【媒合者】—— 你是天生的資源連結者，看得懂誰跟誰湊在一起會發生化學反應，一對一深聊時你的敏銳度特別強。",
+    strength:["天生資源連結者，看得懂誰跟誰能合作","一對一深聊時特別有敏銳度","人脈廣，牽線牽得又快又準"],
+    blindspot:["定位容易模糊，說不清楚自己在做什麼","遇到衝突容易想太多而卡住","不敢做出果斷決定，常懷疑自己不夠專業"],
+    relationship:"你在關係裡是那個什麼都能聊、一對一深聊特別有感覺的人，人脈廣、朋友多，但你也容易在關係中沒有明確定位，別人搞不清楚你們到底是什麼關係，你自己有時候也說不清楚，容易陷入「大家都認識我，但沒人真的懂我」的孤獨感。",
+    career:"適合商務開發、公關、顧問、媒合平台經營，任何需要「連接資源、促成合作」的角色都很適合你。不適合需要長期單打獨鬥、不太需要跟人互動的崗位。",
+    income:"你的收入方程式是「連接的品質 × 成交的果斷度」。你手上握的人脈資源常常比你自己想的更值錢，卡住你的往往不是資源不夠，是該拍板成交的時候猶豫了；練習把「我來牽線就好」升級成「我來促成這筆交易」。" },
+  merchant:{ name:"商人", people:"代表人物：索羅斯、曼德拉", tag:"節奏系", primary:"rhythm",
+    hook:"你是【商人】—— 你觀察力極強，總能在對的時機看懂局勢，務實地把機會轉換成實際的成果，不玩虛的。",
+    strength:["觀察力極強，總能看懂局勢與時機","務實執行，該出手時絕不手軟","判斷精準，不玩虛的"],
+    blindspot:["創意不是強項，難以從0到1突破","容易過度攬責，凡事都想自己扛","想太多導致行動變慢甚至停滯"],
+    relationship:"你在關係裡是務實派，不擅長說甜言蜜語，但你觀察力強、記得住細節，會用行動而不是話語表達在乎；缺點是你容易把太多責任攬在自己身上，讓身邊的人覺得你什麼都自己扛、不太需要別人。",
+    career:"適合投資、交易、專案管理、營運執行類的角色，任何需要在對的時機做出精準判斷的位置都很適合你。不適合需要不斷產出新創意、天馬行空發想的崗位。",
+    income:"你的收入方程式是「判斷精準度 × 出手的次數」。你的問題通常不是看不準，是想太多、扛太多而出手次數太少；找一個發電機或火焰型的夥伴幫你分擔創意跟人脈，你才能把更多時間留給你最擅長的「精準出手」。" },
+  accumulator:{ name:"積蓄者", people:"代表人物：巴菲特、李嘉誠", tag:"鋼鐵系", primary:"steel",
+    hook:"你是【積蓄者】—— 你天生謹慎、責任感強，別人衝動下決定的時候，你早就把風險算得清清楚楚，是團隊裡最讓人放心的存在。",
+    strength:["責任感強，做事可靠謹慎","懂得長期累積，穩紮穩打","風險意識高，能冷靜評估利弊"],
+    blindspot:["過度考量風險，容易害怕失敗","不敢跨出舒適區，容易自我壓抑","明明有能力，卻遲遲不敢放大格局"],
+    relationship:"你在關係裡穩定、可靠，是那個永遠不會放你鴿子的人，但你也容易因為過度謹慎而不敢先跨出那一步，寧可等對方主動，也不想冒著「說錯話、做錯事」的風險。",
+    career:"適合財務、風險管理、長期資產配置、後勤管理類的角色，任何需要穩紮穩打、對細節負責的位置都很適合你。不適合需要快速冒險、大幅波動的第一線開創型崗位。",
+    income:"你的收入方程式是「累積的時間 × 你願意承擔的風險上限」。你天生就是複利的受益者，但如果風險容忍度設得太低，複利效果會被你自己踩煞車；學著把「可承受的風險」設定得比現在再高一點點，是你放大收入的關鍵。" },
+  landlord:{ name:"地主", people:"代表人物：米塔爾、洛克斐勒", tag:"鋼鐵系", primary:"steel",
+    hook:"你是【地主】—— 你擅長看穿系統背後的結構，別人還在處理眼前的問題，你已經在想怎麼建一套能自動運轉的機制。",
+    strength:["善於分析，能看穿系統背後的結構","擅長創造系統，讓資源規模化運作","邏輯縝密，效率與品質兼具"],
+    blindspot:["過於「對事不對人」，不擅長交流","容易給人冷漠的印象，難以拉近距離","系統做得再強，也常常留不住人"],
+    relationship:"你在關係裡理性、對事不對人，重視公平與邏輯多過情緒表達，這讓你很值得信任，但也容易讓親近的人覺得你有點冷、不容易靠近，尤其在對方需要的是情緒支持而不是解決方案的時候。",
+    career:"適合系統架構、營運長（COO）、平台／加盟體系建置類的角色，任何需要把資源整合成一套可規模化系統的位置都很適合你。不適合需要高頻率情感互動、第一線銷售的崗位。",
+    income:"你的收入方程式是「系統規模 × 系統的可複製性」。你擅長把一件事變成一套系統，但如果只服務自己，天花板有限；把你建的系統變成別人也能用、能授權出去的架構，收入才會脫離「用時間換錢」的天花板。" }
+};
+
+const TRIANGLE = {
+  generator:"在黃金三角團隊分工裡，你適合站的位置是「願景家」——負責從0到1的創意發想，看見未來藍圖。你需要找「傳訊者」位置的夥伴（火焰系：明星、支持者）幫你把想法傳出去、建立聲量；也需要「系統架構師」位置的夥伴（鋼鐵系：積蓄者、地主）把你的想法落地成可複製的系統，你自己不用、也不擅長把每個細節都做完。",
+  flame:"在黃金三角團隊分工裡，你適合站的位置是「傳訊者」——負責把願景傳遞出去，透過人脈、社交與感性溝通達成品牌宣傳與高成交。你需要「願景家」位置的夥伴（發電機系：創作者、技師）提供源源不絕的新方向；也需要「系統架構師」位置的夥伴（鋼鐵系：積蓄者、地主）把你張羅來的人脈與聲量，轉換成穩定運作的系統，不然熱度過了就容易打回原形。",
+  rhythm:"在黃金三角團隊分工裡，你是最關鍵的「橋樑者」——負責校準時機、按部就班把事情落地，讓願景家的點子跟系統架構師的系統不會脫節。建議搭配「願景家」位置的夥伴（發電機系）出方向、「系統架構師」位置的夥伴（鋼鐵系）建系統，你負責抓時機、顧細節、確保團隊產出穩定，這個位置常被低估，但少了你，整個團隊會亂了步調。",
+  steel:"在黃金三角團隊分工裡，你適合站的位置是「系統架構師」——負責把創意落地為流程，透過數據分析與自動化系統優化效率，確保企業能規模化擴張。你需要「願景家」位置的夥伴（發電機系：創作者、技師）提供方向與新點子，避免系統做得再完美也沒有新內容可裝；也需要「傳訊者」位置的夥伴（火焰系：明星、支持者）把系統包裝、推廣出去、帶進客源。"
+};
+
+const PRACTICE = {
+  generator:"發電機的操練指令：每日在安靜環境中進行60分鐘的「深度發想」，並記錄所有點子；當有基礎畫面時立即行動將0變1，不求完美——你的天賦怕的不是想不出來，是想太久不敢動手。",
+  flame:"火焰的操練指令：主動參與實體社交或專業論壇進行「大量交流」；練習在每個場合精準感受氛圍並主動「優化」它，把盲目社交轉化為真正的氛圍掌控力，而不只是熱鬧一場。",
+  rhythm:"節奏的操練指令：每週將一項重複性事務整理成具備具體步驟的SOP並執行；記錄人事時地物的最佳時機點，鍛鍊對時機的敏感度——你的天賦怕的是想太多卻遲遲不出手。",
+  steel:"鋼鐵的操練指令：針對現有業務進行「深入分析」，找出問題源頭與因果；將重複性工作建立成「自動化流程系統」，讓系統幫你工作，而不是事必躬親。"
+};
+
+function fmtDate(d){
+  const dt = d ? new Date(d) : new Date();
+  return `產出日期：${dt.getFullYear()}/${String(dt.getMonth()+1).padStart(2,"0")}/${String(dt.getDate()).padStart(2,"0")}`;
+}
+
+const ICON_CHECK = `<svg class="li-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+const ICON_WARN = `<svg class="li-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+
+function fillBulletList(elId, items, icon){
+  const ul = document.getElementById(elId);
+  ul.innerHTML = "";
+  items.forEach(text=>{
+    const li = document.createElement("li");
+    li.innerHTML = icon + `<span>${text}</span>`;
+    ul.appendChild(li);
+  });
+}
+
+// 四能量雷達圖：發電機在上、火焰在右、節奏在下、鋼鐵在左，順時針排列
+function buildRadar(scores){
+  const cx=120, cy=120, rMax=85;
+  const order = ["generator","flame","rhythm","steel"];
+  const angle = { generator:-Math.PI/2, flame:0, rhythm:Math.PI/2, steel:Math.PI };
+  const pt = (e, r) => {
+    const a = angle[e];
+    return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+  };
+  let svg = "";
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const pts = order.map(e=>pt(e, rMax*f).join(",")).join(" ");
+    svg += `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>`;
+  });
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax);
+    svg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.18)" stroke-width="1"/>`;
+  });
+  const dataPts = order.map(e=> pt(e, rMax * Math.min(scores[e]/20,1)).join(",")).join(" ");
+  svg += `<polygon points="${dataPts}" fill="rgba(232,163,61,.35)" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax * Math.min(scores[e]/20,1));
+    svg += `<circle cx="${x}" cy="${y}" r="4" fill="${ENERGY_COLOR[e]}" stroke="#fff" stroke-width="1.5"/>`;
+  });
+  const labelOffset = { generator:[0,-14], flame:[16,4], rhythm:[0,20], steel:[-16,4] };
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax);
+    const [ox,oy] = labelOffset[e];
+    svg += `<text x="${x+ox}" y="${y+oy}" fill="#f5e6d3" font-size="12" text-anchor="middle" font-weight="700">${ENERGY_LABEL[e]}</text>`;
+  });
+  document.getElementById("radar-svg").innerHTML = svg;
+}
+
+function renderReport(data){
+  const role = ROLES[data.roleKey] || ROLES.creator;
+  const name = data.name || "你";
+  document.getElementById("rp-name").textContent = name;
+  document.getElementById("rp-date").textContent = fmtDate(data.date);
+  document.getElementById("navName").textContent = `${name} 的報告`;
+  document.getElementById("rp-tag").textContent = role.tag + " · 你的天賦角色";
+  document.getElementById("rp-role").textContent = role.name;
+  document.getElementById("rp-people").textContent = role.people;
+  document.getElementById("rp-hook").textContent = role.hook;
+  fillBulletList("rp-strength", role.strength, ICON_CHECK);
+  fillBulletList("rp-blindspot", role.blindspot, ICON_WARN);
+  document.getElementById("rp-relationship").textContent = role.relationship;
+  document.getElementById("rp-career").textContent = role.career;
+  document.getElementById("rp-income").textContent = role.income;
+  document.getElementById("rp-role-inline").textContent = role.name;
+  document.getElementById("rp-triangle").textContent = TRIANGLE[role.primary];
+  document.getElementById("rp-practice").textContent = PRACTICE[role.primary];
+
+  const scores = { generator:data.scoreGenerator||0, flame:data.scoreFlame||0, rhythm:data.scoreRhythm||0, steel:data.scoreSteel||0 };
+  const sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+
+  buildRadar(scores);
+  const legend = document.getElementById("radar-legend");
+  legend.innerHTML = "";
+  sorted.forEach(e=>{
+    const item = document.createElement("div");
+    item.className = "li";
+    item.innerHTML = `<span class="dot" style="background:${ENERGY_COLOR[e]}"></span>${ENERGY_LABEL[e]} ${scores[e]}`;
+    legend.appendChild(item);
+  });
+
+  const barsWrap = document.getElementById("energy-bars");
+  barsWrap.innerHTML = "";
+  sorted.forEach(e=>{
+    const row = document.createElement("div");
+    row.className = "ebar-row";
+    row.innerHTML = `
+      <div class="ebar-label">${ENERGY_LABEL[e]}</div>
+      <div class="ebar-track"><div class="ebar-fill" style="width:${scores[e]/20*100}%; background:${ENERGY_COLOR[e]}"></div></div>
+      <div class="ebar-score">${scores[e]}</div>`;
+    barsWrap.appendChild(row);
+  });
+}
+
+/* Firestore 文件 → renderReport() 需要的欄位格式 */
+function toReportData(doc){
+  const c = doc.counts||{};
+  const ts = doc.createdAt?.seconds ? new Date(doc.createdAt.seconds*1000) : new Date();
+  return{
+    name: doc.name, date: ts,
+    roleKey: doc.roleKey,
+    scoreGenerator: c.generator||0, scoreFlame: c.flame||0, scoreRhythm: c.rhythm||0, scoreSteel: c.steel||0
+  };
+}
+
+const DEMO = { name:"範例個案・小明", roleKey:"creator", scoreGenerator:9, scoreFlame:6, scoreRhythm:3, scoreSteel:2 };
+
+async function load(){
+  if(!docId){renderReport(DEMO);return;}
+  try{
+    const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+    const {getFirestore,doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
+    const app=initializeApp(fbCfg);
+    const db=getFirestore(app);
+    const snap=await getDoc(fsDoc(db,'talentClients',docId));
+    if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#f5e6d3">找不到此報告。</p>';return;}
+    window._reportRaw=snap.data();window._reportId=docId;
+    renderReport(toReportData(snap.data()));
+  }catch(e){
+    console.warn('Firebase 讀取失敗，使用 demo 資料:',e.message);
+    renderReport(DEMO);
+  }
+}
+
+window.openEmailModal=()=>{
+  if(!window._reportRaw){alert('預覽模式，請從後台開啟報告後再寄送。');return;}
+  const d=window._reportRaw;
+  const url=`${location.origin}${location.pathname}?id=${window._reportId}`;
+  const role=ROLES[d.roleKey]||ROLES.creator;
+  const subj=encodeURIComponent(`${d.name} 的天賦順流報告出爐了！｜Mike 主任`);
+  const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《天賦順流報告》出爐了！\n天賦角色：${role.name}\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
+  window.open(`mailto:${d.email||''}?subject=${subj}&body=${body}`);
+};
+
+load();
+</script>
+</body>
+</html>
