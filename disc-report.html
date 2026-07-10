@@ -1,144 +1,103 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant-TW">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DISC 行為風格報告｜Career Blueprint</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DISC．行為風格深度解析報告書</title>
 <style>
-@page{size:A4;margin:0mm}
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;box-sizing:border-box;margin:0;padding:0}
-html{-webkit-print-color-adjust:exact}
-:root{
-  --o:#b5651d;--od:#6b3a1f;--om:#c97c35;--ol:#d9a05a;--op:#faf0e0;--ox:#fdf8f0;
-  --teal:#5c7a5e;--teal-pale:#eaf2ea;
-  --text:#2a1a0a;--ts:#5a3a1a;--tm:#9a7a50;--line:#e0cdb0;
-  --cv1:#3d1f0a;--cv2:#6b3a1f;--cv3:#b5651d;--cv4:#d4915a;
-  /* DISC 四色（僅用於圖表/圖例辨識） */
-  --D:#c0392b;--I:#d4a017;--S:#4a7a52;--C:#3a5a8a;
-}
-body{font-family:'Noto Sans TC',sans-serif;background:#ede4d8;color:var(--text);font-size:14px;line-height:1.7}
-.screen-nav{position:fixed;top:0;left:0;right:0;background:rgba(61,31,10,0.97);backdrop-filter:blur(8px);padding:10px 24px;display:flex;align-items:center;gap:16px;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.2)}
-.screen-nav .nav-title{color:rgba(255,255,255,0.9);font-size:13px;font-weight:500;letter-spacing:1px;flex:1}
-.screen-nav .nav-name{color:rgba(255,255,255,0.6);font-size:12px}
-.nav-btn{padding:6px 16px;border-radius:20px;font-family:inherit;font-size:12px;cursor:pointer;transition:all .2s;letter-spacing:.5px;border:none}
-.nav-btn.print-btn{background:var(--o);color:white}
-.nav-btn.email{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
-.pages-wrap{padding-top:52px}
-.page{width:794px;min-height:1123px;margin:20px auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,0.15);position:relative;overflow:hidden;page-break-after:always}
-.cover-bg{background-color:var(--cv2);background-image:linear-gradient(160deg,var(--cv1) 0%,var(--cv2) 40%,var(--cv3) 80%,var(--cv4) 100%);min-height:1123px;display:flex;flex-direction:column;justify-content:flex-end;padding:60px 56px 64px;position:relative;overflow:hidden}
-.cover-deco{position:absolute;inset:0;background-image:radial-gradient(circle at 70% 20%,rgba(220,170,100,0.12) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(180,110,50,0.08) 0%,transparent 40%)}
-.cover-badge{position:absolute;top:52px;right:56px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:50%;width:100px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.cover-badge .num{font-size:26px;font-weight:700;font-family:'Noto Serif TC',serif;line-height:1;color:rgba(255,255,255,0.95)}
-.cover-badge .txt{font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.6);margin-top:4px}
-.cv-tag{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
-.cv-line{width:60px;height:3px;background-color:rgba(255,255,255,0.5);margin-bottom:28px;border-radius:2px}
-.cv-h1{font-family:'Noto Serif TC',serif;font-size:40px;font-weight:700;color:#fff;line-height:1.2;letter-spacing:2px;margin-bottom:12px}
-.cv-h1 span{color:rgba(255,210,150,0.9)}
-.cv-sub{color:rgba(255,255,255,0.65);font-size:14px;letter-spacing:2px;margin-bottom:40px}
-.cv-divider{width:100%;height:1px;background-color:rgba(255,255,255,0.15);margin-bottom:32px}
-.cv-meta{display:flex;gap:40px}
-.cv-mi .label{color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
-.cv-mi .val{color:rgba(255,255,255,0.92);font-size:16px;font-family:'Noto Serif TC',serif;font-weight:500}
-.cv-disc-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:30px;padding:8px 20px;margin-top:20px}
-.cv-disc-badge .d-icon{font-size:20px}
-.cv-disc-badge .d-label{color:rgba(255,255,255,0.9);font-size:13px;font-weight:500;letter-spacing:1px}
-.cv-disc-badge .d-type{color:rgba(255,210,150,0.9);font-size:15px;font-weight:700;font-family:'Noto Serif TC',serif}
-.inner{padding:52px 56px 72px}
-.ph{display:flex;align-items:center;gap:16px;margin-bottom:32px;padding-bottom:18px;border-bottom:2px solid var(--o)}
-.pn{width:44px;height:44px;border-radius:50%;background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1),var(--cv3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;font-family:'Noto Serif TC',serif;flex-shrink:0}
-.ph .chapter{font-size:10px;letter-spacing:3px;color:var(--o);text-transform:uppercase;margin-bottom:4px;font-weight:500}
-.ph .title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:600;color:var(--text);letter-spacing:1px}
-.pf{position:absolute;bottom:0;left:0;right:0;height:40px;background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));display:flex;align-items:center;justify-content:space-between;padding:0 40px}
-.pf .brand{color:rgba(255,255,255,0.8);font-size:11px;letter-spacing:2px;text-transform:uppercase}
-.pf .pg{color:rgba(255,255,255,0.6);font-size:11px}
-.hbox{background-color:var(--op);border:1.5px solid var(--ol);border-left:4px solid var(--o);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:16px}
-.hbox.green{background-color:var(--teal-pale);border-color:#a0c8a0;border-left-color:var(--teal)}
-.hbox.red{background-color:#fef0f0;border-color:#f5c0c0;border-left-color:#b03020}
-.hbox.dark{background-color:#f5ece0;border-color:var(--o);border-left-color:var(--od)}
-.hb-t{font-size:11px;font-weight:600;color:var(--od);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.hbox.green .hb-t{color:var(--teal)}
-.hbox.red .hb-t{color:#b03020}
-.hb-body{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300}
-.hb-body strong{color:var(--text);font-weight:500}
-.sec{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:600;color:var(--od);margin:20px 0 12px;display:flex;align-items:center;gap:8px}
-.sec::before{content:'';width:4px;height:18px;background-color:var(--o);border-radius:2px;flex-shrink:0}
-.bt{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:16px}
-.bt strong{color:var(--text);font-weight:500}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.tag{background-color:var(--op);border:1px solid var(--ol);border-radius:20px;padding:4px 14px;font-size:12px;color:var(--od);font-weight:500}
+  :root{
+    --bg1:#16232f; --bg2:#28455c; --accent:#4f8fdb; --accent-dark:#2d5f96;
+    --ink:#16232f; --card:#ffffff; --sub:#7d93a8; --line:#00c300;
+    --D:#c0392b; --I:#d4a017; --S:#4a7a52; --C:#3a5a8a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
+    background:linear-gradient(160deg,var(--bg1),var(--bg2) 60%,#3a5a78);
+    min-height:100vh; color:var(--ink); display:flex; justify-content:center; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%; max-width:520px; padding:30px 20px 50px;}
 
-/* HERO (page 2) */
-.d-hero{background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1),var(--cv3));border-radius:16px;padding:28px 32px;margin-bottom:24px;position:relative;overflow:hidden}
-.d-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 30%,rgba(220,170,80,0.1) 0%,transparent 60%)}
-.d-hero-top{display:flex;align-items:center;gap:16px;margin-bottom:16px}
-.d-big-icon{font-size:44px;line-height:1}
-.d-hero-label{color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px}
-.d-hero-name{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;color:#fff;letter-spacing:2px}
-.d-hero-sub{color:rgba(255,220,150,0.9);font-size:14px;font-weight:500;letter-spacing:1px}
-.d-hero-desc{color:rgba(255,255,255,0.82);font-size:13.5px;line-height:1.9;font-weight:300}
+  /* 頂部固定列（後台檢視用：寄信 / 列印） */
+  .screen-nav{position:fixed;top:0;left:0;right:0;background:rgba(20,32,44,0.96);backdrop-filter:blur(8px);padding:10px 18px;display:flex;align-items:center;gap:12px;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.2)}
+  .screen-nav .nav-title{color:rgba(255,255,255,0.9);font-size:12.5px;font-weight:600;letter-spacing:.5px;flex:1}
+  .screen-nav .nav-name{color:rgba(255,255,255,0.6);font-size:11.5px}
+  .nav-btn{padding:6px 14px;border-radius:20px;font-family:inherit;font-size:11.5px;cursor:pointer;transition:all .2s;letter-spacing:.5px;border:none}
+  .nav-btn.print-btn{background:var(--accent);color:#fff;font-weight:700}
+  .nav-btn.email{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3)}
+  .nav-spacer{height:44px}
 
-/* SCORE / RADAR */
-.score-row{display:flex;gap:10px;margin-bottom:20px}
-.score-col{flex:1;background-color:var(--op);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
-.score-col .wt{font-size:16px;font-weight:700;font-family:'Noto Serif TC',serif}
-.score-col .wn{font-size:11px;color:var(--tm);margin:3px 0 8px;letter-spacing:.5px}
-.bar-wrap{background-color:#e8d8c0;border-radius:6px;height:8px;overflow:hidden;margin-bottom:4px}
-.bar-fill{height:100%;border-radius:6px}
-.ws-num{font-size:12px;font-weight:600}
-.radar-box{background-color:#fffaf4;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;gap:24px;align-items:center}
-.radar-legend{display:flex;flex-direction:column;gap:8px;font-size:12px}
-.radar-legend-item{display:flex;align-items:center;gap:8px}
-.radar-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.chart-note{font-size:11px;color:var(--tm);margin-top:6px}
+  /* 封面 */
+  .cover{text-align:center; padding:20px 0 30px;}
+  .cover .kicker{color:var(--accent); font-size:12px; letter-spacing:3px; margin-bottom:14px;}
+  .cover .to{color:#cfe0f0; font-size:14px; margin-bottom:6px;}
+  .cover .to b{color:#fff;}
+  .cover h1{color:#fff; font-size:24px; line-height:1.6; margin-bottom:8px;}
+  .cover .date{color:#9fb6cc; font-size:12px;}
 
-/* SOL / ROLE CARDS */
-.role-card{background-color:var(--ox);border:1px solid var(--line);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
-.role-badge{background:var(--o);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap;margin-top:2px;flex-shrink:0}
-.role-text{font-size:13px;color:var(--ts);line-height:1.75;font-weight:300}
+  .role-hero{text-align:center; margin-bottom:24px;}
+  .role-tag{display:inline-block; background:rgba(79,143,219,.18); color:var(--accent); border:1px solid var(--accent-dark);
+    padding:5px 14px; border-radius:999px; font-size:12px; margin-bottom:12px;}
+  .role-name{color:#fff; font-size:34px; font-weight:900; margin-bottom:6px;}
+  .role-people{color:#cfe0f0; font-size:13px;}
 
-.action-card{border:1.5px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:14px}
-.action-hd{background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));padding:10px 18px;display:flex;align-items:center;gap:12px}
-.action-num{background:rgba(255,255,255,0.2);color:#fff;font-size:13px;font-weight:700;font-family:'Noto Serif TC',serif;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.action-title{color:#fff;font-size:13.5px;font-weight:600;letter-spacing:.5px}
-.action-body{padding:14px 18px;background:var(--ox);font-size:13px;color:var(--ts);line-height:1.8;font-weight:300}
+  .energy-bars{background:rgba(255,255,255,.06); border-radius:16px; padding:18px; margin-bottom:20px;}
+  .ebar-row{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .ebar-row:last-child{margin-bottom:0;}
+  .ebar-label{width:52px; font-size:12px; color:#dbe8f5; flex-shrink:0;}
+  .ebar-track{flex:1; height:10px; background:rgba(255,255,255,.12); border-radius:999px; overflow:hidden;}
+  .ebar-fill{height:100%; border-radius:999px;}
+  .ebar-score{width:22px; font-size:12px; color:#cfe0f0; text-align:right;}
 
-.whisper-box{background-color:var(--cv2);background-image:linear-gradient(135deg,var(--cv1) 0%,var(--cv3) 100%);border-radius:18px;padding:36px 40px;position:relative;overflow:hidden;margin-bottom:20px}
-.whisper-box::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(220,170,80,0.08) 0%,transparent 50%)}
-.whisper-quote{font-family:'Noto Serif TC',serif;font-size:24px;font-weight:300;color:rgba(255,255,255,0.92);line-height:1.7;letter-spacing:1px;margin-bottom:20px;position:relative;padding-left:20px}
-.whisper-quote::before{content:'"';font-size:60px;color:rgba(255,255,255,0.1);position:absolute;top:-16px;left:-10px;font-family:Georgia,serif;line-height:1}
-.whisper-sign{color:rgba(255,255,255,0.6);font-size:12px;letter-spacing:2px}
+  .section-label{display:flex; align-items:center; gap:7px; color:var(--accent); font-size:12px; letter-spacing:2px; margin:26px 0 10px; padding-left:2px;}
+  .sec-icon{width:15px; height:15px; flex-shrink:0;}
+  .hook-card{background:linear-gradient(135deg,#16232f,#28455c); border-radius:18px; padding:20px; margin-bottom:14px;}
+  .hook-card p{color:#e7f0f8; font-size:14.5px; line-height:1.9;}
+  .card{background:var(--card); border-radius:18px; padding:20px; margin-bottom:14px; box-shadow:0 10px 30px rgba(0,0,0,.25);}
+  .card h3{font-size:14px; color:var(--accent-dark); margin-bottom:8px; font-weight:800;}
+  .card p{font-size:14px; line-height:1.85; color:var(--ink);}
+  .card p+p{margin-top:10px;}
+  .card b{color:var(--accent-dark);}
 
-.cta-box{border:1.5px solid var(--ol);border-radius:16px;overflow:hidden;margin-top:20px}
-.cta-hd{background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));padding:14px 24px;display:flex;align-items:center;gap:10px}
-.cta-hd-badge{background-color:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;font-size:10px;padding:3px 10px;border-radius:20px;letter-spacing:2px}
-.cta-hd-title{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px}
-.cta-body{padding:20px 24px;background-color:var(--ox)}
-.cta-lead{font-size:13.5px;color:var(--ts);line-height:1.9;font-weight:300;margin-bottom:16px}
-.cta-lead strong{color:var(--text);font-weight:500}
-.cta-items{list-style:none;padding:0;margin-bottom:18px}
-.cta-items li{font-size:13.5px;color:var(--ts);padding:6px 0 6px 20px;position:relative;font-weight:400;line-height:1.8}
-.cta-items li::before{content:'';position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background-color:var(--o)}
-.cta-scarcity{background-color:rgba(181,101,29,0.06);border:1px solid rgba(181,101,29,0.2);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12.5px;color:var(--od);line-height:1.75}
-.cta-btn{display:block;text-align:center;background-color:var(--cv2);background-image:linear-gradient(90deg,var(--cv1),var(--cv3));color:#fff;padding:16px;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:2px;text-decoration:none}
+  /* 雷達圖 */
+  .radar-wrap{display:flex; justify-content:center; align-items:center; background:rgba(255,255,255,.06); border-radius:16px; padding:14px; margin-bottom:12px;}
+  .radar-legend{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:20px;}
+  .radar-legend .li{display:flex; align-items:center; gap:5px; font-size:11.5px; color:#dbe8f5;}
+  .radar-legend .dot{width:8px; height:8px; border-radius:50%;}
 
-.closing-bg{background-color:var(--cv2);background-image:linear-gradient(160deg,var(--cv1),var(--cv2) 50%,var(--cv3));min-height:1123px;display:flex;flex-direction:column;justify-content:center;padding:80px 64px;position:relative;overflow:hidden}
-.closing-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 80% 20%,rgba(255,200,100,0.08) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(255,150,50,0.06) 0%,transparent 40%)}
-.cl-quote{font-family:'Noto Serif TC',serif;font-size:26px;font-weight:300;color:rgba(255,255,255,0.92);line-height:1.6;letter-spacing:2px;margin-bottom:48px;position:relative;padding-left:20px}
-.cl-quote::before{content:'"';font-size:80px;color:rgba(255,255,255,0.08);position:absolute;top:-24px;left:-16px;font-family:Georgia,serif;line-height:1}
-.cl-divider{width:60px;height:2px;background-color:rgba(255,255,255,0.3);margin-bottom:32px;border-radius:1px}
-.cl-info .ci-label{color:rgba(255,255,255,0.5);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
-.cl-info .ci-val{color:rgba(255,255,255,0.85);font-size:16px;font-family:'Noto Serif TC',serif;margin-bottom:20px}
-.cl-cta{display:inline-flex;align-items:center;gap:8px;background-color:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:30px;padding:12px 28px;color:rgba(255,255,255,0.9);font-size:13px;letter-spacing:2px;margin-top:16px;text-decoration:none}
-.cl-seal{position:absolute;bottom:40px;right:56px;color:rgba(255,255,255,0.25);font-size:11px;letter-spacing:3px;text-transform:uppercase}
+  /* 條列小項目 */
+  .bullet-list{list-style:none; margin:0; padding:0;}
+  .bullet-list li{display:flex; align-items:flex-start; gap:9px; font-size:14px; line-height:1.7; color:var(--ink); padding:8px 0;}
+  .bullet-list li:not(:last-child){border-bottom:1px dashed #e4edf5;}
+  .bullet-list .li-icon{width:17px; height:17px; flex-shrink:0; margin-top:2px;}
+  .bullet-list.strength .li-icon{color:var(--accent-dark);}
+  .bullet-list.blindspot .li-icon{color:#c0392b;}
 
-@media print{
-  .screen-nav{display:none!important}
-  .pages-wrap{padding-top:0!important}
-  .page{margin:0!important;box-shadow:none!important;width:100%!important;page-break-after:always!important}
-  body{background:#fff!important}
-}
+  .cta-block{background:rgba(255,255,255,.08); border:1.5px dashed rgba(79,143,219,.55); border-radius:18px; padding:26px 22px; text-align:center; margin-top:22px;}
+  .gift-badge{display:inline-flex; align-items:center; gap:6px; background:rgba(79,143,219,.18); color:var(--accent); border:1px solid var(--accent-dark);
+    padding:6px 16px; border-radius:999px; font-size:11.5px; letter-spacing:1px; margin-bottom:16px;}
+  .gift-badge svg{width:14px; height:14px;}
+  .cta-block .cta-title{color:#fff; font-size:17px; font-weight:800; margin-bottom:10px; line-height:1.5;}
+  .cta-block p{color:#dbe8f5; font-size:13.5px; line-height:1.85; margin-bottom:20px;}
+  .cta-block .cta-topics{display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px;}
+  .cta-block .topic-chip{background:rgba(255,255,255,.08); border:1px solid rgba(79,143,219,.4); color:#e7f0f8; font-size:12px; padding:6px 13px; border-radius:999px;}
+  .btn-line{
+    display:block; background:var(--line); color:#fff; text-decoration:none; font-weight:800; font-size:15.5px;
+    border-radius:14px; padding:16px; box-shadow:0 8px 20px rgba(0,195,0,.35); margin-bottom:10px;
+  }
+  .btn-outline{
+    display:block; background:transparent; color:var(--accent); text-decoration:none; font-weight:700; font-size:14px;
+    border:1.5px solid var(--accent-dark); border-radius:14px; padding:13px; cursor:pointer; font-family:inherit; width:100%;
+  }
+  .foot-note{text-align:center; color:#7d93a8; font-size:11px; margin-top:24px;}
+
+  @media print{
+    .screen-nav,.nav-spacer{display:none !important;}
+    body{background:#fff !important;}
+    .wrap{max-width:100%;}
+    .cta-block .btn-line, .cta-block .btn-outline, .foot-note{display:none;}
+    .hook-card, .role-hero, .cover, .energy-bars, .radar-wrap, .cta-block{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
 </style>
 </head>
 <body>
@@ -149,244 +108,111 @@ body{font-family:'Noto Sans TC',sans-serif;background:#ede4d8;color:var(--text);
   <button class="nav-btn email" onclick="openEmailModal()">📧 寄送 Email</button>
   <button class="nav-btn print-btn" onclick="window.print()">🖨 列印 / PDF</button>
 </div>
+<div class="nav-spacer"></div>
 
-<div class="pages-wrap">
+<div class="wrap">
 
-<!-- PAGE 1: COVER -->
-<div class="page">
-<div class="cover-bg">
-  <div class="cover-deco"></div>
-  <div class="cover-badge"><div class="num">8</div><div class="txt">PAGES</div></div>
-  <div class="cv-line"></div>
-  <div class="cv-tag">DISC Behavior Report · 行為風格診斷報告</div>
-  <div class="cv-h1">你的<span>行為風格</span><br>解析報告</div>
-  <div class="cv-sub">專屬 DISC 行為風格報告 · 嚴格保密</div>
-  <div class="cv-divider"></div>
-  <div class="cv-meta">
-    <div class="cv-mi"><div class="label">個案姓名</div><div class="val" id="cvName">—</div></div>
-    <div class="cv-mi"><div class="label">報告日期</div><div class="val" id="cvDate">—</div></div>
-    <div class="cv-mi"><div class="label">諮詢顧問</div><div class="val">Mike 主任</div></div>
-  </div>
-</div>
-</div>
-
-<!-- PAGE 2: DISC 總覽 -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">1</div><div><div class="chapter">Chapter 01</div><div class="title">📌 你的 DISC 總覽</div></div></div>
-
-  <p class="bt">DISC 是全球廣泛使用的行為風格模型，把人的職場行為傾向分成四大類：<strong>D 指揮型</strong>（果斷／目標導向）、<strong>I 社交型</strong>（熱情／人際導向）、<strong>S 穩健型</strong>（耐心／和諧導向）、<strong>C 謹慎型</strong>（精確／邏輯導向）。每個人身上都有這四種特質，只是比例不同——了解你的組合，就能了解你直覺的行為模式。</p>
-
-  <div class="score-row">
-    <div class="score-col"><div class="wt" style="color:var(--D)">D</div><div class="wn">指揮型</div><div class="bar-wrap"><div class="bar-fill" id="barD" style="width:0%;background:var(--D)"></div></div><div class="ws-num" id="scD">0%</div></div>
-    <div class="score-col"><div class="wt" style="color:var(--I)">I</div><div class="wn">社交型</div><div class="bar-wrap"><div class="bar-fill" id="barI" style="width:0%;background:var(--I)"></div></div><div class="ws-num" id="scI">0%</div></div>
-    <div class="score-col"><div class="wt" style="color:var(--S)">S</div><div class="wn">穩健型</div><div class="bar-wrap"><div class="bar-fill" id="barS" style="width:0%;background:var(--S)"></div></div><div class="ws-num" id="scS">0%</div></div>
-    <div class="score-col"><div class="wt" style="color:var(--C)">C</div><div class="wn">謹慎型</div><div class="bar-wrap"><div class="bar-fill" id="barC" style="width:0%;background:var(--C)"></div></div><div class="ws-num" id="scC">0%</div></div>
+  <div class="cover">
+    <div class="kicker">DISC 行為風格系統 · 深度解析報告書</div>
+    <div class="to">獻給　<b id="rp-name">—</b></div>
+    <div class="date" id="rp-date">產出日期：—</div>
   </div>
 
-  <div class="radar-box">
-    <svg width="220" height="220" viewBox="0 0 220 220">
-      <polygon points="110,20 200,110 110,200 20,110" fill="none" stroke="#e0cdb0" stroke-width="1"/>
-      <polygon points="110,50 170,110 110,170 50,110" fill="none" stroke="#e8ddd0" stroke-width="1"/>
-      <line x1="110" y1="20" x2="110" y2="200" stroke="#e8ddd0" stroke-width="1"/>
-      <line x1="20" y1="110" x2="200" y2="110" stroke="#e8ddd0" stroke-width="1"/>
-      <polygon id="radarPoly" points="110,110 110,110 110,110 110,110" fill="rgba(181,101,29,0.18)" stroke="var(--o)" stroke-width="2"/>
-      <circle id="rdD" cx="110" cy="110" r="4" fill="var(--D)"/>
-      <circle id="rdI" cx="110" cy="110" r="4" fill="var(--I)"/>
-      <circle id="rdS" cx="110" cy="110" r="4" fill="var(--S)"/>
-      <circle id="rdC" cx="110" cy="110" r="4" fill="var(--C)"/>
-      <text x="110" y="14" text-anchor="middle" font-size="12" font-weight="700" fill="var(--D)" font-family="Noto Sans TC,sans-serif">D</text>
-      <text x="208" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="var(--I)" font-family="Noto Sans TC,sans-serif">I</text>
-      <text x="110" y="214" text-anchor="middle" font-size="12" font-weight="700" fill="var(--S)" font-family="Noto Sans TC,sans-serif">S</text>
-      <text x="12" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="var(--C)" font-family="Noto Sans TC,sans-serif">C</text>
-    </svg>
-    <div class="radar-legend">
-      <div class="radar-legend-item"><span class="radar-dot" style="background:var(--D)"></span>D 指揮型・果斷務實</div>
-      <div class="radar-legend-item"><span class="radar-dot" style="background:var(--I)"></span>I 社交型・熱情感染</div>
-      <div class="radar-legend-item"><span class="radar-dot" style="background:var(--S)"></span>S 穩健型・耐心可靠</div>
-      <div class="radar-legend-item"><span class="radar-dot" style="background:var(--C)"></span>C 謹慎型・精確嚴謹</div>
+  <div class="role-hero">
+    <div class="role-tag" id="rp-tag">—</div>
+    <div class="role-name" id="rp-role">—</div>
+    <div class="role-people" id="rp-people">—</div>
+  </div>
+
+  <div class="radar-wrap"><svg id="radar-svg" viewBox="0 0 240 240" width="220" height="220"></svg></div>
+  <div class="radar-legend" id="radar-legend"></div>
+  <div class="energy-bars" id="energy-bars"></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2-6.3-4.5-6.3 4.5 2.3-7.2-6-4.6h7.6z"/></svg>
+    你的行為風格辨識
+  </div>
+  <div class="hook-card"><p id="rp-hook">—</p></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    核心優勢
+  </div>
+  <div class="card"><ul class="bullet-list strength" id="rp-strength"></ul></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    卡關盲點
+  </div>
+  <div class="card"><p id="rp-blindspot">—</p></div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    人際溝通：優勢與地雷
+  </div>
+  <div class="card">
+    <p id="rp-comm">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    你最理想的工作環境
+  </div>
+  <div class="card">
+    <p id="rp-env">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    團隊合作全景
+  </div>
+  <div class="card">
+    <p id="rp-roles">—</p>
+  </div>
+
+  <div class="section-label">
+    <svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    你的行動起點
+  </div>
+  <div class="card">
+    <p id="rp-actions">—</p>
+  </div>
+
+  <div class="cta-block">
+    <div class="gift-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7"/><path d="M20 12v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9"/><path d="M7.5 7a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"/><path d="M16.5 7a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg>
+      給你的專屬贈禮
     </div>
-  </div>
-  <p class="chart-note">※ 分數依 20 題情境作答的選擇比例計算，反映你直覺的行為傾向，非能力優劣評比。</p>
-
-</div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">2 / 8</span></div>
-</div>
-
-<!-- PAGE 3: 主導風格深度解析 -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">2</div><div><div class="chapter">Chapter 02</div><div class="title">📌 你的主導風格：深度解析</div></div></div>
-
-  <div class="d-hero" id="dHero">
-    <div class="d-hero-top">
-      <div class="d-big-icon" id="dBigIcon">✦</div>
-      <div>
-        <div class="d-hero-label">你的主導行為風格</div>
-        <div class="d-hero-name" id="dHeroName">—</div>
-        <div class="d-hero-sub" id="dHeroSub">—</div>
-      </div>
+    <div class="cta-title">謝謝你，願意花這幾分鐘好好認識自己</div>
+    <p>這不是一般的銷售邀約，是我想送給認真面對自己的你的一份禮物——<b id="rp-consultant-name">Mike 主任</b> 親自花<b>免費30分鐘</b>分析給你聽，一對一看懂報告裡點到的卡關，找到屬於你的下一步。</p>
+    <div class="cta-topics">
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>人際溝通</span>
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>工作發展</span>
+      <span class="topic-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>行為定位</span>
     </div>
-    <div class="d-hero-desc" id="dHeroDesc">載入中...</div>
+    <a class="btn-line" id="rp-cta" href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" rel="noopener">領取我的免費30分鐘諮詢 →</a>
+    <button class="btn-outline" onclick="window.print()">下載 / 列印 PDF 報告</button>
   </div>
 
-  <div class="two-col">
-    <div>
-      <div class="sec">你最輕鬆的狀態</div>
-      <div class="tag-row" id="dStrengths"></div>
-      <div class="bt" id="dStrengthDesc">載入中...</div>
-    </div>
-    <div>
-      <div class="sec">要小心的盲區 ⚠️</div>
-      <div class="hbox red"><div class="hb-t">最容易自我消耗的地方</div><div class="hb-body" id="dBlind">載入中...</div></div>
-    </div>
-  </div>
-
-  <div class="sec">你最理想的工作環境</div>
-  <div class="hbox"><div class="hb-t">在這樣的環境裡，你最有能量</div><div class="hb-body" id="dIdealEnv">載入中...</div></div>
-
+  <p class="foot-note">DISC 行為風格系統 · 本報告結果僅供自我探索參考</p>
 </div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">3 / 8</span></div>
-</div>
-
-<!-- PAGE 4: 人際溝通建議 -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">3</div><div><div class="chapter">Chapter 03</div><div class="title">📌 人際溝通：優勢與地雷</div></div></div>
-  <p class="bt">每種行為風格都有自己的「黃金溝通模式」和「踩雷習慣」。了解這些，能讓你少走很多彎路。</p>
-
-  <div class="two-col">
-    <div>
-      <div class="sec">你的溝通優勢</div>
-      <div class="bt" id="commStrength">載入中...</div>
-    </div>
-    <div>
-      <div class="sec">最容易踩的地雷 ⚠️</div>
-      <div class="hbox red"><div class="hb-t">在這些情境要小心</div><div class="hb-body" id="commMine">載入中...</div></div>
-      <div class="sec">破解方法</div>
-      <div class="bt" id="mineBreak">載入中...</div>
-    </div>
-  </div>
-
-  <div class="sec">職場不同角色的相處建議</div>
-  <div id="roleCards"></div>
-
-</div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">4 / 8</span></div>
-</div>
-
-<!-- PAGE 5: 行動起點 -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">4</div><div><div class="chapter">Chapter 04</div><div class="title">📌 你的行動起點：現在就能開始做的 3 件事</div></div></div>
-  <p class="bt">不需要等準備好。這 3 件事，<strong>這週就能開始</strong>，而且是針對你的風格量身設計的。</p>
-
-  <div id="actionCards"></div>
-
-  <div class="sec">如果只能做一件事</div>
-  <div class="hbox dark"><div class="hb-t">Mike 主任的首要建議</div><div class="hb-body" id="topAction">載入中...</div></div>
-
-  <div class="sec">你的成長里程碑</div>
-  <div style="background-color:var(--ox);border:1.5px solid var(--line);border-radius:14px;padding:20px 20px 16px">
-    <svg width="100%" height="110" viewBox="0 0 640 110">
-      <line x1="60" y1="36" x2="580" y2="36" stroke="#e0cdb0" stroke-width="2.5"/>
-      <circle cx="60" cy="36" r="14" fill="#7a3a10" stroke="#b5651d" stroke-width="3"/>
-      <text x="60" y="41" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Noto Sans TC,sans-serif">D1</text>
-      <circle cx="200" cy="36" r="10" fill="#b5651d"/><circle cx="380" cy="36" r="10" fill="#b5651d"/><circle cx="560" cy="36" r="10" fill="#b5651d"/>
-      <text x="60" y="16" text-anchor="middle" font-size="9" font-weight="700" fill="#7a3a10" font-family="Noto Sans TC,sans-serif">▶ 這週</text>
-      <text x="200" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 1 個月</text>
-      <text x="380" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 3 個月</text>
-      <text x="560" y="16" text-anchor="middle" font-size="9" font-weight="600" fill="#6b3a1f" font-family="Noto Sans TC,sans-serif">第 6 個月</text>
-      <foreignObject x="0" y="56" width="130" height="50"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;color:#7a3a10;font-weight:700;line-height:1.5;font-family:Noto Sans TC,sans-serif;text-align:center">與 Mike 主任<br>策略複診校準</div></foreignObject>
-      <text x="200" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">啟動第一個</text>
-      <text x="200" y="72" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">行為實驗</text>
-      <text x="380" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">看見可感受</text>
-      <text x="380" y="72" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">的改變</text>
-      <text x="560" y="60" text-anchor="middle" font-size="9" fill="#9a7a50" font-family="Noto Sans TC,sans-serif">收穫成果</text>
-      <polygon points="60,54 55,62 65,62" fill="#b5651d"/>
-    </svg>
-    <p style="font-size:11px;color:#7a3a10;font-weight:500;margin-top:4px;text-align:center">⚡ Day 1 是整個計畫最關鍵的一步——方向沒校準，後面的行動都是在加速跑錯路</p>
-    <p class="chart-note" id="growthNote" style="text-align:center;margin-top:4px">載入中...</p>
-  </div>
-
-</div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">5 / 8</span></div>
-</div>
-
-<!-- PAGE 6: 團隊合作全景 -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">5</div><div><div class="chapter">Chapter 05</div><div class="title">📌 團隊合作全景：四型互動關係</div></div></div>
-  <p class="bt">認識自己只是第一步，看懂身邊四種風格的人怎麼想，才能真正減少摩擦、提高合作效率。</p>
-
-  <div class="two-col">
-    <div class="hbox" style="border-left-color:var(--D)"><div class="hb-t" style="color:var(--D)">D 指揮型同事</div><div class="hb-body">重視效率和結果，跟他們溝通時<strong>直接講重點</strong>，避免拖泥帶水的鋪陳。</div></div>
-    <div class="hbox" style="border-left-color:var(--I)"><div class="hb-t" style="color:var(--I)">I 社交型同事</div><div class="hb-body">重視關係和氣氛，跟他們溝通時<strong>多一點熱情回應</strong>，給他們表達的空間。</div></div>
-    <div class="hbox" style="border-left-color:var(--S)"><div class="hb-t" style="color:var(--S)">S 穩健型同事</div><div class="hb-body">重視穩定和信任，跟他們溝通時<strong>放慢步調、給足時間</strong>，別急著逼他們表態。</div></div>
-    <div class="hbox" style="border-left-color:var(--C)"><div class="hb-t" style="color:var(--C)">C 謹慎型同事</div><div class="hb-body">重視邏輯和精確，跟他們溝通時<strong>準備好數據和細節</strong>，避免空泛的說法。</div></div>
-  </div>
-
-  <div class="sec">與你天生最合拍的夥伴</div>
-  <div class="hbox green" id="matchBox"><div class="hb-t">互補型合作</div><div class="hb-body" id="matchText">載入中...</div></div>
-
-</div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">6 / 8</span></div>
-</div>
-
-<!-- PAGE 7: Mike主任的悄悄話 + CTA -->
-<div class="page">
-<div class="inner">
-  <div class="ph"><div class="pn">6</div><div><div class="chapter">Chapter 06</div><div class="title">📌 Mike 主任的悄悄話</div></div></div>
-
-  <div class="whisper-box"><div class="whisper-quote" id="whisperQuote">載入中...</div><div class="whisper-sign">— Mike 主任</div></div>
-  <div class="bt" id="whisperBody">載入中...</div>
-
-  <div class="cta-box">
-    <div class="cta-hd"><span class="cta-hd-badge">📣 本月僅開放 3 個名額</span><span class="cta-hd-title">來跟我真人聊聊吧</span></div>
-    <div class="cta-body">
-      <div class="cta-lead">這份報告能幫你看清楚自己直覺的行為模式，但<strong>行為風格只是起點</strong>——它怎麼影響你的職涯選擇、收入模式、人際卡點，需要更細緻的拆解。<br><br>如果你想知道：</div>
-      <ul class="cta-items">
-        <li>你的行為風格<strong>在目前的職場處境裡</strong>，該怎麼發揮才能被看見、被重用？</li>
-        <li>結合 <strong>Wealth Dynamics 財富流系統</strong>，你的行為風格對應的原型決定了最適合你的收入模式——這份報告只到門口，真正的核心在複診裡。</li>
-        <li>你最容易踩的人際地雷，具體<strong>在你目前的團隊裡</strong>怎麼化解？</li>
-      </ul>
-      <div class="cta-scarcity">歡迎點擊下方預約連結，跟我進行一場 <strong>30 分鐘的 1-on-1 真人策略複診</strong>。<br><strong>本月僅開放 3 個免費名額</strong>，額滿恢復原價，期待在諮詢室見到你 😊</div>
-      <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" class="cta-btn">立即預約 30 分鐘策略複診 ↗</a>
-    </div>
-  </div>
-</div>
-<div class="pf"><span class="brand">DISC Report · Mike 主任</span><span class="pg">7 / 8</span></div>
-</div>
-
-<!-- PAGE 8: CLOSING -->
-<div class="page">
-<div class="closing-bg">
-  <div class="cl-quote" id="closingQuote">看懂自己的行為模式，<br>是所有改變的起點。</div>
-  <div class="cl-divider"></div>
-  <div class="cl-info">
-    <div class="ci-label">此報告專屬於</div><div class="ci-val" id="closingName">—</div>
-    <div class="ci-label">諮詢顧問</div><div class="ci-val">Mike 主任 · 職涯定位顧問</div>
-    <div class="ci-label">行為風格</div><div class="ci-val" id="closingDisc">—</div>
-    <div class="ci-label">報告生成日期</div><div class="ci-val" id="closingDate">—</div>
-  </div>
-  <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" class="cl-cta">預約策略複診 ↗</a>
-  <div class="cl-seal">DISC REPORT · 嚴格保密</div>
-</div>
-</div>
-
-</div><!-- /pages-wrap -->
 
 <script>
+/* =========================================================
+   從 Firebase Firestore 讀取資料（collection: discClients），
+   走 ?id= 這個網址參數，套用跟 talent-report.html 一樣的版型結構。
+   ========================================================= */
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
 
-/* ══ DISC TYPE DATA ══ */
+const TYPE_LABEL = { D:"指揮型", I:"社交型", S:"穩健型", C:"謹慎型" };
+const TYPE_COLOR = { D:"#c0392b", I:"#d4a017", S:"#4a7a52", C:"#3a5a8a" };
+
 const DISC={
-  D:{name:'指揮型',icon:'🦁',sub:'目標驅動 · 天生的決策者',
+  D:{name:'指揮型',people:'目標驅動 · 天生的決策者',icon:'🦁',
     heroDesc:'你是那種丟給你一個目標，會立刻想辦法解決、而且通常最快看到結果的人。你不喜歡拖泥帶水，遇到問題你的第一反應是「動起來」，而不是「再討論一下」。在很多人還在猶豫的時候，你已經做出決定、往前走了。',
     strengths:['決斷力強，不輕易猶豫','天生的目標導向','敢承擔風險','危機處理冷靜果斷','推動事情往前的行動力'],
-    strengthDesc:'你在有明確目標、能自主做決定的環境裡效率最高。被綁手綁腳、事事要請示，會讓你的能量迅速被磨掉——這不是你不配合，是你的引擎本來就設計來衝的。',
     blind:'說個直接的：你的盲區是「太直接、不夠耐心」。你講話單刀直入、做事講求效率，但這常常讓身邊步調比較慢的人覺得被壓迫，甚至誤會你不近人情。你不是真的不在乎別人的感受，你只是把「解決問題」排在「照顧情緒」前面——這個順序，值得你重新想一想。',
     idealEnv:'有清楚目標、能自主決策、看得到具體成果的環境。事事要請示、進度緩慢的地方，會讓你的能量迅速流失。',
     commStrength:'你的溝通優勢是「說重點、有魄力」。當事情需要有人拍板、扛責任時，你往往是那個讓大家安心的角色。',
@@ -395,13 +221,10 @@ const DISC={
     roles:[{r:'面對主管',t:'直接報告結果和數字，不需要鋪陳太多，主管會欣賞你的效率。'},{r:'面對同事',t:'記得放慢一點，確認大家真的跟上了，而不是只有你自己往前衝。'},{r:'面對客戶',t:'你的自信會讓客戶感到專業可靠，但記得多留一點空間讓對方表達疑慮。'}],
     match:'穩健型和謹慎型的人——他們的耐心和嚴謹，正好補上你的弱項，而你的行動力能帶著他們一起往前衝。',
     actions:[{num:'01',title:'這週練習「先聽完再回應」',desc:'在下一次會議或對話中，刻意等對方講完再開口，觀察自己有沒有更耐心接住對方的意思。'},{num:'02',title:'找一個能幫你補位的夥伴',desc:'找一個穩健型或謹慎型的人，讓他們幫你把關團隊的情緒溫度和執行細節，補上你天生比較弱的那一塊。'},{num:'03',title:'把「贏」的定義擴大',desc:'這週試著把一次「讓團隊都覺得舒服」的合作，也算作一種成功，而不只是看結果。'}],
-    top:'這週選一個你正在推動的專案，主動問身邊一位夥伴：「我這樣推進的方式，你會覺得有壓力嗎？」聽真實的答案，而不是禮貌性的回應。',
-    growth:'以你的特質，一旦你把「照顧他人步調」這塊補上，你的領導力和推進力會被更多人心甘情願地跟隨——速度會比你想像的快。',
-    whisper:'你的直接是禮物，不是缺點。只是有時候，慢半拍反而能讓你走得更遠。'},
-  I:{name:'社交型',icon:'🌟',sub:'人脈磁鐵 · 天生的感染者',
+    top:'這週選一個你正在推動的專案，主動問身邊一位夥伴：「我這樣推進的方式，你會覺得有壓力嗎？」聽真實的答案，而不是禮貌性的回應。'},
+  I:{name:'社交型',people:'人脈磁鐵 · 天生的感染者',icon:'🌟',
     heroDesc:'你走進任何場合，都有辦法在很短時間內讓大家喜歡你、想跟你多聊幾句。你的超能力不是最懂技術，而是「讓人願意信任你、跟你合作」。這種能力在職場上，比大多數硬實力都珍貴。',
     strengths:['天生讓人覺得親切','擅長讀懂氣氛','用熱情感染團隊','建立關係的速度飛快','把沉悶的事情變有趣'],
-    strengthDesc:'你在有互動、有能量流動的環境裡最有活力。一個人埋頭做重複性的事，會讓你的動力迅速下滑；但給你一個舞台、一群人，你能讓整個空間的溫度都不一樣。',
     blind:'直說了：你的盲區是「太怕讓人失望」。你很難拒絕別人，答應了太多事，最後把自己的時間和精力耗在維持表面和諧上，反而沒空做真正重要的事。',
     idealEnv:'有活力、能跟人互動、氣氛輕鬆自在的環境。一個人悶頭做事、缺乏互動的場合，會讓你覺得特別煎熬。',
     commStrength:'你的溝通優勢是「點燃對話」。你能把複雜或無聊的內容，用有趣的方式說出來，讓所有人都聽得進去。',
@@ -410,13 +233,10 @@ const DISC={
     roles:[{r:'面對主管',t:'用結果和具體成效包裝你的想法，而不只是「我覺得這樣做很有趣」。'},{r:'面對同事',t:'你天生是團隊的潤滑劑，但注意別讓自己變成大家的情緒垃圾桶，適度設立界線。'},{r:'面對客戶',t:'你建立信任的速度是所有類型裡最快的，善用這點深耕長期關係。'}],
     match:'謹慎型和穩健型的人——謹慎型幫你把關細節，穩健型給你一個穩定的後盾，讓你的熱情有地方安放。',
     actions:[{num:'01',title:'這週練習說一次「不」',desc:'找一件你本來想答應、但其實會犧牲自己時間的事，練習溫和但堅定地拒絕。'},{num:'02',title:'找一個能幫你補位的夥伴',desc:'找一個謹慎型或穩健型的人，讓他們幫你把關細節和後續追蹤，補上你天生比較弱的那一塊。'},{num:'03',title:'把一個「還沒完成」的計畫重新撿起來',desc:'你身邊一定有一個曾經很興奮、後來沒下文的專案，這週回頭看看它卡在哪。'}],
-    top:'這週列出你目前答應的所有事，圈出其中一件其實你不想做的，練習好好拒絕它。',
-    growth:'以你的特質，人脈和影響力的複利效應是所有類型裡最快的——一旦你學會篩選，而不是來者不拒，你的收穫會加倍。',
-    whisper:'你最大的資產不是技巧，是「讓人願意靠近你」的能力。現在要學的，是把這份能力用在真正值得的地方。'},
-  S:{name:'穩健型',icon:'🌿',sub:'團隊基石 · 值得信賴的夥伴',
+    top:'這週列出你目前答應的所有事，圈出其中一件其實你不想做的，練習好好拒絕它。'},
+  S:{name:'穩健型',people:'團隊基石 · 值得信賴的夥伴',icon:'🌿',
     heroDesc:'你是那種「大家都很慶幸有你在」的人。你不是最高調的那個，但你往往是把事情穩穩落地、讓大家安心的那個。你天生擅長傾聽，也很少讓人感覺到壓力。',
     strengths:['耐心十足，值得信賴','擅長傾聽和支持他人','情緒穩定不易崩潰','做事扎實有始有終','團隊裡的穩定力量'],
-    strengthDesc:'你在有穩定節奏、能按部就班推進的環境裡效率最高。突然被打亂步調、被催趕，會讓你感到不安；但給你足夠的空間，你能把事情做得比任何人都紮實。',
     blind:'說個也許你自己也隱約知道的事：你太怕改變、太怕起衝突了。這讓你常常把真實想法藏在心裡，久而久之累積成內耗，也讓機會在你猶豫的時候溜走。',
     idealEnv:'穩定、和諧、彼此信任支持的環境。步調混亂、常常臨時變動的地方，會讓你特別沒有安全感。',
     commStrength:'你的溝通優勢是「讓人放心」。你很少高調表達，說話溫和，這讓身邊的人願意把真心話告訴你。',
@@ -425,13 +245,10 @@ const DISC={
     roles:[{r:'面對主管',t:'主動讓主管知道你的進度，不要讓你的穩定被誤解成「沒有想法」。'},{r:'面對同事',t:'你是讓大家安心的那個人，但要注意別把「配合」變成「委屈自己」。'},{r:'面對客戶',t:'你給客戶的安全感是你最大的資產，強調你的可靠和一致性。'}],
     match:'指揮型和社交型的人——指揮型能推著你踏出舒適圈，社交型能幫你在人際上多一些開拓。',
     actions:[{num:'01',title:'這週練習說出一次真實的想法',desc:'找一個你平常會選擇沉默的場合，練習說出你真正的意見，哪怕只是一小步。'},{num:'02',title:'找一個能拉你前進的夥伴',desc:'找一個指揮型或社交型的人，讓他們幫你把想法推向行動、拉你走出舒適圈。'},{num:'03',title:'給自己一個「小改變」的實驗',desc:'這個月，刻意做一件你一直想做但覺得「時機還沒到」的小事。'}],
-    top:'這週在一次會議或對話中，主動先開口表達立場，而不是等別人問你才說。',
-    growth:'以你的特質，一旦你願意主動表態、擁抱一點點不確定，你的穩健執行力會讓成果比任何人都紮實——而且比你想像的更快看到回報。',
-    whisper:'你的穩定是團隊最寶貴的資產。現在要練習的，不是變得更外向，而是讓你的真實想法被聽見。'},
-  C:{name:'謹慎型',icon:'🧭',sub:'邏輯專家 · 品質的把關者',
+    top:'這週在一次會議或對話中，主動先開口表達立場，而不是等別人問你才說。'},
+  C:{name:'謹慎型',people:'邏輯專家 · 品質的把關者',icon:'🧭',
     heroDesc:'你是那種別人吵成一團、你安靜坐下來列出重點就解決問題的人。你最厲害的地方是把複雜的事情拆解成清楚的邏輯和步驟，讓混亂變得有秩序。',
     strengths:['邏輯清晰，分析力強','注重細節不馬虎','做決定精準嚴謹','高標準把關品質','系統化思考的天賦'],
-    strengthDesc:'你在有清楚規則、能用數據佐證的環境裡最有安全感。你不喜歡模糊地帶，給你清楚的目標和足夠的資訊，你能做出讓大家佩服的精準判斷。',
     blind:'直說一件你可能不太願意承認的事：你太追求完美了，容易卡在細節裡動不了。你習慣蒐集更多資料才敢行動，導致很多「先做再調整」的機會，被你變成了無止盡的準備。',
     idealEnv:'有條理、規則清楚、品質受重視的環境。模糊不清、朝令夕改的地方，會讓你特別焦慮。',
     commStrength:'你的溝通優勢是「有憑有據」。你不輕易發言，但一開口就讓人覺得可信賴、有份量。',
@@ -440,107 +257,142 @@ const DISC={
     roles:[{r:'面對主管',t:'定期給簡短的進度更新，別讓沉默被誤解成「沒在動」。'},{r:'面對同事',t:'你是讓大家安心的把關者，但要注意別讓「高標準」變成「難合作」。'},{r:'面對客戶',t:'你的專業細節是最大的信任來源，強調你的準確和一致性。'}],
     match:'社交型和指揮型的人——社交型幫你補上人際的溫度，指揮型能推你把分析化為行動。',
     actions:[{num:'01',title:'設一個「可接受的最低標準」',desc:'選一件你分析很久的事，設定一個門檻，達到就先行動，而不是等到完美。'},{num:'02',title:'找一個能推你一把的夥伴',desc:'找一個指揮型或社交型的人，幫你在「準備」和「行動」之間抓平衡。'},{num:'03',title:'練習分享一個「還沒完全確定」的想法',desc:'這週在會議中主動提出一個尚未完全驗證、但值得討論的觀點。'}],
-    top:'這週選一件你已經分析超過一週的事，設定一個「先做出第一版」的期限，然後行動。',
-    growth:'以你的特質，一旦系統和分析能力搭配「先行動再優化」的習慣，你的成果會比任何人都精準紮實，而且複利效應很快就會顯現。',
-    whisper:'你的分析能力是真正的優勢，但分析是工具，不是目的。現在你需要的不是更多資料，是一個「先做再說」的決定。'}
+    top:'這週選一件你已經分析超過一週的事，設定一個「先做出第一版」的期限，然後行動。'}
 };
 
-function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt||'';}
-function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html||'';}
-
-function calcDisc(answers){
-  const c={D:0,I:0,S:0,C:0};
-  Object.values(answers||{}).forEach(v=>{if(c[v]!==undefined)c[v]++;});
-  const s=Object.entries(c).sort((a,b)=>b[1]-a[1]);
-  return{counts:c,primary:s[0][0],secondary:s[1][1]>0?s[1][0]:null,sorted:s};
+function fmtDate(d){
+  const dt = d ? new Date(d) : new Date();
+  return `產出日期：${dt.getFullYear()}/${String(dt.getMonth()+1).padStart(2,"0")}/${String(dt.getDate()).padStart(2,"0")}`;
 }
 
-function render(data){
-  const answers=data.answers||{};
-  const d=data.counts?{counts:data.counts,primary:data.primary,secondary:data.secondary}:calcDisc(answers);
-  const pt=DISC[d.primary]||DISC.D;
-  const name=data.name||'您';
-  const now=new Date();
-  const dateStr=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
-  const label=data.label||(d.secondary?`${DISC[d.primary].name} × ${DISC[d.secondary].name}`:DISC[d.primary].name);
+const ICON_CHECK = `<svg class="li-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
-  setText('cvName',name);setText('cvDate',dateStr);setText('navName',`${name} 的報告`);
-  setText('closingName',name);setText('closingDate',dateStr);setText('closingDisc',label);
-  setText('closingQuote','看懂自己的行為模式，\n是所有改變的起點。');
-
-  // Page 2
-  const total=20;
-  const bmap={D:'barD',I:'barI',S:'barS',C:'barC'};
-  const smap={D:'scD',I:'scI',S:'scS',C:'scC'};
-  Object.entries(d.counts).forEach(([k,v])=>{
-    const pct=Math.round(v/total*100);
-    const bar=document.getElementById(bmap[k]);if(bar)bar.style.width=pct+'%';
-    const sc=document.getElementById(smap[k]);if(sc)sc.textContent=pct+'%';
+function fillBulletList(elId, items, icon){
+  const ul = document.getElementById(elId);
+  ul.innerHTML = "";
+  items.forEach(text=>{
+    const li = document.createElement("li");
+    li.innerHTML = icon + `<span>${text}</span>`;
+    ul.appendChild(li);
   });
-  // radar polygon: D top, I right, S bottom, C left
-  const cx=110,cy=110,rmax=90;
-  const axes={D:{x:0,y:-1},I:{x:1,y:0},S:{x:0,y:1},C:{x:-1,y:0}};
-  const pts=['D','I','S','C'].map(k=>{
-    const v=(d.counts[k]||0)/total;
-    const ax=axes[k];
-    return{x:cx+ax.x*rmax*v,y:cy+ax.y*rmax*v};
-  });
-  const poly=document.getElementById('radarPoly');
-  if(poly)poly.setAttribute('points',pts.map(p=>`${p.x},${p.y}`).join(' '));
-  ['rdD','rdI','rdS','rdC'].forEach((id,i)=>{
-    const el=document.getElementById(id);
-    if(el){el.setAttribute('cx',pts[i].x);el.setAttribute('cy',pts[i].y);}
-  });
-
-  // Page 3
-  setText('dHeroName',pt.name);setText('dHeroSub',pt.sub);setText('dBigIcon',pt.icon);
-  setText('dHeroDesc',pt.heroDesc);setText('dStrengthDesc',pt.strengthDesc);setText('dBlind',pt.blind);
-  setText('dIdealEnv',pt.idealEnv);
-  setHTML('dStrengths',pt.strengths.map(s=>`<span class="tag">${s}</span>`).join(''));
-
-  // Page 4
-  setText('commStrength',pt.commStrength);setText('commMine',pt.commMine);setText('mineBreak',pt.mineBreak);
-  setHTML('roleCards',pt.roles.map(r=>`<div class="role-card"><span class="role-badge">${r.r}</span><span class="role-text">${r.t}</span></div>`).join(''));
-
-  // Page 5
-  setHTML('actionCards',pt.actions.map(a=>`<div class="action-card"><div class="action-hd"><span class="action-num">${a.num}</span><span class="action-title">${a.title}</span></div><div class="action-body">${a.desc}</div></div>`).join(''));
-  setText('topAction',pt.top);setText('growthNote',pt.growth);
-
-  // Page 6
-  setText('matchText',pt.match);
-
-  // Page 7
-  setText('whisperQuote',pt.whisper);
-  setHTML('whisperBody',`看完你的作答，我有幾件事想直接跟你說。<br><br>你是<strong>${pt.name}</strong>，這代表你最大的優勢是<strong>${pt.strengths.slice(0,3).join('、')}</strong>。但優勢沒有放在對的位置，就只是「潛力」，不會自動變成職涯上的加分。<br><br>我見過太多人，能力沒問題，但因為行為模式和環境不對位，結果在同一個卡點繞了好幾年。<br><br><strong>這份報告能幫你看清楚自己的傾向，但「看清楚」和「真的用對」之間，還差一步。</strong> 那一步，就是有個人幫你把這份報告對應到你真實的處境。`);
 }
 
-const DEMO={name:'範例個案・小明',answers:{q1:'D',q2:'D',q3:'D',q4:'D',q5:'D',q6:'D',q7:'D',q8:'D',q9:'D',q10:'D',q11:'I',q12:'I',q13:'I',q14:'I',q15:'I',q16:'S',q17:'S',q18:'S',q19:'C',q20:'C'}};
+// 雷達圖：D 在上、I 在右、S 在下、C 在左，順時針排列
+function buildRadar(scores){
+  const cx=120, cy=120, rMax=85;
+  const order = ["D","I","S","C"];
+  const angle = { D:-Math.PI/2, I:0, S:Math.PI/2, C:Math.PI };
+  const pt = (e, r) => {
+    const a = angle[e];
+    return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+  };
+  let svg = "";
+  [0.25,0.5,0.75,1].forEach(f=>{
+    const pts = order.map(e=>pt(e, rMax*f).join(",")).join(" ");
+    svg += `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="1"/>`;
+  });
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax);
+    svg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,.18)" stroke-width="1"/>`;
+  });
+  const dataPts = order.map(e=> pt(e, rMax * Math.min(scores[e]/20,1)).join(",")).join(" ");
+  svg += `<polygon points="${dataPts}" fill="rgba(79,143,219,.35)" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>`;
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax * Math.min(scores[e]/20,1));
+    svg += `<circle cx="${x}" cy="${y}" r="4" fill="${TYPE_COLOR[e]}" stroke="#fff" stroke-width="1.5"/>`;
+  });
+  const labelOffset = { D:[0,-14], I:[16,4], S:[0,20], C:[-16,4] };
+  order.forEach(e=>{
+    const [x,y] = pt(e, rMax);
+    const [ox,oy] = labelOffset[e];
+    svg += `<text x="${x+ox}" y="${y+oy}" fill="#e7f0f8" font-size="12" text-anchor="middle" font-weight="700">${TYPE_LABEL[e]}</text>`;
+  });
+  document.getElementById("radar-svg").innerHTML = svg;
+}
+
+function renderReport(data){
+  const pt = DISC[data.primary] || DISC.D;
+  const name = data.name || "你";
+  const label = data.label || (data.secondary ? `${TYPE_LABEL[data.primary]} × ${TYPE_LABEL[data.secondary]}` : TYPE_LABEL[data.primary]);
+
+  document.getElementById("rp-name").textContent = name;
+  document.getElementById("rp-date").textContent = fmtDate(data.date);
+  document.getElementById("navName").textContent = `${name} 的報告`;
+  document.getElementById("rp-tag").textContent = pt.people;
+  document.getElementById("rp-role").textContent = label;
+  document.getElementById("rp-people").textContent = pt.icon + "　" + pt.name;
+  document.getElementById("rp-hook").textContent = pt.heroDesc;
+  fillBulletList("rp-strength", pt.strengths, ICON_CHECK);
+  document.getElementById("rp-blindspot").textContent = pt.blind;
+  document.getElementById("rp-comm").innerHTML = `<b>溝通優勢：</b>${pt.commStrength}<br><br><b>最容易踩的地雷：</b>${pt.commMine}<br><br><b>破解方法：</b>${pt.mineBreak}`;
+  document.getElementById("rp-env").textContent = pt.idealEnv;
+  document.getElementById("rp-roles").innerHTML = pt.roles.map(r=>`<b>${r.r}：</b>${r.t}`).join("<br><br>") + `<br><br><b>天生最合拍的夥伴：</b>${pt.match}`;
+  document.getElementById("rp-actions").innerHTML = pt.actions.map(a=>`<b>${a.num}・${a.title}</b><br>${a.desc}`).join("<br><br>") + `<br><br><b>如果只能做一件事：</b>${pt.top}`;
+
+  const scores = { D:data.scoreD||0, I:data.scoreI||0, S:data.scoreS||0, C:data.scoreC||0 };
+  const sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+
+  buildRadar(scores);
+  const legend = document.getElementById("radar-legend");
+  legend.innerHTML = "";
+  sorted.forEach(e=>{
+    const item = document.createElement("div");
+    item.className = "li";
+    item.innerHTML = `<span class="dot" style="background:${TYPE_COLOR[e]}"></span>${TYPE_LABEL[e]} ${scores[e]}`;
+    legend.appendChild(item);
+  });
+
+  const barsWrap = document.getElementById("energy-bars");
+  barsWrap.innerHTML = "";
+  sorted.forEach(e=>{
+    const row = document.createElement("div");
+    row.className = "ebar-row";
+    row.innerHTML = `
+      <div class="ebar-label">${TYPE_LABEL[e]}</div>
+      <div class="ebar-track"><div class="ebar-fill" style="width:${scores[e]/20*100}%; background:${TYPE_COLOR[e]}"></div></div>
+      <div class="ebar-score">${scores[e]}</div>`;
+    barsWrap.appendChild(row);
+  });
+}
+
+/* Firestore 文件 → renderReport() 需要的欄位格式 */
+function toReportData(doc){
+  const c = doc.counts||{};
+  const ts = doc.createdAt?.seconds ? new Date(doc.createdAt.seconds*1000) : new Date();
+  return{
+    name: doc.name, date: ts, label: doc.label,
+    primary: doc.primary, secondary: doc.secondary,
+    scoreD: c.D||0, scoreI: c.I||0, scoreS: c.S||0, scoreC: c.C||0
+  };
+}
+
+const DEMO = { name:"範例個案・小明", primary:"D", secondary:"C", label:"指揮型 × 謹慎型", scoreD:9, scoreI:2, scoreS:3, scoreC:6 };
 
 async function load(){
-  if(!docId){render(DEMO);return;}
+  if(!docId){renderReport(DEMO);return;}
   try{
     const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
     const {getFirestore,doc:fsDoc,getDoc}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
     const app=initializeApp(fbCfg);
     const db=getFirestore(app);
     const snap=await getDoc(fsDoc(db,'discClients',docId));
-    if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#5c3a1a">找不到此報告。</p>';return;}
-    window._reportData=snap.data();window._reportId=docId;
-    render(snap.data());
+    if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#e7f0f8">找不到此報告。</p>';return;}
+    window._reportRaw=snap.data();window._reportId=docId;
+    renderReport(toReportData(snap.data()));
   }catch(e){
     console.warn('Firebase 讀取失敗，使用 demo 資料:',e.message);
-    render(DEMO);
+    renderReport(DEMO);
   }
 }
 
 window.openEmailModal=()=>{
-  if(!window._reportData){alert('預覽模式，請從後台開啟報告後再寄送。');return;}
-  const d=window._reportData;
-  // 用目前頁面自己的路徑組網址，自動適應網域根目錄或子路徑(如 GitHub Pages)部署
+  if(!window._reportRaw){alert('預覽模式，請從後台開啟報告後再寄送。');return;}
+  const d=window._reportRaw;
   const url=`${location.origin}${location.pathname}?id=${window._reportId}`;
-  const subj=encodeURIComponent(`${d.name} 的 DISC 行為風格報告｜Career Blueprint`);
-  const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《DISC 行為風格報告》出爐了！\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
-  window.open(`mailto:${d.email}?subject=${subj}&body=${body}`);
+  const label=d.label||TYPE_LABEL[d.primary]||'';
+  const subj=encodeURIComponent(`${d.name} 的 DISC 行為風格報告出爐了！｜Mike 主任`);
+  const body=encodeURIComponent(`嗨 ${d.name}，\n\n你的《DISC 行為風格報告》出爐了！\n行為風格：${label}\n\n點選以下連結查看你的專屬報告：\n${url}\n\n本月僅開放 3 個 1-on-1 策略複診名額，建議盡早預約：\nhttps://calendar.app.google/y7pFfnC2HXbyvydP9\n\n期待見到你！\nMike 主任`);
+  window.open(`mailto:${d.email||''}?subject=${subj}&body=${body}`);
 };
 
 load();
