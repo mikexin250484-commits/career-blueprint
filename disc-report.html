@@ -39,6 +39,9 @@
   .role-tag{display:inline-block; background:rgba(240,169,60,.18); color:var(--accent); border:1px solid var(--accent-dark);
     padding:5px 14px; border-radius:999px; font-size:12px; margin-bottom:12px;}
   .role-animal-emoji{font-size:52px; line-height:1; margin-bottom:4px;}
+  .role-animal-emoji svg{width:92px; height:92px; display:block; margin:0 auto; filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));}
+  .mini-animal{display:inline-block; width:15px; height:15px; vertical-align:-3px; margin-right:2px;}
+  .mini-animal svg{width:100%; height:100%; display:block;}
   .role-name{color:#fff; font-size:34px; font-weight:900; margin-bottom:6px;}
   .role-people{color:#f5dfc0; font-size:13px;}
 
@@ -281,8 +284,14 @@ async function initFb(){
 const TYPE_LABEL = { D:"指揮型", I:"社交型", S:"穩健型", C:"謹慎型" };
 const TYPE_COLOR = { D:"#c0392b", I:"#d4a017", S:"#4a7a52", C:"#3a5a8a" };
 
-/* 每個 DISC 屬性對應一種代表動物，讓風格更直覺好記 */
-const ANIMAL = { D:{name:'老虎',emoji:'🐯'}, I:{name:'孔雀',emoji:'🦚'}, S:{name:'無尾熊',emoji:'🐨'}, C:{name:'貓頭鷹',emoji:'🦉'} };
+/* 每個 DISC 屬性對應一種代表動物插畫，讓風格更直覺好記 */
+const ANIMAL_ICON = {
+  D: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 35 L28 14 L39 32 Z" fill="#ef8a3d"/><path d="M80 35 L72 14 L61 32 Z" fill="#ef8a3d"/><path d="M23 30 L28 19 L34 30 Z" fill="#241209"/><path d="M77 30 L72 19 L66 30 Z" fill="#241209"/><circle cx="50" cy="56" r="36" fill="#f2954a"/><ellipse cx="50" cy="70" rx="23" ry="18" fill="#fff5e4"/><path d="M23 44 q7 -9 15 -5" stroke="#241209" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M21 54 q8 -6 16 -2" stroke="#241209" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M77 44 q-7 -9 -15 -5" stroke="#241209" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M79 54 q-8 -6 -16 -2" stroke="#241209" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M50 28 l-6 11 h12 z" fill="#241209"/><ellipse cx="37" cy="53" rx="6" ry="6.5" fill="#170c04"/><ellipse cx="63" cy="53" rx="6" ry="6.5" fill="#170c04"/><circle cx="35" cy="51" r="1.7" fill="#fff"/><circle cx="61" cy="51" r="1.7" fill="#fff"/><path d="M44 65 q6 6 12 0 q-6 6 -12 0 z" fill="#3a2416"/><line x1="50" y1="69" x2="50" y2="75" stroke="#3a2416" stroke-width="2.4"/><path d="M50 75 q-8 5 -17 3" stroke="#3a2416" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M50 75 q8 5 17 3" stroke="#3a2416" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>`,
+  I: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="30" cy="55" rx="13" ry="26" fill="#1a9c86" transform="rotate(-35 30 55)"/><ellipse cx="42" cy="48" rx="13" ry="28" fill="#2fb8a0" transform="rotate(-15 42 48)"/><ellipse cx="58" cy="48" rx="13" ry="28" fill="#2fb8a0" transform="rotate(15 58 48)"/><ellipse cx="70" cy="55" rx="13" ry="26" fill="#1a9c86" transform="rotate(35 70 55)"/><ellipse cx="50" cy="42" rx="13" ry="30" fill="#39cbb0"/><circle cx="24" cy="42" r="6" fill="#d9a017"/><circle cx="24" cy="42" r="3" fill="#0e5c4e"/><circle cx="42" cy="32" r="6" fill="#d9a017"/><circle cx="42" cy="32" r="3" fill="#0e5c4e"/><circle cx="58" cy="32" r="6" fill="#d9a017"/><circle cx="58" cy="32" r="3" fill="#0e5c4e"/><circle cx="76" cy="42" r="6" fill="#d9a017"/><circle cx="76" cy="42" r="3" fill="#0e5c4e"/><circle cx="50" cy="26" r="6" fill="#d9a017"/><circle cx="50" cy="26" r="3" fill="#0e5c4e"/><circle cx="50" cy="72" r="17" fill="#0e7c6b"/><path d="M46 58 l-3 -10 l7 6 z" fill="#d9a017"/><circle cx="55" cy="70" r="2" fill="#0c1a17"/><path d="M50 78 l6 5 l-6 2 l-6 -2 z" fill="#e8b923"/></svg>`,
+  S: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="38" r="19" fill="#aab0b4"/><circle cx="80" cy="38" r="19" fill="#aab0b4"/><circle cx="20" cy="38" r="10" fill="#7d8386"/><circle cx="80" cy="38" r="10" fill="#7d8386"/><circle cx="50" cy="58" r="35" fill="#c3c9cc"/><circle cx="37" cy="52" r="5.5" fill="#1a1a1a"/><circle cx="63" cy="52" r="5.5" fill="#1a1a1a"/><circle cx="35.5" cy="50.5" r="1.5" fill="#fff"/><circle cx="61.5" cy="50.5" r="1.5" fill="#fff"/><ellipse cx="50" cy="68" rx="13" ry="10" fill="#2b2b2b"/><path d="M50 78 q-6 4 -12 1" stroke="#5a5f61" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M50 78 q6 4 12 1" stroke="#5a5f61" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+  C: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 12 q34 4 34 44 q0 34 -34 34 q-34 0 -34 -34 q0 -40 34 -44 z" fill="#8b5a2b"/><path d="M28 26 l6 14 l-14 -4 z" fill="#8b5a2b"/><path d="M72 26 l-6 14 l14 -4 z" fill="#8b5a2b"/><circle cx="36" cy="52" r="16" fill="#f4e6c8"/><circle cx="64" cy="52" r="16" fill="#f4e6c8"/><circle cx="36" cy="52" r="11" fill="#fff"/><circle cx="64" cy="52" r="11" fill="#fff"/><circle cx="36" cy="52" r="6" fill="#1a1006"/><circle cx="64" cy="52" r="6" fill="#1a1006"/><circle cx="34" cy="49.5" r="1.6" fill="#fff"/><circle cx="62" cy="49.5" r="1.6" fill="#fff"/><path d="M50 60 l-6 8 l12 0 z" fill="#e08a1f"/><path d="M30 78 q20 10 40 0" stroke="#5c3a18" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`
+};
+const ANIMAL = { D:{name:'老虎',emoji:'🐯',icon:ANIMAL_ICON.D}, I:{name:'孔雀',emoji:'🦚',icon:ANIMAL_ICON.I}, S:{name:'無尾熊',emoji:'🐨',icon:ANIMAL_ICON.S}, C:{name:'貓頭鷹',emoji:'🦉',icon:ANIMAL_ICON.C} };
 
 const DISC={
   D:{name:'指揮型',people:'目標驅動 · 天生的決策者',
@@ -399,7 +408,7 @@ function renderReport(data){
   document.getElementById("rp-date").textContent = fmtDate(data.date);
   document.getElementById("navName").textContent = `${name} 的報告`;
   document.getElementById("rp-tag").textContent = `${label} · 你的行為風格`;
-  document.getElementById("rp-animal-emoji").textContent = animal.emoji;
+  document.getElementById("rp-animal-emoji").innerHTML = animal.icon;
   document.getElementById("rp-role").textContent = `${animal.name}型`;
   document.getElementById("rp-people").textContent = pt.people;
   document.getElementById("rp-hook").textContent = `${pt.animalDesc} ${pt.heroDesc}`;
@@ -419,7 +428,7 @@ function renderReport(data){
   sorted.forEach(e=>{
     const item = document.createElement("div");
     item.className = "li";
-    item.innerHTML = `<span class="dot" style="background:${TYPE_COLOR[e]}"></span>${ANIMAL[e].emoji} ${TYPE_LABEL[e]} ${scores[e]}`;
+    item.innerHTML = `<span class="dot" style="background:${TYPE_COLOR[e]}"></span><span class="mini-animal">${ANIMAL[e].icon}</span>${TYPE_LABEL[e]} ${scores[e]}`;
     legend.appendChild(item);
   });
 
@@ -429,7 +438,7 @@ function renderReport(data){
     const row = document.createElement("div");
     row.className = "ebar-row";
     row.innerHTML = `
-      <div class="ebar-label">${ANIMAL[e].emoji} ${TYPE_LABEL[e]}</div>
+      <div class="ebar-label"><span class="mini-animal">${ANIMAL[e].icon}</span>${TYPE_LABEL[e]}</div>
       <div class="ebar-track"><div class="ebar-fill" style="width:${scores[e]/20*100}%; background:${TYPE_COLOR[e]}"></div></div>
       <div class="ebar-score">${scores[e]}</div>`;
     barsWrap.appendChild(row);
