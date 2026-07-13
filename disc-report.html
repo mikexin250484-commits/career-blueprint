@@ -273,6 +273,7 @@
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
+const demoType=params.get('demo');
 let db;
 async function initFb(){
   if(db)return db;
@@ -458,8 +459,15 @@ function toReportData(doc){
 }
 
 const DEMO = { name:"範例個案・小明", primary:"D", secondary:"C", label:"指揮型 × 謹慎型", scoreD:9, scoreI:2, scoreS:3, scoreC:6 };
+const DEMO_SET = {
+  D:{ name:"範例個案・大衛", primary:"D", secondary:"I", label:"指揮型 × 社交型", scoreD:9, scoreI:5, scoreS:2, scoreC:3 },
+  I:{ name:"範例個案・怡君", primary:"I", secondary:"S", label:"社交型 × 穩健型", scoreD:3, scoreI:9, scoreS:5, scoreC:2 },
+  S:{ name:"範例個案・淑芬", primary:"S", secondary:"C", label:"穩健型 × 謹慎型", scoreD:2, scoreI:3, scoreS:9, scoreC:5 },
+  C:{ name:"範例個案・志成", primary:"C", secondary:"D", label:"謹慎型 × 主導型", scoreD:5, scoreI:2, scoreS:3, scoreC:9 }
+};
 
 async function load(){
+  if(demoType && DEMO_SET[demoType]){renderReport(DEMO_SET[demoType]);return;}
   if(!docId){renderReport(DEMO);return;}
   try{
     await initFb();
