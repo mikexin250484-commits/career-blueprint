@@ -41,12 +41,32 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .form-meta{display:flex;justify-content:space-between;align-items:center;margin:18px 0 0;font-size:12px;color:var(--tm);padding-top:14px;border-top:1px solid var(--line)}
 .required-note{color:var(--red)}
 
+/* TYPE CHOICE */
+.type-choice{padding:28px 16px 30px}
+.type-choice-head{text-align:center;margin-bottom:20px}
+.type-choice-tag{color:var(--o);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:block}
+.type-choice-title{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:600;color:var(--text)}
+.type-card{background:var(--white);border-radius:20px;padding:26px 22px;margin-bottom:16px;box-shadow:var(--shadow);border:1.5px solid var(--line);cursor:pointer;transition:all .2s}
+.type-card:hover{border-color:var(--ol);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.type-card-icon{font-size:32px;margin-bottom:12px}
+.type-card-title{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:600;color:var(--text);margin-bottom:8px}
+.type-card-desc{font-size:13.5px;color:var(--ts);line-height:1.85;font-weight:300;margin-bottom:14px}
+.type-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.type-card-tag{background:var(--op);color:var(--o);font-size:11.5px;padding:3px 10px;border-radius:14px;font-weight:400}
+.type-card-btn{display:inline-flex;align-items:center;gap:6px;color:#fff;background:linear-gradient(90deg,var(--wd),var(--amber));font-size:13.5px;font-weight:500;padding:10px 18px;border-radius:20px;letter-spacing:.5px}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--tm);font-size:13px;cursor:pointer;margin:14px 16px 6px;padding:6px 2px;user-select:none}
+.back-link:hover{color:var(--o)}
+
+.type-flow{display:none}
+.type-flow.show{display:block}
+
 /* STEP CARD */
 .page-wrap{padding:16px 16px 0}
 .step-card{background:var(--white);border-radius:20px;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
 .step-header{background:linear-gradient(90deg,var(--wd) 0%,var(--amber) 100%);padding:12px 22px;display:flex;align-items:center;gap:10px}
 .step-badge{background:rgba(255,255,255,0.25);color:#fff;font-size:11px;font-weight:500;padding:3px 12px;border-radius:20px;letter-spacing:1px}
 .step-title{color:#fff;font-size:14px;font-weight:500;letter-spacing:.5px}
+.step-title .opt-tag{font-size:11px;font-weight:400;opacity:.85;margin-left:4px}
 .step-body{padding:24px 22px}
 .step-desc{font-size:13.5px;color:var(--ts);margin-bottom:22px;line-height:1.8;font-weight:300}
 .step-desc strong{color:var(--o);font-weight:500}
@@ -94,7 +114,7 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
 .plan-detail ul li::before{content:'';position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
 .plan-detail ul li strong{color:var(--wd);font-weight:500}
 
-/* ── WD 天賦題 ────────────────────────────────────── */
+/* ── 多選題卡片（沿用同一組視覺，供任一小測驗使用）───── */
 .wd-intro{background:linear-gradient(135deg,var(--op),#fef6ec);border:1px solid var(--ol);border-radius:14px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;color:var(--ts);line-height:1.8;font-weight:300}
 .wd-intro strong{color:var(--o);font-weight:500}
 .wd-q{margin-bottom:20px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden}
@@ -114,11 +134,6 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
 .wd-opt.active .wd-dot::after{display:block}
 .wd-opt-body{flex:1}
 .wd-opt-text{font-size:13.5px;color:var(--ts);font-weight:300;line-height:1.65}
-.wd-opt-tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:4px;letter-spacing:.5px}
-.wd-opt-tag.gen{background:#fef3e5;color:#a06520}
-.wd-opt-tag.fire{background:#fde8e8;color:#c0392b}
-.wd-opt-tag.rhythm{background:#e8f5e8;color:#2a7a4a}
-.wd-opt-tag.steel{background:#e8f0fb;color:#2a5a9a}
 
 /* GCAL */
 .gcal-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--op),#fef6ec);border:1.5px solid var(--ol);border-radius:14px;padding:16px 18px;text-decoration:none;transition:all .2s;margin-bottom:18px}
@@ -158,6 +173,7 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
   .intro-card{margin:0 10px;padding:22px 18px}
   .page-wrap{padding:12px 10px 0}
   .submit-area{padding:8px 10px 36px}
+  .type-choice{padding:22px 10px 24px}
 }
 /* ════ BOOKING PAGE (送出後全螢幕) ════════════════════ */
 .booking-page{
@@ -293,13 +309,13 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
 <!-- INTRO -->
 <div class="intro-card">
   <p>哈囉，我是 <strong>Mike 主任</strong>，謝謝你來預約諮詢 😊<br>
-  職涯定位顧問已有 <strong>10 多年</strong>的經驗。<br>
+  職涯與心理諮詢顧問已有 <strong>10 多年</strong>的經驗。<br>
   我會用<strong>心理學</strong>結合適合你／妳的工具（例如：Wealth Dynamics 能量分析、數字易經、Holland⋯⋯等），快速協助你看見並解決目前的痛點。</p>
-  <p>這些年幫助過超過<em>千位</em>來訪者，<br>幫他們找回職場方向、改善人際困擾、也協助他們找到屬於自己的收入模式。</p>
+  <p>這些年幫助過超過<em>千位</em>來訪者，<br>幫他們找回職場方向、改善人際與感情困擾、也協助他們找到屬於自己的收入模式。</p>
   <span class="fit-tag">如果你目前有以下狀況，這次的諮詢非常適合你：</span>
   <ul class="fit-list">
     <li>想<strong>轉換跑道</strong>，不知道適合什麼工作</li>
-    <li><strong>職場人際關係</strong>讓你很困擾，想換環境</li>
+    <li><strong>感情或人際關係</strong>讓你很困擾，想搞懂自己的模式</li>
     <li>長期<strong>職業倦怠</strong>，工作提不起勁</li>
     <li>想<strong>增加收入</strong>，不知道從何開始</li>
   </ul>
@@ -311,367 +327,571 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
     <span class="cred">數字易經老師</span>
     <span class="cred">業界約聘講師</span>
   </div>
-  <div class="form-meta">
-    <span class="required-note">* 表示必填欄位</span>
-    <span>預計填寫時間 3-5 分鐘</span>
+</div>
+
+<!-- ════════════════════════════════════════
+     選擇諮詢類型
+════════════════════════════════════════ -->
+<div class="type-choice" id="typeChoice">
+  <div class="type-choice-head">
+    <span class="type-choice-tag">先選一個方向</span>
+    <div class="type-choice-title">你這次想聊聊哪一種？</div>
+  </div>
+
+  <div class="type-card" data-type="psych">
+    <div class="type-card-icon">💛</div>
+    <div class="type-card-title">心理＆人際諮詢</div>
+    <div class="type-card-desc">想搞懂感情裡的自己、看懂人格特質與溝通模式，或是理不清的人際關係，都可以從這裡開始。</div>
+    <div class="type-card-tags">
+      <span class="type-card-tag">兩性感情</span>
+      <span class="type-card-tag">人格特質解析</span>
+      <span class="type-card-tag">溝通表達</span>
+    </div>
+    <div class="type-card-btn">進入這個表單 →</div>
+  </div>
+
+  <div class="type-card" data-type="career">
+    <div class="type-card-icon">🧭</div>
+    <div class="type-card-title">收入＆職涯諮詢</div>
+    <div class="type-card-desc">想轉職、找方向、突破收入天花板，或是職場倦怠找不到出口，這裡幫你釐清下一步。</div>
+    <div class="type-card-tags">
+      <span class="type-card-tag">轉職定位</span>
+      <span class="type-card-tag">收入突破</span>
+      <span class="type-card-tag">職場倦怠</span>
+    </div>
+    <div class="type-card-btn">進入這個表單 →</div>
   </div>
 </div>
 
-<form id="consultForm">
-<div class="page-wrap">
+<!-- ════════════════════════════════════════════════════════════════
+     心理＆人際諮詢表單
+════════════════════════════════════════════════════════════════ -->
+<div class="type-flow" id="psychFlow">
+  <div class="back-link" onclick="backToChoice()">‹ 返回選擇諮詢類型</div>
 
-<!-- ════════════════════════════════════════
-     STEP 1 · 先讓我認識你
-════════════════════════════════════════ -->
-<div class="step-card">
-  <div class="step-header">
-    <span class="step-badge">STEP 1</span>
-    <span class="step-title">先讓我認識你</span>
-  </div>
-  <div class="step-body">
-    <p class="step-desc">這些是聯繫用的基本資料，填完我才知道要把報告寄給誰 😄</p>
+  <form id="psychConsultForm">
+  <div class="page-wrap">
 
-    <div class="field">
-      <div class="f-label">你的名字／稱呼 <span class="req">*</span></div>
-      <input type="text" class="f-input" name="name" placeholder="想讓我怎麼稱呼你呢？" required/>
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 1</span>
+      <span class="step-title">先讓我認識你</span>
     </div>
+    <div class="step-body">
+      <p class="step-desc">這些是聯繫用的基本資料，填完我才知道要跟誰聊 😄</p>
 
-    <div class="field">
-      <div class="f-label">Email <span class="req">*</span></div>
-      <div class="f-hint">報告會寄到這裡，請確認填寫正確</div>
-      <input type="email" class="f-input" name="email" placeholder="your@email.com" required/>
-    </div>
-
-    <div class="row-2">
       <div class="field">
-        <div class="f-label">年齡區間 <span class="req">*</span></div>
-        <select class="f-select" name="age" required>
+        <div class="f-label">你的名字／稱呼 <span class="req">*</span></div>
+        <input type="text" class="f-input" name="p_name" placeholder="想讓我怎麼稱呼你呢？" required/>
+      </div>
+
+      <div class="field">
+        <div class="f-label">Email <span class="req">*</span></div>
+        <div class="f-hint">方便後續跟你確認諮詢時間</div>
+        <input type="email" class="f-input" name="p_email" placeholder="your@email.com" required/>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <div class="f-label">年齡區間 <span class="req">*</span></div>
+          <select class="f-select" name="p_age" required>
+            <option value="" disabled selected>請選擇</option>
+            <option>18-24</option><option>25-29</option><option>30-34</option>
+            <option>35-39</option><option>40-49</option><option>50 歲以上</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="f-label">目前的感情狀態</div>
+          <select class="f-select" name="p_relStatus">
+            <option value="" disabled selected>請選擇</option>
+            <option>單身</option><option>曖昧中</option><option>穩定交往中</option>
+            <option>已婚</option><option>分手／離異中</option><option>其他</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 2</span>
+      <span class="step-title">聊聊你的現況</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">這 4 題讓我先了解你的狀況，<strong>沒有標準答案</strong>，像跟朋友聊天一樣輕鬆回答就好 😊</p>
+
+      <!-- Q1 -->
+      <div class="field">
+        <div class="f-label">① 最近讓你困擾的感情或人際關係，大概是什麼樣的狀況？<span class="req">*</span></div>
+        <div class="f-hint">簡單說說就好，例如：「跟另一半常常為了小事吵架」、「不知道怎麼跟主管溝通」</div>
+        <textarea class="f-input" name="p_issueDesc" placeholder="例如：交往兩年的另一半最近常常冷戰，我不知道問題出在哪裡..." required></textarea>
+      </div>
+
+      <!-- Q2 -->
+      <div class="field">
+        <div class="f-label">② 這個困擾最常出現在哪一種關係裡？<span class="req">*</span></div>
+        <div class="option-list" id="issueContextGroup">
+          <label class="opt-card">
+            <input type="radio" name="issueContext" value="伴侶／曖昧對象">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">💑 伴侶／曖昧對象</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="issueContext" value="家人">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">🏠 家人（父母／手足）</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="issueContext" value="朋友">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">🧑‍🤝‍🧑 朋友</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="issueContext" value="職場人際">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">💼 職場同事或主管</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="issueContext" value="自己與自己">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">🪞 主要是自己的內在狀態</div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="field">
+        <div class="f-label">③ 這件事你已經嘗試過哪些方式？</div>
+        <div class="f-hint">可以複選，多選也沒關係</div>
+        <div class="option-list" id="triedGroup">
+          <label class="opt-card">
+            <input type="checkbox" value="已經溝通過但沒改善">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">🗣️ 已經溝通過，但沒什麼改善</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="自己悶著不知道怎麼開口">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">🤐 自己悶著，不知道怎麼開口</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="找朋友聊過但沒用">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">☕ 找朋友聊過，但沒什麼用</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="看書或影片想自己解決">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">📖 看過書或影片，想自己先解決</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="第一次正式面對">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">🌱 還沒特別做什麼，這是第一次正式面對</div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="field">
+        <div class="f-label">④ 如果這次諮詢能幫你解決一件事，你最希望達到什麼？<span class="req">*</span></div>
+        <div class="f-hint">例如：「想知道怎麼跟另一半好好溝通不吵架」、「想搞懂自己在感情裡的模式」</div>
+        <textarea class="f-input" name="p_desiredOutcome" placeholder="例如：希望能學會怎麼把心裡的話好好講出來，不要每次都用吵架收場..." required></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 3</span>
+      <span class="step-title">人格特質／溝通風格小測驗<span class="opt-tag">（選填）</span></span>
+    </div>
+    <div class="step-body">
+
+      <div class="wd-intro">
+        這 6 題<strong>選填</strong>，憑第一直覺勾選就好，不用每題都答 😄<br>
+        讓 Mike 先大概了解你的特質與溝通習慣，諮詢時能更快聊到重點。
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 1 / 6</div>
+          <div class="wd-q-text">遇到衝突時，你通常會？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq1" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">立刻表達感受，把話說開</div></label>
+          <label class="wd-opt"><input type="radio" name="sq1" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">先冷靜下來，想清楚再說</div></label>
+          <label class="wd-opt"><input type="radio" name="sq1" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">先讓步，不想把場面弄僵</div></label>
+          <label class="wd-opt"><input type="radio" name="sq1" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">假裝沒事，但心裡在意很久</div></label>
+        </div>
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 2 / 6</div>
+          <div class="wd-q-text">在感情／關係中，你比較需要哪一種安全感？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq2" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">對方常主動表達關心</div></label>
+          <label class="wd-opt"><input type="radio" name="sq2" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">穩定可預期的相處模式</div></label>
+          <label class="wd-opt"><input type="radio" name="sq2" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">彼此有各自的空間</div></label>
+          <label class="wd-opt"><input type="radio" name="sq2" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">清楚知道彼此的界線與期待</div></label>
+        </div>
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 3 / 6</div>
+          <div class="wd-q-text">別人形容你的溝通風格，比較常聽到哪一種？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq3" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">直接坦白，有話直說</div></label>
+          <label class="wd-opt"><input type="radio" name="sq3" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">溫和委婉，怕傷到人</div></label>
+          <label class="wd-opt"><input type="radio" name="sq3" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">幽默帶過，不喜歡談嚴肅話題</div></label>
+          <label class="wd-opt"><input type="radio" name="sq3" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">邏輯清楚，但常被說不夠有溫度</div></label>
+        </div>
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 4 / 6</div>
+          <div class="wd-q-text">當你在關係中感覺不被理解時，你的第一反應是？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq4" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">想解釋清楚，讓對方懂我</div></label>
+          <label class="wd-opt"><input type="radio" name="sq4" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">情緒上來，容易生氣或難過</div></label>
+          <label class="wd-opt"><input type="radio" name="sq4" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">選擇沉默，晾一下再說</div></label>
+          <label class="wd-opt"><input type="radio" name="sq4" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">開始懷疑是不是自己的問題</div></label>
+        </div>
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 5 / 6</div>
+          <div class="wd-q-text">你希望這次諮詢後，自己在關係裡能多一點？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq5" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">表達真實感受的勇氣</div></label>
+          <label class="wd-opt"><input type="radio" name="sq5" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">看懂對方和自己的相處模式</div></label>
+          <label class="wd-opt"><input type="radio" name="sq5" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">設立界線的能力</div></label>
+          <label class="wd-opt"><input type="radio" name="sq5" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">修復關係的具體方法</div></label>
+        </div>
+      </div>
+
+      <div class="wd-q">
+        <div class="wd-q-head">
+          <div class="wd-q-num">題 6 / 6</div>
+          <div class="wd-q-text">一段關係中，你最重視的是？</div>
+        </div>
+        <div class="wd-opts">
+          <label class="wd-opt"><input type="radio" name="sq6" value="A"><div class="wd-dot"></div>
+            <div class="wd-opt-text">坦誠與信任</div></label>
+          <label class="wd-opt"><input type="radio" name="sq6" value="B"><div class="wd-dot"></div>
+            <div class="wd-opt-text">穩定與安全感</div></label>
+          <label class="wd-opt"><input type="radio" name="sq6" value="C"><div class="wd-dot"></div>
+            <div class="wd-opt-text">被尊重和理解</div></label>
+          <label class="wd-opt"><input type="radio" name="sq6" value="D"><div class="wd-dot"></div>
+            <div class="wd-opt-text">彼此都能成長</div></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 4</span>
+      <span class="step-title">選擇你想要的服務</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">第一次接觸<strong>完全免費</strong>，先聊聊看合不合拍 😊 點選方案可以展開服務說明。</p>
+      <div class="option-list" id="psychPlanGroup">
+
+        <label class="opt-card" data-plan="pA">
+          <input type="checkbox" value="A">
+          <div class="opt-box"></div>
+          <div class="opt-text">
+            <div class="opt-main">體驗諮詢・30 分鐘</div>
+            <div class="opt-sub">先聊聊，讓 Mike 親自幫你看清楚目前卡住的地方</div>
+            <div class="plan-detail" id="detail-pA">
+              <ul>
+                <li><strong>現狀釐清：</strong>把心裡模糊的感覺，整理成清楚的問題</li>
+                <li><strong>初步分析：</strong>從你的回答，先看出可能的互動模式</li>
+                <li><strong>3 個即戰行動：</strong>給你這週就能開始做的具體建議</li>
+              </ul>
+            </div>
+          </div>
+          <span class="opt-badge badge-free">NT FREE</span>
+        </label>
+
+        <label class="opt-card" data-plan="pB">
+          <input type="checkbox" value="B">
+          <div class="opt-box"></div>
+          <div class="opt-text">
+            <div class="opt-main">深度盤點：翻轉現況・60 分鐘</div>
+            <div class="opt-sub">適合真的想全面看懂自己、改善關係或溝通模式的你</div>
+            <div class="plan-detail" id="detail-pB">
+              <ul>
+                <li><strong>深度挖掘：</strong>用多元工具找出你的人格特質與慣性反應</li>
+                <li><strong>關係／溝通策略：</strong>搞定讓你最耗能的那個問題</li>
+                <li><strong>具體行動計畫：</strong>諮詢後可以馬上開始練習的方法</li>
+                <li><strong>專屬諮詢報告書：</strong>完整的諮詢紀錄與行動計畫</li>
+              </ul>
+            </div>
+          </div>
+          <span class="opt-badge badge-paid">NT 1,500</span>
+        </label>
+
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /page-wrap -->
+
+  <div class="submit-area">
+    <span class="clear-btn" onclick="clearForm('psychConsultForm')">清除表單</span>
+    <button type="submit" class="submit-btn" id="psychSubmitBtn">送出 ✨</button>
+    <div class="submit-note">
+      送出後下一步會引導你預約時間 📅<br>
+      <strong>所有資訊僅用於諮詢用途，不會分享給第三方。</strong>
+    </div>
+    <div class="error-msg" id="psychErrorMsg"></div>
+  </div>
+
+  </form>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     收入＆職涯諮詢表單
+════════════════════════════════════════════════════════════════ -->
+<div class="type-flow" id="careerFlow">
+  <div class="back-link" onclick="backToChoice()">‹ 返回選擇諮詢類型</div>
+
+  <form id="careerConsultForm">
+  <div class="page-wrap">
+
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 1</span>
+      <span class="step-title">先讓我認識你</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">這些是聯繫用的基本資料，填完我才知道要把報告寄給誰 😄</p>
+
+      <div class="field">
+        <div class="f-label">你的名字／稱呼 <span class="req">*</span></div>
+        <input type="text" class="f-input" name="c_name" placeholder="想讓我怎麼稱呼你呢？" required/>
+      </div>
+
+      <div class="field">
+        <div class="f-label">Email <span class="req">*</span></div>
+        <div class="f-hint">方便後續跟你確認諮詢時間</div>
+        <input type="email" class="f-input" name="c_email" placeholder="your@email.com" required/>
+      </div>
+
+      <div class="row-2">
+        <div class="field">
+          <div class="f-label">年齡區間 <span class="req">*</span></div>
+          <select class="f-select" name="c_age" required>
+            <option value="" disabled selected>請選擇</option>
+            <option>18-24</option><option>25-29</option><option>30-34</option>
+            <option>35-39</option><option>40-49</option><option>50 歲以上</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="f-label">工作年資</div>
+          <select class="f-select" name="c_experience">
+            <option value="" disabled selected>請選擇</option>
+            <option>未滿 1 年</option><option>1-3 年</option><option>3-5 年</option>
+            <option>5-10 年</option><option>10-15 年</option><option>15 年以上</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="f-label">目前工作領域 <span class="req">*</span></div>
+        <select class="f-select" name="c_industry" required>
           <option value="" disabled selected>請選擇</option>
-          <option>18-24</option><option>25-29</option><option>30-34</option>
-          <option>35-39</option><option>40-49</option><option>50 歲以上</option>
+          <option>學生／應屆畢業</option><option>業務／行銷</option><option>管理／主管職</option>
+          <option>科技／工程</option><option>設計／創意</option><option>金融／顧問</option>
+          <option>教育／公職</option><option>服務業</option><option>創業者</option>
+          <option>自由工作者</option><option>轉職中</option><option>其他</option>
         </select>
       </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 2</span>
+      <span class="step-title">聊聊你的現狀</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">這 4 題是讓我先了解你的現況，<strong>沒有標準答案</strong>，就像在跟朋友聊天一樣輕鬆回答就好 😊</p>
+
       <div class="field">
-        <div class="f-label">工作年資</div>
-        <select class="f-select" name="experience">
-          <option value="" disabled selected>請選擇</option>
-          <option>未滿 1 年</option><option>1-3 年</option><option>3-5 年</option>
-          <option>5-10 年</option><option>10-15 年</option><option>15 年以上</option>
-        </select>
+        <div class="f-label">① 你目前在做什麼工作？大概做多久了呢？<span class="req">*</span></div>
+        <div class="f-hint">簡單說說就好，例如：「在科技公司做業務，大概 3 年了」</div>
+        <textarea class="f-input" name="c_jobDesc" placeholder="例如：在一家傳統製造業公司做業務，做了快 5 年了，最近有點想換換環境..." required></textarea>
       </div>
-    </div>
 
-    <div class="field">
-      <div class="f-label">目前工作領域 <span class="req">*</span></div>
-      <select class="f-select" name="industry" required>
-        <option value="" disabled selected>請選擇</option>
-        <option>學生／應屆畢業</option><option>業務／行銷</option><option>管理／主管職</option>
-        <option>科技／工程</option><option>設計／創意</option><option>金融／顧問</option>
-        <option>教育／公職</option><option>服務業</option><option>創業者</option>
-        <option>自由工作者</option><option>轉職中</option><option>其他</option>
-      </select>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     STEP 2 · 聊聊你的現狀
-════════════════════════════════════════ -->
-<div class="step-card">
-  <div class="step-header">
-    <span class="step-badge">STEP 2</span>
-    <span class="step-title">聊聊你的現狀</span>
-  </div>
-  <div class="step-body">
-    <p class="step-desc">這 4 題是讓我先了解你的現況，<strong>沒有標準答案</strong>，就像在跟朋友聊天一樣輕鬆回答就好 😊</p>
-
-    <!-- Q1 工作現況 -->
-    <div class="field">
-      <div class="f-label">① 你目前在做什麼工作？大概做多久了呢？<span class="req">*</span></div>
-      <div class="f-hint">簡單說說就好，例如：「在科技公司做業務，大概 3 年了」</div>
-      <textarea class="f-input" name="jobDesc" placeholder="例如：在一家傳統製造業公司做業務，做了快 5 年了，最近有點想換換環境..." required></textarea>
-    </div>
-
-    <!-- Q2 收入區間 -->
-    <div class="field">
-      <div class="f-label">② 目前這份工作的月收入大概落在？<span class="req">*</span></div>
-      <div class="option-list income-opts" id="incomeGroup">
-        <label class="opt-card">
-          <input type="radio" name="incomeRange" value="3萬~5萬">
-          <div class="opt-radio"></div>
-          <div class="opt-text"><div class="opt-main">3 萬 ～ 5 萬</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="radio" name="incomeRange" value="5萬~8萬">
-          <div class="opt-radio"></div>
-          <div class="opt-text"><div class="opt-main">5 萬 ～ 8 萬</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="radio" name="incomeRange" value="8萬~12萬">
-          <div class="opt-radio"></div>
-          <div class="opt-text"><div class="opt-main">8 萬 ～ 12 萬</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="radio" name="incomeRange" value="12萬以上">
-          <div class="opt-radio"></div>
-          <div class="opt-text"><div class="opt-main">12 萬以上</div></div>
-        </label>
-      </div>
-    </div>
-
-    <!-- Q3 社交生活 -->
-    <div class="field">
-      <div class="f-label">③ 下班後，你的日常生活圈大概是什麼樣子？</div>
-      <div class="f-hint">可以複選，多選也沒關係</div>
-      <div class="option-list" id="socialGroup">
-        <label class="opt-card">
-          <input type="checkbox" value="下班回家，社交圈比較小">
-          <div class="opt-box"></div>
-          <div class="opt-text"><div class="opt-main">🏠 下班通常直接回家，社交圈比較小</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="checkbox" value="會去打桌遊、運動或社團">
-          <div class="opt-box"></div>
-          <div class="opt-text"><div class="opt-main">🎲 會去打桌遊、運動或參與社團，認識新朋友</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="checkbox" value="會去上課學習、自我充實">
-          <div class="opt-box"></div>
-          <div class="opt-text"><div class="opt-main">📚 會去上課學習、自我充實</div></div>
-        </label>
-        <label class="opt-card">
-          <input type="checkbox" value="已經有在經營副業">
-          <div class="opt-box"></div>
-          <div class="opt-text"><div class="opt-main">💼 已經有在經營一些副業了</div></div>
-        </label>
-      </div>
-    </div>
-
-    <!-- Q4 未來目標 -->
-    <div class="field">
-      <div class="f-label">④ 對於未來 1～3 年的自己，你最大的期待是什麼？<span class="req">*</span></div>
-      <div class="f-hint">不論是收入、職涯、生活方式，說說你心裡最真實的渴望</div>
-      <textarea class="f-input" name="futureGoal" placeholder="例如：希望收入能翻倍、想找到自己真正有熱情的工作方向、希望有更多時間陪家人..." required></textarea>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     STEP 3 · 天賦能量測驗（6 題）
-════════════════════════════════════════ -->
-<div class="step-card">
-  <div class="step-header">
-    <span class="step-badge">STEP 3</span>
-    <span class="step-title">職場直覺 6 題 ✦</span>
-  </div>
-  <div class="step-body">
-
-    <div class="wd-intro">
-      這 6 題請憑<strong>第一直覺</strong>勾選，不要想太多 😄<br>
-      Mike 會根據你的選擇，幫你找出你最適合的工作方式和收入模式。
-    </div>
-
-    <!-- Q5 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 1 / 6</div>
-        <div class="wd-q-text">碰到團隊要挑戰一個全新、沒人做過的任務時，你通常是哪種人？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd1" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">點子王！馬上興奮地想各種新點子和突破口</div></label>
-        <label class="wd-opt"><input type="radio" name="wd1" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">啦啦隊！立刻召集大家、炒熱氣氛，把大家的熱情帶起來</div></label>
-        <label class="wd-opt"><input type="radio" name="wd1" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">穩定器！保持冷靜，務實地看看手邊有多少時間人手，按部就班來</div></label>
-        <label class="wd-opt"><input type="radio" name="wd1" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">糾察隊！專注研究流程和潛在風險，規劃出最精準的執行計畫</div></label>
-      </div>
-    </div>
-
-    <!-- Q6 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 2 / 6</div>
-        <div class="wd-q-text">在跨部門溝通或跟客戶開會時，你覺得自己哪種能力最強？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd2" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">提出令人驚豔的創意或解決方案</div></label>
-        <label class="wd-opt"><input type="radio" name="wd2" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">讀懂人心，用親和力和幽默感跟所有人打成一片</div></label>
-        <label class="wd-opt"><input type="radio" name="wd2" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">觀察敏銳，會看準最好的時機才發表意見</div></label>
-        <label class="wd-opt"><input type="radio" name="wd2" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">拿出具體的證據與邏輯數據，有條理地說服對方</div></label>
-      </div>
-    </div>
-
-    <!-- Q7 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 3 / 6</div>
-        <div class="wd-q-text">談到職涯與財富，你內心最嚮往哪一種狀態？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd3" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">擁有絕對的自由，能不斷創造自己的新專案或作品</div></label>
-        <label class="wd-opt"><input type="radio" name="wd3" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">擁有強大的人脈，能透過「跟厲害的人合作」來賺錢</div></label>
-        <label class="wd-opt"><input type="radio" name="wd3" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">在穩定的環境下，靠敏銳的眼光累積資產與穩定變現</div></label>
-        <label class="wd-opt"><input type="radio" name="wd3" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">建立一套自動化的系統或流程，靠紀律和數字持續獲利</div></label>
-      </div>
-    </div>
-
-    <!-- Q8 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 4 / 6</div>
-        <div class="wd-q-text">當工作壓力很大、進度不如預期時，你的直覺反應通常是？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd4" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">腦袋停不下來，開始想下一個新計劃，但容易三分鐘熱度</div></label>
-        <label class="wd-opt"><input type="radio" name="wd4" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">情緒起伏大，想趕快找身邊的朋友或夥伴訴苦、聊聊天</div></label>
-        <label class="wd-opt"><input type="radio" name="wd4" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">容易內耗、不敢輕易改變，默默憋在心裡配合大局</div></label>
-        <label class="wd-opt"><input type="radio" name="wd4" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">變得很理性、防備心重，非要把細節的對錯搞清楚</div></label>
-      </div>
-    </div>
-
-    <!-- Q9 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 5 / 6</div>
-        <div class="wd-q-text">在職場上，你最受不了跟哪一種特質的同事共事？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd5" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">思想僵化、做事老套又拒絕改變的人</div></label>
-        <label class="wd-opt"><input type="radio" name="wd5" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">孤僻冷冰冰、不講人情味、很難溝通的人</div></label>
-        <label class="wd-opt"><input type="radio" name="wd5" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">喜歡亂改節奏、打破穩定、急功近利的人</div></label>
-        <label class="wd-opt"><input type="radio" name="wd5" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">說話沒憑沒據、做事沒邏輯、不看細節的人</div></label>
-      </div>
-    </div>
-
-    <!-- Q10 -->
-    <div class="wd-q">
-      <div class="wd-q-head">
-        <div class="wd-q-num">題 6 / 6</div>
-        <div class="wd-q-text">你覺得自己目前在工作上，最常卡住的「小盲區」是什麼？</div>
-      </div>
-      <div class="wd-opts">
-        <label class="wd-opt"><input type="radio" name="wd6" value="A"><div class="wd-dot"></div>
-          <div class="wd-opt-text">想法很多但執行力不夠，常常開了頭就沒下文</div></label>
-        <label class="wd-opt"><input type="radio" name="wd6" value="B"><div class="wd-dot"></div>
-          <div class="wd-opt-text">太容易受別人的情緒或人情世故影響，不夠理性</div></label>
-        <label class="wd-opt"><input type="radio" name="wd6" value="C"><div class="wd-dot"></div>
-          <div class="wd-opt-text">做事步伐太慢、怕改變，常常錯失最好的轉型時機</div></label>
-        <label class="wd-opt"><input type="radio" name="wd6" value="D"><div class="wd-dot"></div>
-          <div class="wd-opt-text">太追求完美，把自己綁在瑣事裡，缺乏大局觀</div></label>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     STEP 4 · 選擇方案
-════════════════════════════════════════ -->
-<div class="step-card">
-  <div class="step-header">
-    <span class="step-badge">STEP 4</span>
-    <span class="step-title">選擇你想要的服務</span>
-  </div>
-  <div class="step-body">
-    <p class="step-desc">第一次接觸<strong>完全免費</strong>，先聊聊看合不合拍 😊 點選方案可以展開服務說明。</p>
-    <div class="option-list" id="planGroup">
-
-      <label class="opt-card" data-plan="report">
-        <input type="checkbox" value="report">
-        <div class="opt-box"></div>
-        <div class="opt-text">
-          <div class="opt-main">✨ 免費職涯策略診斷報告</div>
-          <div class="opt-sub">根據你的 6 題測驗結果自動生成，送出表單即可收到</div>
-          <div class="plan-detail" id="detail-report">
-            <ul>
-              <li><strong>能量類型解析：</strong>找出你的「出廠設定」與職場最佳位置</li>
-              <li><strong>現況卡點診斷：</strong>用數據說話，打破你的線性努力盲點</li>
-              <li><strong>主動＋被動收入建議：</strong>依你的特質量身定制增收方向</li>
-              <li><strong>下一步行動指南：</strong>具體可落地的改變起點</li>
-            </ul>
-          </div>
+      <div class="field">
+        <div class="f-label">② 目前這份工作的月收入大概落在？<span class="req">*</span></div>
+        <div class="option-list income-opts" id="incomeGroup">
+          <label class="opt-card">
+            <input type="radio" name="incomeRange" value="3萬~5萬">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">3 萬 ～ 5 萬</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="incomeRange" value="5萬~8萬">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">5 萬 ～ 8 萬</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="incomeRange" value="8萬~12萬">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">8 萬 ～ 12 萬</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="radio" name="incomeRange" value="12萬以上">
+            <div class="opt-radio"></div>
+            <div class="opt-text"><div class="opt-main">12 萬以上</div></div>
+          </label>
         </div>
-        <span class="opt-badge badge-ai">免費</span>
-      </label>
+      </div>
 
-      <label class="opt-card" data-plan="A">
-        <input type="checkbox" value="A">
-        <div class="opt-box"></div>
-        <div class="opt-text">
-          <div class="opt-main">體驗諮詢・30 分鐘</div>
-          <div class="opt-sub">先聊聊，讓 Mike 親自幫你看清楚目前的卡點</div>
-          <div class="plan-detail" id="detail-A">
-            <ul>
-              <li><strong>現狀釐清：</strong>把心裡模糊的感覺，整理成清楚的問題</li>
-              <li><strong>能量落地：</strong>告訴你報告裡的特質，在你的現況下怎麼用</li>
-              <li><strong>3 個即戰行動：</strong>給你這週就能開始做的具體建議</li>
-            </ul>
-          </div>
+      <div class="field">
+        <div class="f-label">③ 下班後，你的日常生活圈大概是什麼樣子？</div>
+        <div class="f-hint">可以複選，多選也沒關係</div>
+        <div class="option-list" id="socialGroup">
+          <label class="opt-card">
+            <input type="checkbox" value="下班回家，社交圈比較小">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">🏠 下班通常直接回家，社交圈比較小</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="會去打桌遊、運動或社團">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">🎲 會去打桌遊、運動或參與社團，認識新朋友</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="會去上課學習、自我充實">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">📚 會去上課學習、自我充實</div></div>
+          </label>
+          <label class="opt-card">
+            <input type="checkbox" value="已經有在經營副業">
+            <div class="opt-box"></div>
+            <div class="opt-text"><div class="opt-main">💼 已經有在經營一些副業了</div></div>
+          </label>
         </div>
-        <span class="opt-badge badge-free">NT FREE</span>
-      </label>
+      </div>
 
-      <label class="opt-card" data-plan="B">
-        <input type="checkbox" value="B">
-        <div class="opt-box"></div>
-        <div class="opt-text">
-          <div class="opt-main">深度盤點：翻轉現況・60 分鐘</div>
-          <div class="opt-sub">適合真的想全面改變、找回職場熱情或增加收入的你</div>
-          <div class="plan-detail" id="detail-B">
-            <ul>
-              <li><strong>深度挖掘：</strong>用多元工具找出你真正的核心優勢</li>
-              <li><strong>收入增長路徑：</strong>主動＋被動收入的具體規劃</li>
-              <li><strong>人際與職場策略：</strong>搞定讓你最耗能的那個問題</li>
-              <li><strong>專屬諮詢報告書：</strong>完整的諮詢紀錄與行動計畫</li>
-            </ul>
-          </div>
-        </div>
-        <span class="opt-badge badge-paid">NT 1,500</span>
-      </label>
-
+      <div class="field">
+        <div class="f-label">④ 對於未來 1～3 年的自己，你最大的期待是什麼？<span class="req">*</span></div>
+        <div class="f-hint">不論是收入、職涯、生活方式，說說你心裡最真實的渴望</div>
+        <textarea class="f-input" name="c_futureGoal" placeholder="例如：希望收入能翻倍、想找到自己真正有熱情的工作方向、希望有更多時間陪家人..." required></textarea>
+      </div>
     </div>
   </div>
-</div>
 
-</div><!-- /page-wrap -->
+  <!-- STEP 3 -->
+  <div class="step-card">
+    <div class="step-header">
+      <span class="step-badge">STEP 3</span>
+      <span class="step-title">選擇你想要的服務</span>
+    </div>
+    <div class="step-body">
+      <p class="step-desc">第一次接觸<strong>完全免費</strong>，先聊聊看合不合拍 😊 點選方案可以展開服務說明。</p>
+      <div class="option-list" id="careerPlanGroup">
 
-<div class="submit-area">
-  <span class="clear-btn" onclick="clearForm()">清除表單</span>
-  <button type="submit" class="submit-btn" id="submitBtn">送出 ✨</button>
-  <div class="submit-note">
-    送出後下一步會引導你預約時間 📅<br>
-    <strong>所有資訊僅用於諮詢用途，不會分享給第三方。</strong>
+        <label class="opt-card" data-plan="cA">
+          <input type="checkbox" value="A">
+          <div class="opt-box"></div>
+          <div class="opt-text">
+            <div class="opt-main">體驗諮詢・30 分鐘</div>
+            <div class="opt-sub">先聊聊，讓 Mike 親自幫你看清楚目前的卡點</div>
+            <div class="plan-detail" id="detail-cA">
+              <ul>
+                <li><strong>現狀釐清：</strong>把心裡模糊的感覺，整理成清楚的問題</li>
+                <li><strong>方向初步分析：</strong>從你的回答，先看出可能適合的方向</li>
+                <li><strong>3 個即戰行動：</strong>給你這週就能開始做的具體建議</li>
+              </ul>
+            </div>
+          </div>
+          <span class="opt-badge badge-free">NT FREE</span>
+        </label>
+
+        <label class="opt-card" data-plan="cB">
+          <input type="checkbox" value="B">
+          <div class="opt-box"></div>
+          <div class="opt-text">
+            <div class="opt-main">深度盤點：翻轉現況・60 分鐘</div>
+            <div class="opt-sub">適合真的想全面改變、找回職場熱情或增加收入的你</div>
+            <div class="plan-detail" id="detail-cB">
+              <ul>
+                <li><strong>深度挖掘：</strong>用多元工具找出你真正的核心優勢</li>
+                <li><strong>收入增長路徑：</strong>主動＋被動收入的具體規劃</li>
+                <li><strong>人際與職場策略：</strong>搞定讓你最耗能的那個問題</li>
+                <li><strong>專屬諮詢報告書：</strong>完整的諮詢紀錄與行動計畫</li>
+              </ul>
+            </div>
+          </div>
+          <span class="opt-badge badge-paid">NT 1,500</span>
+        </label>
+
+      </div>
+    </div>
   </div>
-  <div class="error-msg" id="errorMsg"></div>
-</div>
 
-</form>
+  </div><!-- /page-wrap -->
+
+  <div class="submit-area">
+    <span class="clear-btn" onclick="clearForm('careerConsultForm')">清除表單</span>
+    <button type="submit" class="submit-btn" id="careerSubmitBtn">送出 ✨</button>
+    <div class="submit-note">
+      送出後下一步會引導你預約時間 📅<br>
+      <strong>所有資訊僅用於諮詢用途，不會分享給第三方。</strong>
+    </div>
+    <div class="error-msg" id="careerErrorMsg"></div>
+  </div>
+
+  </form>
+</div>
 
 <!-- ════════════════════════════════════════
-     送出成功後：預約頁面（全螢幕接管）
+     送出成功後：預約頁面（全螢幕接管，兩個表單共用）
 ════════════════════════════════════════ -->
 <div class="booking-page" id="bookingPage">
   <div class="bp-inner">
 
-    <!-- 頂部確認 -->
     <div class="bp-confirm">
       <div class="bp-check">✓</div>
       <div>
@@ -680,14 +900,12 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
       </div>
     </div>
 
-    <!-- 主標題 -->
     <div class="bp-hero">
       <div class="bp-step-tag">最後一步</div>
       <h2 class="bp-title">選個時間，跟 Mike 聊聊 📅</h2>
       <p class="bp-desc">你的資料已經存好了，現在只需要選一個你方便的時段——整個流程大概 1 分鐘完成。</p>
     </div>
 
-    <!-- Google 行事曆按鈕 -->
     <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bp-gcal-btn" id="bpGcalBtn">
       <div class="bp-gcal-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -704,7 +922,6 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
       <div class="bp-gcal-arrow">↗</div>
     </a>
 
-    <!-- 預約完成後回填 -->
     <div class="bp-fill-section">
       <div class="bp-fill-title">請填寫以下資訊 👇</div>
       <div class="bp-fill-hint">這樣我才能提前準備，讓我們的諮詢更有效率</div>
@@ -750,7 +967,6 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
       <div class="bp-skip" onclick="skipBooking()">還沒預約，先跳過，之後再說</div>
     </div>
 
-    <!-- 底部安心說明 -->
     <div class="bp-footer-note">
       🔒 所有資訊僅用於諮詢，不會分享給第三方 · Mike 會在 24 小時內確認你的預約
     </div>
@@ -770,6 +986,21 @@ async function initFb(){
   fbCollection=mod.collection; fbAddDoc=mod.addDoc; fbServerTimestamp=mod.serverTimestamp;
   fbDoc=mod.doc; fbUpdateDoc=mod.updateDoc;
 }
+
+// ── 選擇諮詢類型 ──────────────────────────────────────
+document.querySelectorAll('.type-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const type=card.dataset.type;
+    document.getElementById('typeChoice').style.display='none';
+    document.getElementById(type+'Flow').classList.add('show');
+    window.scrollTo(0,0);
+  });
+});
+window.backToChoice=()=>{
+  document.querySelectorAll('.type-flow').forEach(f=>f.classList.remove('show'));
+  document.getElementById('typeChoice').style.display='block';
+  window.scrollTo(0,0);
+};
 
 // ── opt-card 互動（checkbox + radio）────────────────
 document.querySelectorAll('.option-list').forEach(group => {
@@ -797,7 +1028,7 @@ document.querySelectorAll('.option-list').forEach(group => {
   });
 });
 
-// ── WD 題互動 ────────────────────────────────────────
+// ── 小測驗題互動 ─────────────────────────────────────
 document.querySelectorAll('.wd-opt').forEach(opt => {
   opt.addEventListener('click', () => {
     const inp = opt.querySelector('input');
@@ -811,12 +1042,13 @@ document.querySelectorAll('.wd-opt').forEach(opt => {
 });
 
 // ── 清除表單 ─────────────────────────────────────────
-window.clearForm = () => {
+window.clearForm = (formId) => {
   if (!confirm('確定要清除所有填寫內容？')) return;
-  document.getElementById('consultForm').reset();
-  document.querySelectorAll('.opt-card.selected').forEach(c => c.classList.remove('selected'));
-  document.querySelectorAll('.wd-opt.active').forEach(c => c.classList.remove('active'));
-  document.querySelectorAll('.plan-detail').forEach(d => d.style.display = 'none');
+  const form = document.getElementById(formId);
+  form.reset();
+  form.querySelectorAll('.opt-card.selected').forEach(c => c.classList.remove('selected'));
+  form.querySelectorAll('.wd-opt.active').forEach(c => c.classList.remove('active'));
+  form.querySelectorAll('.plan-detail').forEach(d => d.style.display = 'none');
 };
 
 // ── 格式選項互動 ──────────────────────────────────────
@@ -827,79 +1059,101 @@ document.querySelectorAll('.bp-format-opt').forEach(opt => {
   });
 });
 
-// ── 送出表單 ──────────────────────────────────────────
+// ── 共用：送出後開啟預約頁 ─────────────────────────────
 let savedDocId = null;
 let savedFormData = null;
 
-document.getElementById('consultForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const errMsg = document.getElementById('errorMsg');
-  btn.disabled = true;
-  btn.textContent = '送出中...';
-  errMsg.style.display = 'none';
+async function saveBookingAndShowPage(data, submitBtn, errMsgEl){
+  submitBtn.disabled = true;
+  submitBtn.textContent = '送出中...';
+  errMsgEl.style.display = 'none';
+  try {
+    await initFb();
+    data.createdAt = fbServerTimestamp();
+    const docRef = await fbAddDoc(fbCollection(db,'bookings'), data);
+    savedDocId = docRef.id;
+    savedFormData = data;
+    document.getElementById('psychFlow').classList.remove('show');
+    document.getElementById('careerFlow').classList.remove('show');
+    const bp = document.getElementById('bookingPage');
+    bp.classList.add('show');
+    document.getElementById('bpName').textContent = `${data.name}，謝謝你 😊`;
+    window.scrollTo(0,0);
+  } catch (err) {
+    console.error('Firebase 寫入失敗:', err.code, err.message);
+    errMsgEl.textContent = err.code==='permission-denied'
+      ? '❌ Firebase 權限不足，請確認 Firestore 安全規則。'
+      : `❌ 送出失敗：${err.message}`;
+    errMsgEl.style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '送出 ✨';
+  }
+}
 
-  const selectedPlans = [...document.querySelectorAll('#planGroup .opt-card.selected')]
+// ── 心理＆人際諮詢 表單送出 ─────────────────────────────
+document.getElementById('psychConsultForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const selectedPlans = [...document.querySelectorAll('#psychPlanGroup .opt-card.selected')]
     .map(c => c.querySelector('input').value);
 
-  const wd = {
-    q1: document.querySelector('input[name="wd1"]:checked')?.value || '',
-    q2: document.querySelector('input[name="wd2"]:checked')?.value || '',
-    q3: document.querySelector('input[name="wd3"]:checked')?.value || '',
-    q4: document.querySelector('input[name="wd4"]:checked')?.value || '',
-    q5: document.querySelector('input[name="wd5"]:checked')?.value || '',
-    q6: document.querySelector('input[name="wd6"]:checked')?.value || '',
+  const styleQuiz = {
+    q1: document.querySelector('input[name="sq1"]:checked')?.value || '',
+    q2: document.querySelector('input[name="sq2"]:checked')?.value || '',
+    q3: document.querySelector('input[name="sq3"]:checked')?.value || '',
+    q4: document.querySelector('input[name="sq4"]:checked')?.value || '',
+    q5: document.querySelector('input[name="sq5"]:checked')?.value || '',
+    q6: document.querySelector('input[name="sq6"]:checked')?.value || '',
   };
-  const wdCounts = {A:0,B:0,C:0,D:0};
-  Object.values(wd).forEach(v=>{if(wdCounts[v]!==undefined)wdCounts[v]++;});
-  const wdSorted = Object.entries(wdCounts).sort((a,b)=>b[1]-a[1]);
-  const wdTypeMap = {A:'發電機',B:'火焰',C:'節奏',D:'鋼鐵'};
-  const wdPrimary = wdTypeMap[wdSorted[0][0]]||'';
-  const wdSecondary = wdSorted[1][1]>0?wdTypeMap[wdSorted[1][0]]:'';
 
-  savedFormData = {
-    name: document.querySelector('[name="name"]').value.trim(),
-    email: document.querySelector('[name="email"]').value.trim(),
-    age: document.querySelector('[name="age"]').value||'',
-    experience: document.querySelector('[name="experience"]').value||'',
-    industry: document.querySelector('[name="industry"]').value||'',
-    jobDesc: document.querySelector('[name="jobDesc"]').value.trim(),
-    incomeRange: document.querySelector('input[name="incomeRange"]:checked')?.value||'',
-    socialLife: [...document.querySelectorAll('#socialGroup .selected input')].map(i=>i.value),
-    futureGoal: document.querySelector('[name="futureGoal"]').value.trim(),
-    wd, wdCounts, wdPrimary, wdSecondary,
-    wdLabel: wdSecondary?`${wdPrimary} × ${wdSecondary}`:wdPrimary,
+  const data = {
+    formType: 'psych',
+    name: document.querySelector('[name="p_name"]').value.trim(),
+    email: document.querySelector('[name="p_email"]').value.trim(),
+    age: document.querySelector('[name="p_age"]').value||'',
+    relationshipStatus: document.querySelector('[name="p_relStatus"]').value||'',
+    issueDesc: document.querySelector('[name="p_issueDesc"]').value.trim(),
+    issueContext: document.querySelector('input[name="issueContext"]:checked')?.value||'',
+    triedMethods: [...document.querySelectorAll('#triedGroup .selected input')].map(i=>i.value),
+    desiredOutcome: document.querySelector('[name="p_desiredOutcome"]').value.trim(),
+    styleQuiz,
     plans: selectedPlans,
     plan: selectedPlans.includes('B')?'B':selectedPlans.includes('A')?'A':'',
-    wantsReport: selectedPlans.includes('report'),
     appointmentTime: '',
     format: '',
     notes: '',
     status: 'pending',
-    report: '',
   };
 
-  try {
-    await initFb();
-    // createdAt 要在 initFb 之後才能呼叫
-    savedFormData.createdAt = fbServerTimestamp();
-    const docRef = await fbAddDoc(fbCollection(db,'bookings'), savedFormData);
-    savedDocId = docRef.id;
-    document.querySelector('form').style.display = 'none';
-    const bp = document.getElementById('bookingPage');
-    bp.classList.add('show');
-    document.getElementById('bpName').textContent = `${savedFormData.name}，謝謝你 😊`;
-    window.scrollTo(0,0);
-  } catch (err) {
-    console.error('Firebase 寫入失敗:', err.code, err.message);
-    errMsg.textContent = err.code==='permission-denied'
-      ? '❌ Firebase 權限不足，請確認 Firestore 安全規則。'
-      : `❌ 送出失敗：${err.message}`;
-    errMsg.style.display = 'block';
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '送出 ✨';
-  }
+  await saveBookingAndShowPage(data, document.getElementById('psychSubmitBtn'), document.getElementById('psychErrorMsg'));
+});
+
+// ── 收入＆職涯諮詢 表單送出 ─────────────────────────────
+document.getElementById('careerConsultForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const selectedPlans = [...document.querySelectorAll('#careerPlanGroup .opt-card.selected')]
+    .map(c => c.querySelector('input').value);
+
+  const data = {
+    formType: 'career',
+    name: document.querySelector('[name="c_name"]').value.trim(),
+    email: document.querySelector('[name="c_email"]').value.trim(),
+    age: document.querySelector('[name="c_age"]').value||'',
+    experience: document.querySelector('[name="c_experience"]').value||'',
+    industry: document.querySelector('[name="c_industry"]').value||'',
+    jobDesc: document.querySelector('[name="c_jobDesc"]').value.trim(),
+    incomeRange: document.querySelector('input[name="incomeRange"]:checked')?.value||'',
+    socialLife: [...document.querySelectorAll('#socialGroup .selected input')].map(i=>i.value),
+    futureGoal: document.querySelector('[name="c_futureGoal"]').value.trim(),
+    plans: selectedPlans,
+    plan: selectedPlans.includes('B')?'B':selectedPlans.includes('A')?'A':'',
+    appointmentTime: '',
+    format: '',
+    notes: '',
+    status: 'pending',
+  };
+
+  await saveBookingAndShowPage(data, document.getElementById('careerSubmitBtn'), document.getElementById('careerErrorMsg'));
 });
 
 // ── 完成預約確認 ───────────────────────────────────────
@@ -925,9 +1179,6 @@ window.skipBooking = () => showDonePage();
 // ── 完成頁 ────────────────────────────────────────────
 function showDonePage() {
   const bp = document.getElementById('bookingPage');
-  const wantsReport = savedFormData?.wantsReport;
-  // 報告連結：用相對路徑，不管部署在網域根目錄還是子路徑(如 GitHub Pages)都能正確連到同資料夾的 report.html
-  const reportLink = `report.html?id=${savedDocId}`;
   bp.innerHTML = `
     <div class="bp-inner">
       <div class="bp-done show">
@@ -935,14 +1186,10 @@ function showDonePage() {
         <div class="bp-done-title">太好了，一切都搞定了！</div>
         <div class="bp-done-text">
           你的資料 Mike 主任都收到了 😊<br>
-          ${wantsReport ? '你的職涯策略診斷報告已生成，<br>點下方按鈕立即查看。<br><br>' : ''}
           Mike 主任會在 <strong>24 小時內</strong>透過 Email 與你確認，<br>
           期待在諮詢室見到你！
         </div>
-        ${wantsReport && savedDocId
-          ? `<a href="${reportLink}" target="_blank" class="bp-done-btn">查看我的診斷報告 →</a>`
-          : `<div class="bp-done-btn" onclick="document.getElementById('bookingPage').style.display='none'">好的，期待與你相見 ✨</div>`
-        }
+        <div class="bp-done-btn" onclick="document.getElementById('bookingPage').classList.remove('show')">好的，期待與你相見 ✨</div>
       </div>
     </div>`;
 }
