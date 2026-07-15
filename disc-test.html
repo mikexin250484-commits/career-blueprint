@@ -77,7 +77,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .dq-opt.active .dq-dot::after{display:block}
 .dq-opt-text{font-size:13.5px;color:var(--ts);font-weight:300;line-height:1.65;flex:1}
 
-/* GCAL / BOOKING (借用既有預約流程樣式) */
+/* GCAL / BOOKING / REPORT（共用樣式） */
 .submit-area{padding:8px 16px 40px}
 .submit-btn{width:100%;padding:18px;background:linear-gradient(90deg,var(--dark) 0%,var(--amber) 100%);color:#fff;border:none;border-radius:16px;font-family:inherit;font-size:16px;font-weight:500;letter-spacing:2px;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(200,118,42,0.3)}
 .submit-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,118,42,0.35)}
@@ -212,24 +212,53 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 <div class="submit-area">
   <button type="submit" class="submit-btn" id="submitBtn">送出 ✨</button>
   <div class="submit-note">
-    送出後會引導你預約諮詢時間 📅<br>
+    送出後馬上看到你的 DISC 報告 📋<br>
     所有資訊僅用於諮詢用途，不會分享給第三方。
   </div>
   <div class="error-msg" id="errorMsg"></div>
 </div>
 </form>
 
-<!-- 送出成功後：預約頁面 -->
-<div class="booking-page" id="bookingPage">
+<!-- 送出成功後：STEP 2/3 先看報告 -->
+<div class="booking-page" id="reportPage">
   <div class="bp-inner">
     <div class="bp-confirm">
       <div class="bp-check">✓</div>
-      <div><div class="bp-confirm-title">資料已收到！</div><div class="bp-confirm-sub" id="bpName">謝謝你 😊</div></div>
+      <div><div class="bp-confirm-title">資料已收到！</div><div class="bp-confirm-sub" id="rpBpName">謝謝你 😊</div></div>
     </div>
     <div class="bp-hero">
-      <div class="bp-step-tag">最後一步</div>
+      <div class="bp-step-tag">STEP 2 / 3</div>
+      <h2 class="bp-title">你的 DISC 報告出爐了 🎉</h2>
+      <p class="bp-desc">花不到 1 分鐘，先看看你的主導行為風格、雷達圖，還有專屬的溝通地雷分析。</p>
+    </div>
+    <a href="#" target="_blank" id="reportLinkBtn" class="bp-gcal-btn">
+      <div class="bp-gcal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M14 2v6h6" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M8 13h8M8 17h5" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="bp-gcal-text"><div class="bp-gcal-main">查看我的完整報告</div><div class="bp-gcal-sub">主導風格・雷達圖・深度解析</div></div>
+      <div class="bp-gcal-arrow">↗</div>
+    </a>
+    <div class="bp-fill-section">
+      <div class="bp-fill-title" id="rpFillTitle">看完報告，想更快解開卡關？👇</div>
+      <div class="bp-fill-hint">跟 Mike 主任約 30 分鐘，一對一看懂報告裡點到的盲點</div>
+      <button class="bp-submit-btn" onclick="goToBookingStep()">下一步：預約諮詢時段 →</button>
+      <div class="bp-skip" onclick="skipToEnd()">先不預約，謝謝</div>
+    </div>
+    <div class="bp-footer-note">🔒 所有資訊僅用於諮詢，不會分享給第三方</div>
+  </div>
+</div>
+
+<!-- STEP 3 · 預約時段 -->
+<div class="booking-page" id="bookingPage">
+  <div class="bp-inner">
+    <div class="bp-hero">
+      <div class="bp-step-tag">STEP 3 / 3 · 最後一步</div>
       <h2 class="bp-title">選個時間，跟 Mike 聊聊 📅</h2>
-      <p class="bp-desc">你的 DISC 報告已經生成，現在只需要選一個你方便的時段——整個流程大概 1 分鐘完成。</p>
+      <p class="bp-desc">現在只需要選一個你方便的時段——整個流程大概 1 分鐘完成。</p>
     </div>
     <a href="https://calendar.app.google/y7pFfnC2HXbyvydP9" target="_blank" class="bp-gcal-btn" id="bpGcalBtn">
       <div class="bp-gcal-icon">
@@ -461,9 +490,10 @@ document.getElementById('discForm').addEventListener('submit',async(e)=>{
     const docRef=await fbAddDoc(fbCollection(db,'discClients'),savedFormData);
     savedDocId=docRef.id;
     document.getElementById('discForm').style.display='none';
-    const bp=document.getElementById('bookingPage');
-    bp.classList.add('show');
-    document.getElementById('bpName').textContent=`${savedFormData.name}，謝謝你 😊`;
+    // STEP 2/3：先顯示報告頁
+    document.getElementById('reportLinkBtn').href=`disc-report.html?id=${savedDocId}`;
+    document.getElementById('rpBpName').textContent=`${savedFormData.name}，謝謝你 😊`;
+    document.getElementById('reportPage').classList.add('show');
     window.scrollTo(0,0);
   }catch(err){
     console.error('Firebase 寫入失敗:',err.code,err.message);
@@ -478,23 +508,39 @@ document.querySelectorAll('.bp-format-opt').forEach(opt=>{
   opt.addEventListener('click',()=>opt.querySelector('input').checked=true);
 });
 
+/* STEP 2 → STEP 3：從報告頁前往預約頁 */
+window.goToBookingStep=()=>{
+  document.getElementById('reportPage').classList.remove('show');
+  document.getElementById('bookingPage').classList.add('show');
+  window.scrollTo(0,0);
+};
+
+/* STEP 2：不想預約，直接結束（報告連結仍留在畫面上可點） */
+window.skipToEnd=()=>{
+  const fillSection=document.querySelector('#reportPage .bp-fill-section');
+  fillSection.innerHTML=`
+    <div class="bp-fill-title">好的，謝謝你 😊</div>
+    <div class="bp-fill-hint">之後想預約諮詢，隨時可以點上方的報告連結，裡面也有預約按鈕。</div>`;
+};
+
+/* STEP 3：完成預約 */
 window.submitBooking=async()=>{
   const btn=document.getElementById('bpSubmitBtn');
   const format=document.querySelector('input[name="bpFormat"]:checked')?.value||'';
   const notes=document.getElementById('bpNotes').value.trim();
-  if(!savedDocId){showDonePage();return;}
+  if(!savedDocId){finalDone();return;}
   btn.disabled=true;btn.textContent='更新中...';
   try{
     await initFb();
     await fbUpdateDoc(fbDoc(db,'discClients',savedDocId),{format,notes});
   }catch(e){console.warn('更新預約資料失敗（主資料已存好）:',e.message);}
-  showDonePage();
+  finalDone();
 };
-window.skipBooking=()=>showDonePage();
+window.skipBooking=()=>finalDone();
 
-function showDonePage(){
+/* STEP 3 結束畫面 */
+function finalDone(){
   const bp=document.getElementById('bookingPage');
-  // 用相對路徑，不管部署在網域根目錄還是子路徑(如 GitHub Pages)都能正確連到同資料夾的 disc-report.html
   const reportLink=`disc-report.html?id=${savedDocId}`;
   bp.innerHTML=`
     <div class="bp-inner">
@@ -502,11 +548,10 @@ function showDonePage(){
         <div class="bp-done-icon">🌿</div>
         <div class="bp-done-title">太好了，一切都搞定了！</div>
         <div class="bp-done-text">
-          你的 DISC 行為報告已經生成 😊<br>
           Mike 主任會在 <strong>24 小時內</strong>透過 Email 與你確認，<br>
           期待在諮詢室見到你！
         </div>
-        <a href="${reportLink}" target="_blank" class="bp-done-btn">查看我的 DISC 報告 →</a>
+        <a href="${reportLink}" target="_blank" class="bp-done-btn">再看一次我的 DISC 報告 →</a>
       </div>
     </div>`;
 }
