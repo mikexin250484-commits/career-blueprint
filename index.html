@@ -60,6 +60,29 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .type-flow{display:none}
 .type-flow.show{display:block}
 
+/* QUIZ PROMO (曝光免費測驗) */
+.quiz-promo{padding:6px 16px 34px}
+.quiz-promo-head{text-align:center;margin-bottom:16px}
+.quiz-promo-tag{color:var(--o);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:block}
+.quiz-promo-title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:600;color:var(--text)}
+.quiz-promo-sub{font-size:13px;color:var(--ts);margin-top:6px;font-weight:300;line-height:1.7}
+.quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:560px){.quiz-grid{grid-template-columns:1fr}}
+.quiz-card{background:var(--white);border:1.5px solid var(--line);border-radius:16px;padding:20px 18px;text-decoration:none;display:block;transition:all .2s}
+.quiz-card:hover{border-color:var(--ol);box-shadow:var(--shadow);transform:translateY(-2px)}
+.quiz-card-badge{display:inline-block;background:var(--op);color:var(--o);font-size:10.5px;padding:2px 9px;border-radius:12px;margin-bottom:8px;font-weight:500;letter-spacing:.3px}
+.quiz-card-icon{font-size:26px;margin-bottom:8px}
+.quiz-card-title{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+.quiz-card-desc{font-size:12.5px;color:var(--ts);line-height:1.7;font-weight:300;margin-bottom:12px}
+.quiz-card-cta{display:inline-flex;align-items:center;gap:5px;color:var(--o);font-size:13px;font-weight:500}
+
+/* 完成頁的測驗延伸 */
+.done-quiz-section{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.done-quiz-label{font-size:13px;color:var(--tm);margin-bottom:12px}
+.done-quiz-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.done-quiz-link{display:inline-flex;align-items:center;gap:6px;background:var(--op);color:var(--o);font-size:13px;font-weight:500;padding:9px 16px;border-radius:20px;text-decoration:none;border:1px solid rgba(200,118,42,.25);transition:all .2s}
+.done-quiz-link:hover{background:var(--amber);color:#fff}
+
 /* STEP CARD */
 .page-wrap{padding:16px 16px 0}
 .step-card{background:var(--white);border-radius:20px;margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
@@ -360,6 +383,33 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
       <span class="type-card-tag">職場倦怠</span>
     </div>
     <div class="type-card-btn">進入這個表單 →</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     免費測驗曝光區
+════════════════════════════════════════ -->
+<div class="quiz-promo">
+  <div class="quiz-promo-head">
+    <span class="quiz-promo-tag">順便延伸</span>
+    <div class="quiz-promo-title">還沒準備好預約？先玩個免費測驗</div>
+    <div class="quiz-promo-sub">填完馬上看到免費報告，之後找 Mike 解盤聊起來更快進入重點</div>
+  </div>
+  <div class="quiz-grid">
+    <a href="disc-test.html" target="_blank" class="quiz-card">
+      <span class="quiz-card-badge">免費報告</span>
+      <div class="quiz-card-icon">🎭</div>
+      <div class="quiz-card-title">DISC 性格測驗</div>
+      <div class="quiz-card-desc">5 分鐘看懂你的行為風格：主導、社交、穩健、謹慎，找出你的職場／人際慣性</div>
+      <div class="quiz-card-cta">開始測驗 →</div>
+    </a>
+    <a href="talent-test.html" target="_blank" class="quiz-card">
+      <span class="quiz-card-badge">免費報告</span>
+      <div class="quiz-card-icon">🌊</div>
+      <div class="quiz-card-title">天賦順流測驗</div>
+      <div class="quiz-card-desc">找出你的天賦能量角色，看懂自己最順、最容易發揮的做事方式</div>
+      <div class="quiz-card-cta">開始測驗 →</div>
+    </a>
   </div>
 </div>
 
@@ -1326,6 +1376,14 @@ function showDonePage() {
           期待在諮詢室見到你！
         </div>
         <div class="bp-done-btn" onclick="document.getElementById('bookingPage').classList.remove('show')">好的，期待與你相見 ✨</div>
+
+        <div class="done-quiz-section">
+          <div class="done-quiz-label">等 Mike 確認預約的同時，要不要先玩個免費測驗？</div>
+          <div class="done-quiz-links">
+            <a href="disc-test.html" target="_blank" class="done-quiz-link">🎭 DISC 性格測驗 →</a>
+            <a href="talent-test.html" target="_blank" class="done-quiz-link">🌊 天賦順流測驗 →</a>
+          </div>
+        </div>
       </div>
     </div>`;
 }
