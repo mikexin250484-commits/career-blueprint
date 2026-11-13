@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>職涯策略診斷報告｜Career Blueprint</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -205,7 +206,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#ede4d8;color:var(--text);
 <div class="screen-nav">
   <div class="nav-title">職涯策略診斷報告</div>
   <div class="nav-name" id="navName">載入中...</div>
-  <button class="nav-btn email" onclick="openEmailModal()">📧 寄送 Email</button>
+  <button class="nav-btn email" id="navEmailBtn" style="display:none" onclick="openEmailModal()">📧 寄送 Email</button>
   <button class="nav-btn print-btn" onclick="window.print()">🖨 列印 / PDF</button>
 </div>
 
@@ -548,6 +549,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:#ede4d8;color:var(--text);
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
+// 「寄送 Email」按鈕只在從後台開啟時顯示，客戶看自己的報告時不會出現
+if(params.get('from')==='admin'){const _eb=document.getElementById('navEmailBtn');if(_eb)_eb.style.display='';}
 
 /* ══ WD TYPE DATA ═══════════════════════════════════════════════════ */
 const WD={
@@ -627,6 +630,7 @@ function calcWd(wd){
 }
 
 function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt||'';}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html||'';}
 
 /* ══ RENDER ═════════════════════════════════════════════════════════ */
@@ -732,7 +736,7 @@ function render(data){
   // 社交圈
   const socialMap={'下班回家，社交圈比較小':'🏠 下班直接回家','會去打桌遊、運動或社團':'🎲 有參與社群活動','會去上課學習、自我充實':'📚 持續自我充實','已經有在經營副業':'💼 已有副業經驗'};
   const socialArr=Array.isArray(social)?social:[social].filter(Boolean);
-  setHTML('socialTags',socialArr.map(s=>`<span class="social-tag">${socialMap[s]||s}</span>`).join(''));
+  setHTML('socialTags',socialArr.map(s=>`<span class="social-tag">${esc(socialMap[s]||s)}</span>`).join(''));
   const hasHome=socialArr.some(s=>s.includes('回家'));
   const hasSide=socialArr.some(s=>s.includes('副業'));
   const hasSocial=socialArr.some(s=>s.includes('桌遊')||s.includes('社團'));
@@ -764,7 +768,7 @@ function render(data){
   // 未來目標
   const goalEl=document.getElementById('goalResponse');
   if(goalEl){
-    const goal=futureGoal.slice(0,80)||'你填寫的期待';
+    const goal=esc(String(futureGoal).slice(0,80))||'你填寫的期待';
     goalEl.innerHTML=`你說你最大的期待是：<em>「${goal}${futureGoal.length>80?'…':''}」</em><br><br>聽到這裡，我想問你一個問題：<strong>你現在走的路，是朝著這個目標在走，還是每天只是在「應付」？</strong><br><br>很多人有方向，但沒有讓自己的優勢真正對齊那個方向。結果就是努力了很久，卻發現自己還是在原地跑。你的優勢是對的，只是需要一個「正確的催化劑」，讓它真正動起來。`;
   }
 
@@ -840,10 +844,16 @@ async function load(){
     const snap=await getDoc(fsDoc(db,'bookings',docId));
     if(!snap.exists()){document.body.innerHTML='<p style="padding:40px;font-family:sans-serif;color:#5c3a1a">找不到此報告。</p>';return;}
     window._reportData=snap.data();window._reportId=docId;
+    const _wd=snap.data().wd||snap.data().disc||{};
+    if(!Object.values(_wd).some(v=>v)){
+      // 這份表單沒有作答「職場直覺六題」（選填），無法判斷能量類型，不顯示猜測的報告
+      document.body.innerHTML='<div style="padding:60px 24px;font-family:sans-serif;color:#5c3a1a;text-align:center;line-height:1.9"><h2 style="font-size:20px;margin-bottom:12px">這份資料沒有作答能量測驗</h2><p>職場直覺六題是選填，這位個案沒有作答，所以無法產生職涯策略診斷報告。</p></div>';
+      return;
+    }
     render(snap.data());
   }catch(e){
-    console.warn('Firebase 讀取失敗，使用 demo 資料:',e.message);
-    render(DEMO);
+    console.warn('Firebase 讀取失敗:',e.message);
+    document.body.innerHTML='<div style="padding:60px 24px;font-family:sans-serif;color:#5c3a1a;text-align:center;line-height:1.9"><h2 style="font-size:20px;margin-bottom:12px">報告暫時無法載入</h2><p>請稍後重新整理頁面再試一次。<br>若持續發生，請直接聯絡 Mike 主任，我們會盡快協助你。</p><button onclick="location.reload()" style="margin-top:20px;padding:10px 28px;border:none;border-radius:20px;background:#b5651d;color:#fff;font-size:14px;cursor:pointer">重新整理</button></div>';
   }
 }
 

@@ -325,6 +325,7 @@ textarea.f-input{resize:vertical;min-height:90px;line-height:1.7}
   font-size:14px;font-weight:500;letter-spacing:1px;
   text-decoration:none;cursor:pointer;border:none;font-family:inherit;
 }
+.option-list.missing{outline:2px solid var(--red);outline-offset:6px;border-radius:12px}
 </style>
 </head>
 <body>
@@ -1234,6 +1235,14 @@ document.querySelectorAll('.bp-format-opt').forEach(opt => {
   });
 });
 
+// ── 共用：必填檢查（卡片式單選／方案瀏覽器不會自動檢查）──
+function failField(errEl, msg, groupEl){
+  errEl.textContent = '❌ ' + msg;
+  errEl.style.display = 'block';
+  if (groupEl) { groupEl.classList.add('missing'); groupEl.scrollIntoView({behavior:'smooth', block:'center'}); }
+}
+document.addEventListener('click', e => { const g = e.target.closest('.option-list.missing'); if (g) g.classList.remove('missing'); });
+
 // ── 共用：送出後開啟預約頁 ─────────────────────────────
 let savedDocId = null;
 let savedFormData = null;
@@ -1271,6 +1280,11 @@ document.getElementById('psychConsultForm').addEventListener('submit', async (e)
   e.preventDefault();
   const selectedPlans = [...document.querySelectorAll('#psychPlanGroup .opt-card.selected')]
     .map(c => c.querySelector('input').value);
+  const pErr = document.getElementById('psychErrorMsg');
+  if (!document.querySelector('input[name="issueContext"]:checked'))
+    return failField(pErr, '請選擇「② 這個困擾最常出現在哪一種關係裡」', document.getElementById('issueContextGroup'));
+  if (!selectedPlans.length)
+    return failField(pErr, '請在 STEP 4 至少選一個你想要的服務', document.getElementById('psychPlanGroup'));
 
   const styleQuiz = {
     q1: document.querySelector('input[name="sq1"]:checked')?.value || '',
@@ -1308,6 +1322,11 @@ document.getElementById('careerConsultForm').addEventListener('submit', async (e
   e.preventDefault();
   const selectedPlans = [...document.querySelectorAll('#careerPlanGroup .opt-card.selected')]
     .map(c => c.querySelector('input').value);
+  const cErr = document.getElementById('careerErrorMsg');
+  if (!document.querySelector('input[name="incomeRange"]:checked'))
+    return failField(cErr, '請選擇「② 目前的月收入區間」', document.getElementById('incomeGroup'));
+  if (!selectedPlans.length)
+    return failField(cErr, '請在 STEP 4 至少選一個你想要的服務', document.getElementById('careerPlanGroup'));
 
   const wd = {
     q1: document.querySelector('input[name="wd1"]:checked')?.value || '',

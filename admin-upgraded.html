@@ -2,6 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Mike 主任 CRM｜後台管理</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -208,7 +209,7 @@ tr:hover td{background:#faf9f5}
     <div class="sb-footer">
       <div class="sb-avatar">
         <div class="sb-avatar-circle">M</div>
-        <div class="info"><div class="n">Mike 主任</div><div class="r">管理員</div></div>
+        <div class="info"><div class="n">Mike 主任</div><div class="r">管理員 · <a href="javascript:void(0)" onclick="lockAdmin()" style="color:#8fa882">登出</a></div></div>
       </div>
     </div>
   </aside>
@@ -299,17 +300,28 @@ tr:hover td{background:#faf9f5}
 
     <div class="dp-section">
       <div class="dp-section-title">基本資料</div>
+      <div class="dp-row"><span class="dp-row-label">諮詢類型</span><span class="dp-row-val" id="dpFormType"></span></div>
       <div class="dp-row"><span class="dp-row-label">年齡區間</span><span class="dp-row-val" id="dpAge"></span></div>
-      <div class="dp-row"><span class="dp-row-label">工作年資</span><span class="dp-row-val" id="dpExp"></span></div>
-      <div class="dp-row"><span class="dp-row-label">產業</span><span class="dp-row-val" id="dpIndustry"></span></div>
-      <div class="dp-row"><span class="dp-row-label">工作描述</span><span class="dp-row-val" id="dpJobDesc"></span></div>
-      <div class="dp-row"><span class="dp-row-label">收入區間</span><span class="dp-row-val" id="dpIncome"></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">工作年資</span><span class="dp-row-val" id="dpExp"></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">產業</span><span class="dp-row-val" id="dpIndustry"></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">工作描述</span><span class="dp-row-val" id="dpJobDesc"></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">收入區間</span><span class="dp-row-val" id="dpIncome"></span></div>
+    </div>
+
+    <div class="dp-section dp-psych">
+      <div class="dp-section-title">感情／人際狀況</div>
+      <div class="dp-row"><span class="dp-row-label">感情狀態</span><span class="dp-row-val" id="dpRelStatus"></span></div>
+      <div class="dp-row"><span class="dp-row-label">困擾描述</span><span class="dp-row-val" id="dpIssueDesc"></span></div>
+      <div class="dp-row"><span class="dp-row-label">出現在</span><span class="dp-row-val" id="dpIssueContext"></span></div>
+      <div class="dp-row"><span class="dp-row-label">試過的方法</span><span class="dp-row-val" id="dpTried"></span></div>
+      <div class="dp-row"><span class="dp-row-label">希望達到</span><span class="dp-row-val" id="dpDesired"></span></div>
+      <div class="dp-row"><span class="dp-row-label">風格小測驗</span><span class="dp-row-val" id="dpStyleQuiz"></span></div>
     </div>
 
     <div class="dp-section">
       <div class="dp-section-title">諮詢資訊</div>
-      <div class="dp-row"><span class="dp-row-label">下班社交</span><span class="dp-row-val"><div class="dp-social-tags" id="dpSocial"></div></span></div>
-      <div class="dp-row"><span class="dp-row-label">未來目標</span><span class="dp-row-val" id="dpGoal"></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">下班社交</span><span class="dp-row-val"><div class="dp-social-tags" id="dpSocial"></div></span></div>
+      <div class="dp-row dp-career"><span class="dp-row-label">未來目標</span><span class="dp-row-val" id="dpGoal"></span></div>
       <div class="dp-row"><span class="dp-row-label">方案</span><span class="dp-row-val" id="dpPlan"></span></div>
       <div class="dp-row"><span class="dp-row-label">諮詢方式</span><span class="dp-row-val" id="dpFormat"></span></div>
       <div class="dp-row"><span class="dp-row-label">預約時段</span><span class="dp-row-val" id="dpAppt"></span></div>
@@ -464,6 +476,17 @@ tr:hover td{background:#faf9f5}
 
 <div class="toast" id="toast"></div>
 
+<!-- LOCK SCREEN -->
+<div id="lockScreen" style="position:fixed;inset:0;background:#2d3a2d;z-index:500;display:flex;align-items:center;justify-content:center;padding:20px">
+  <form onsubmit="tryUnlock(event)" style="background:#fdfbf6;border-radius:18px;padding:36px 32px;width:340px;max-width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25)">
+    <div style="font-family:'Noto Serif TC',serif;font-size:18px;color:#3d4a3d;margin-bottom:6px">Mike 主任 CRM</div>
+    <div style="font-size:12px;color:#7a8a7a;margin-bottom:22px">請輸入後台密碼</div>
+    <input id="lockPw" type="password" autocomplete="current-password" placeholder="密碼" style="width:100%;padding:11px 14px;border:1px solid #e3dccd;border-radius:10px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px"/>
+    <div id="lockErr" style="display:none;color:#c0392b;font-size:12px;margin-bottom:10px">密碼不正確，請再試一次</div>
+    <button type="submit" style="width:100%;padding:11px;border:none;border-radius:24px;background:#6b8068;color:#fff;font-size:14px;cursor:pointer;font-family:inherit">進入後台</button>
+  </form>
+</div>
+
 <script>
 /* ══ FIREBASE ═══════════════════════════════════════════════════════ */
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
@@ -471,7 +494,7 @@ let db,allBookings=[],allDiscClients=[],allTalentClients=[],currentFilter='all',
 
 // 報告頁的基礎 URL：自動抓「目前這個頁面所在的資料夾」，
 // 不管部署在網域根目錄（Netlify）還是子路徑（GitHub Pages 的 /repo-name/）都能正確組出網址
-const BASE_DIR = location.href.replace(/admin-upgraded\.html.*$/, '');
+const BASE_DIR = new URL('.', location.href).href;
 const REPORT_BASE = BASE_DIR + 'report.html';
 const DISC_REPORT_BASE = BASE_DIR + 'disc-report.html';
 const TALENT_REPORT_BASE = BASE_DIR + 'talent-report.html';
@@ -513,10 +536,17 @@ window.loadBookings=async()=>{
 };
 
 /* ══ HELPERS ════════════════════════════════════════════════════════ */
+// 客戶填的文字一律跳脫，避免有人在表單塞入 HTML/程式碼
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const isPsych=r=>r.formType==='psych';
+const hasWd=r=>!!(r.wdPrimary||Object.values(r.wd||r.disc||{}).some(v=>v));
+function matchSearch(list){
+  if(!searchQuery)return list;
+  const q=searchQuery.toLowerCase();
+  return list.filter(b=>(b.name||'').toLowerCase().includes(q)||(b.email||'').toLowerCase().includes(q)||(b.lineName||'').toLowerCase().includes(q));
+}
 function getFiltered(status){
-  let list=status==='all'?allBookings:allBookings.filter(b=>b.status===status);
-  if(searchQuery){const q=searchQuery.toLowerCase();list=list.filter(b=>(b.name||'').toLowerCase().includes(q)||(b.email||'').toLowerCase().includes(q));}
-  return list;
+  return matchSearch(status==='all'?allBookings:allBookings.filter(b=>b.status===status));
 }
 
 function wdLabel(r){
@@ -556,13 +586,13 @@ function renderAll(){
   document.getElementById('st-income').textContent=`NT$${(planBDone*1500).toLocaleString()}`;
   document.getElementById('st-disc').textContent=allDiscClients.length;
   document.getElementById('st-talent').textContent=allTalentClients.length;
-  renderTable('dashboardTable',allBookings.slice(0,20));
+  renderTable('dashboardTable',matchSearch(allBookings).slice(0,20));
   renderTable('clientsTable',getFiltered(currentFilter));
   renderTable('pendingTable',getFiltered('pending'));
   renderTable('confirmedTable',getFiltered('confirmed'));
   renderTable('doneTable',getFiltered('done'));
-  renderDiscTable('discTable',allDiscClients);
-  renderTalentTable('talentTable',allTalentClients);
+  renderDiscTable('discTable',matchSearch(allDiscClients));
+  renderTalentTable('talentTable',matchSearch(allTalentClients));
 }
 
 function setTableLoading(id){document.getElementById(id).innerHTML=`<div class="table-empty"><div class="loading-spinner"></div>載入中...</div>`;}
@@ -579,20 +609,25 @@ function renderTable(containerId,rows){
 }
 
 function rowHTML(r){
-  const wd=wdLabel(r);
-  const social=socialArr(r).slice(0,2).map(s=>`<span class="topic-pill">${s.replace('下班回家，社交圈比較小','下班回家').replace('會去打桌遊、運動或社團','社群活動').replace('會去上課學習、自我充實','自我充實').replace('已經有在經營副業','有副業')}</span>`).join('');
+  const psych=isPsych(r);
+  const wd=psych?'心理＆人際':wdLabel(r);
+  const tags=psych
+    ?[r.issueContext].filter(Boolean).map(s=>`<span class="topic-pill">${esc(s)}</span>`).join('')
+    :socialArr(r).slice(0,2).map(s=>`<span class="topic-pill">${esc(String(s).replace('下班回家，社交圈比較小','下班回家').replace('會去打桌遊、運動或社團','社群活動').replace('會去上課學習、自我充實','自我充實').replace('已經有在經營副業','有副業'))}</span>`).join('');
+  const goal=psych?(r.desiredOutcome||''):(r.futureGoal||r.interest||'');
   const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
-  const appt=r.appointmentTime?`<div style="font-size:10px;color:var(--text-m);margin-top:2px">📅 ${r.appointmentTime}</div>`:'';
+  const appt=r.appointmentTime?`<div style="font-size:10px;color:var(--text-m);margin-top:2px">📅 ${esc(r.appointmentTime)}</div>`:'';
+  const canReport=!psych&&hasWd(r);
   return`<tr>
-    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
-    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div>${appt}</div></div></td>
-    <td>${social||'—'}<div style="font-size:11px;color:var(--text-m);margin-top:2px">${(r.futureGoal||r.interest||'').slice(0,30)||''}</div></td>
-    <td><span class="badge ${wd!=='未完成'?'has-report':'no-report'}">${wd}</span></td>
-    <td>${r.plan?`<span class="badge plan${r.plan}">Plan ${r.plan}</span>`:'—'} ${emailBadge}</td>
+    <td><div class="name-cell"><div class="avatar">${esc((r.name||'?')[0])}</div>
+    <div class="name-text"><div class="n">${esc(r.name||'—')}</div><div class="e">${esc(r.email||'')}</div>${appt}</div></div></td>
+    <td>${tags||'—'}<div style="font-size:11px;color:var(--text-m);margin-top:2px">${esc(goal.slice(0,30))}</div></td>
+    <td><span class="badge ${psych||wd!=='未完成'?'has-report':'no-report'}">${esc(wd)}</span></td>
+    <td>${r.plan?`<span class="badge plan${esc(r.plan)}">Plan ${esc(r.plan)}</span>`:'—'} ${emailBadge}</td>
     <td>${statusBadge(r.status)}</td>
     <td><div class="btn-group-cell">
-      <button class="action-btn" data-view-id="${r.id}">查看</button>
-      <button class="action-btn email" data-email-id="${r.id}">📧 寄報告</button>
+      <button class="action-btn" data-view-id="${esc(r.id)}">查看</button>
+      <button class="action-btn email" data-email-id="${esc(r.id)}">${canReport?'📧 寄報告':'📧 寄確認信'}</button>
     </div></td>
   </tr>`;
 }
@@ -619,14 +654,14 @@ function discRowHTML(r){
   const label=r.label||'未完成';
   const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
   return`<tr>
-    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
-    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div></div></div></td>
-    <td>${r.industry||'—'}</td>
-    <td><span class="badge disc">${label}</span> ${emailBadge}</td>
+    <td><div class="name-cell"><div class="avatar">${esc((r.name||'?')[0])}</div>
+    <div class="name-text"><div class="n">${esc(r.name||'—')}</div><div class="e">${esc(r.email||'')}</div></div></div></td>
+    <td>${esc(r.industry||'—')}</td>
+    <td><span class="badge disc">${esc(label)}</span> ${emailBadge}</td>
     <td>${statusBadge(r.status)}</td>
     <td><div class="btn-group-cell">
-      <button class="action-btn" data-disc-view-id="${r.id}">查看</button>
-      <button class="action-btn email" data-disc-email-id="${r.id}">📧 寄報告</button>
+      <button class="action-btn" data-disc-view-id="${esc(r.id)}">查看</button>
+      <button class="action-btn email" data-disc-email-id="${esc(r.id)}">📧 寄報告</button>
     </div></td>
   </tr>`;
 }
@@ -677,7 +712,7 @@ async function advanceDiscStatus(id,current){
   }catch(e){showToast('更新失敗：'+e.message);}
 }
 
-function openDiscReportInNewTab(id){window.open(`${DISC_REPORT_BASE}?id=${id}`,'_blank');}
+function openDiscReportInNewTab(id){window.open(`${DISC_REPORT_BASE}?id=${encodeURIComponent(id)}&from=admin`,'_blank');}
 
 document.getElementById('ddpDeleteBtn').addEventListener('click',()=>{
   currentSource='discClients';
@@ -701,14 +736,14 @@ function talentRowHTML(r){
   const label=r.label||'未完成';
   const emailBadge=r.emailSentAt?`<span class="badge emailed">✉ 已寄</span>`:'';
   return`<tr>
-    <td><div class="name-cell"><div class="avatar">${(r.name||'?')[0]}</div>
-    <div class="name-text"><div class="n">${r.name||'—'}</div><div class="e">${r.email||''}</div></div></div></td>
-    <td>${r.lineName||'—'}</td>
-    <td><span class="badge talent">${label}</span> ${emailBadge}</td>
+    <td><div class="name-cell"><div class="avatar">${esc((r.name||'?')[0])}</div>
+    <div class="name-text"><div class="n">${esc(r.name||'—')}</div><div class="e">${esc(r.email||'')}</div></div></div></td>
+    <td>${esc(r.lineName||'—')}</td>
+    <td><span class="badge talent">${esc(label)}</span> ${emailBadge}</td>
     <td>${statusBadge(r.status)}</td>
     <td><div class="btn-group-cell">
-      <button class="action-btn" data-talent-view-id="${r.id}">查看</button>
-      <button class="action-btn email" data-talent-email-id="${r.id}">📧 寄報告</button>
+      <button class="action-btn" data-talent-view-id="${esc(r.id)}">查看</button>
+      <button class="action-btn email" data-talent-email-id="${esc(r.id)}">📧 寄報告</button>
     </div></td>
   </tr>`;
 }
@@ -761,7 +796,7 @@ async function advanceTalentStatus(id,current){
   }catch(e){showToast('更新失敗：'+e.message);}
 }
 
-function openTalentReportInNewTab(id){window.open(`${TALENT_REPORT_BASE}?id=${id}`,'_blank');}
+function openTalentReportInNewTab(id){window.open(`${TALENT_REPORT_BASE}?id=${encodeURIComponent(id)}&from=admin`,'_blank');}
 
 document.getElementById('tdpDeleteBtn').addEventListener('click',()=>{
   currentSource='talentClients';
@@ -784,10 +819,23 @@ window.openDetail=(id)=>{
   document.getElementById('dpIncome').textContent=r.incomeRange||r.incomeSatisfaction||'—';
   const sArr=socialArr(r);
   document.getElementById('dpSocial').innerHTML=sArr.length
-    ?sArr.map(s=>`<span class="dp-social-tag">${s}</span>`).join('')
+    ?sArr.map(s=>`<span class="dp-social-tag">${esc(s)}</span>`).join('')
     :'—';
+  const psych=isPsych(r);
+  document.getElementById('dpFormType').textContent=psych?'心理＆人際諮詢':'收入＆職涯諮詢';
+  document.querySelectorAll('#detailOverlay .dp-career').forEach(el=>el.style.display=psych?'none':'');
+  document.querySelectorAll('#detailOverlay .dp-psych').forEach(el=>el.style.display=psych?'':'none');
+  if(psych){
+    const sq=Object.values(r.styleQuiz||{}).filter(Boolean);
+    document.getElementById('dpRelStatus').textContent=r.relationshipStatus||'—';
+    document.getElementById('dpIssueDesc').textContent=r.issueDesc||'—';
+    document.getElementById('dpIssueContext').textContent=r.issueContext||'—';
+    document.getElementById('dpTried').textContent=(r.triedMethods||[]).join('、')||'—';
+    document.getElementById('dpDesired').textContent=r.desiredOutcome||'—';
+    document.getElementById('dpStyleQuiz').textContent=sq.length?`作答 ${sq.length} / 6 題（${sq.join(' ')}）`:'未作答';
+  }
   document.getElementById('dpGoal').textContent=r.futureGoal||r.interest||'—';
-  document.getElementById('dpPlan').innerHTML=r.plan?`<span class="badge plan${r.plan}">Plan ${r.plan}</span>`:'—';
+  document.getElementById('dpPlan').innerHTML=r.plan?`<span class="badge plan${esc(r.plan)}">Plan ${esc(r.plan)}</span>`:'—';
   document.getElementById('dpFormat').textContent=r.format||'—';
   document.getElementById('dpAppt').textContent=r.appointmentTime||'尚未填寫';
   const ts=r.createdAt?.seconds?new Date(r.createdAt.seconds*1000):null;
@@ -800,6 +848,8 @@ window.openDetail=(id)=>{
   const rBtn=document.getElementById('dpReportBtn');
   rBtn.onclick=()=>{closeDetail();openReportInNewTab(id);};
   rBtn.textContent='📋 查看報告';
+  rBtn.style.display=(psych||!hasWd(r))?'none':'';
+  document.getElementById('dpEmailBtn').textContent=(psych||!hasWd(r))?'📧 寄確認信':'📧 寄信';
   document.getElementById('dpEmailBtn').onclick=()=>{closeDetail();openEmailModal(id,'bookings');};
   const aBtn=document.getElementById('dpActionBtn');
   if(r.status==='pending'){aBtn.textContent='✓ 確認預約';aBtn.style.display='block';aBtn.onclick=()=>advanceStatus(id,'pending');}
@@ -825,8 +875,9 @@ async function advanceStatus(id,current){
 
 /* ══ REPORT VIEWER ══════════════════════════════════════════════════ */
 function openReportInNewTab(id){
-  const url=`${REPORT_BASE}?id=${id}`;
-  window.open(url,'_blank');
+  const r=allBookings.find(b=>b.id===id);
+  if(r&&(isPsych(r)||!hasWd(r))){showToast(isPsych(r)?'心理＆人際諮詢沒有自動報告':'這位個案沒有作答能量測驗，無法產生報告');return;}
+  window.open(`${REPORT_BASE}?id=${encodeURIComponent(id)}&from=admin`,'_blank');
 }
 
 /* ══ EMAIL MODAL（共用，依 source 切換文案與連結）══════════════════════ */
@@ -836,6 +887,7 @@ window.openEmailModal=(id,source)=>{
   const r=list.find(b=>b.id===id);if(!r)return;
   currentDocId=id;currentSource=source;
   const reportUrl=source==='discClients'?`${DISC_REPORT_BASE}?id=${id}`:source==='talentClients'?`${TALENT_REPORT_BASE}?id=${id}`:`${REPORT_BASE}?id=${id}`;
+  const noReport=source==='bookings'&&(isPsych(r)||!hasWd(r));
   document.getElementById('emSub').textContent=`寄送至：${r.email||'（未知）'}`;
   document.getElementById('emTo').value=r.email||'';
 
@@ -892,6 +944,19 @@ https://calendar.app.google/y7pFfnC2HXbyvydP9
 
 期待在諮詢室見到你 😊
 Mike 主任`;
+  }else if(noReport){
+    document.getElementById('emSubject').value=`${r.name||'您'}，已收到你的諮詢預約｜Mike 主任`;
+    document.getElementById('emBody').value=
+`嗨 ${r.name||'您'}，
+
+謝謝你填寫${isPsych(r)?'心理＆人際':'收入＆職涯'}諮詢表單 😊
+你的資料我都收到了，會在諮詢前先看過，讓我們的時間更有效率。
+
+${r.format?`諮詢方式：${r.format}\n`:''}如果還沒選好時段，可以從這裡預約：
+https://calendar.app.google/y7pFfnC2HXbyvydP9
+
+期待在諮詢室見到你 😊
+Mike 主任`;
   }else{
     const wdType=wdLabel(r);
     document.getElementById('emSubject').value=`${r.name||'您'} 的職涯策略診斷報告出爐了！｜Mike 主任`;
@@ -920,7 +985,7 @@ https://calendar.app.google/y7pFfnC2HXbyvydP9
 期待在諮詢室見到你 😊
 Mike 主任`;
   }
-  document.getElementById('emPreview').textContent=reportUrl;
+  document.getElementById('emPreview').textContent=noReport?'（這封是確認信，不附報告連結）':reportUrl;
   document.getElementById('emailModalBg').classList.add('show');
 };
 
@@ -998,7 +1063,25 @@ window.filterSearch=()=>{searchQuery=document.getElementById('searchInput').valu
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-window.addEventListener('DOMContentLoaded',()=>loadBookings());
+/* ══ 後台密碼門檻 ════════════════════════════════════════════════════ */
+const ADMIN_HASH='d91e556e1437bf3832b5499221be51505269ad33c5ce9b710e9a1e55d149c588';
+async function sha256(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+function unlockAdmin(){document.getElementById('lockScreen').style.display='none';loadBookings();}
+window.tryUnlock=async(e)=>{
+  if(e)e.preventDefault();
+  const inp=document.getElementById('lockPw');
+  if(await sha256(inp.value.trim())===ADMIN_HASH){
+    try{sessionStorage.setItem('cbAdminOk','1');}catch(_){}
+    unlockAdmin();
+  }else{
+    document.getElementById('lockErr').style.display='block';inp.value='';inp.focus();
+  }
+};
+window.lockAdmin=()=>{try{sessionStorage.removeItem('cbAdminOk');}catch(_){}location.reload();};
+window.addEventListener('DOMContentLoaded',()=>{
+  let ok=false;try{ok=sessionStorage.getItem('cbAdminOk')==='1';}catch(_){}
+  if(ok)unlockAdmin();else document.getElementById('lockPw').focus();
+});
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex,nofollow"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DISC．行為風格深度解析報告書</title>
 <style>
@@ -138,7 +139,7 @@
 <div class="screen-nav">
   <div class="nav-title">DISC 行為風格報告</div>
   <div class="nav-name" id="navName">載入中...</div>
-  <button class="nav-btn email" onclick="openEmailModal()">📧 寄送 Email</button>
+  <button class="nav-btn email" id="navEmailBtn" style="display:none" onclick="openEmailModal()">📧 寄送 Email</button>
   <button class="nav-btn print-btn" onclick="window.print()">🖨 列印 / PDF</button>
 </div>
 <div class="nav-spacer"></div>
@@ -274,6 +275,8 @@
 const fbCfg={apiKey:"AIzaSyAwExq6zJwIMrhEBxAeQ4xt5QX_6Sg6gEk",authDomain:"career-b5a20.firebaseapp.com",projectId:"career-b5a20",storageBucket:"career-b5a20.firebasestorage.app",messagingSenderId:"329919548793",appId:"1:329919548793:web:ef59f82f9934f29192f3a8"};
 const params=new URLSearchParams(location.search);
 const docId=params.get('id');
+// 「寄送 Email」按鈕只在從後台開啟時顯示，客戶看自己的報告時不會出現
+if(params.get('from')==='admin'){const _eb=document.getElementById('navEmailBtn');if(_eb)_eb.style.display='';}
 const demoType=params.get('demo');
 let db;
 async function initFb(){
@@ -478,8 +481,8 @@ async function load(){
     window._reportRaw=snap.data();window._reportId=docId;
     renderReport(toReportData(snap.data()));
   }catch(e){
-    console.warn('Firebase 讀取失敗，使用 demo 資料:',e.message);
-    renderReport(DEMO);
+    console.warn('Firebase 讀取失敗:',e.message);
+    document.body.innerHTML='<div style="padding:60px 24px;font-family:sans-serif;color:#fbeed9;text-align:center;line-height:1.9"><h2 style="font-size:20px;margin-bottom:12px">報告暫時無法載入</h2><p>請稍後重新整理頁面再試一次。<br>若持續發生，請直接聯絡 Mike 主任，我們會盡快協助你。</p><button onclick="location.reload()" style="margin-top:20px;padding:10px 28px;border:none;border-radius:20px;background:#b5651d;color:#fff;font-size:14px;cursor:pointer">重新整理</button></div>';
   }
 }
 
