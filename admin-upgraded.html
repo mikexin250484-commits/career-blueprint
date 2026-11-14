@@ -478,13 +478,12 @@ tr:hover td{background:#faf9f5}
 
 <!-- LOCK SCREEN -->
 <div id="lockScreen" style="position:fixed;inset:0;background:#2d3a2d;z-index:500;display:flex;align-items:center;justify-content:center;padding:20px">
-  <form onsubmit="tryUnlock(event)" style="background:#fdfbf6;border-radius:18px;padding:36px 32px;width:340px;max-width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25)">
+  <div style="background:#fdfbf6;border-radius:18px;padding:36px 32px;width:340px;max-width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.25)">
     <div style="font-family:'Noto Serif TC',serif;font-size:18px;color:#3d4a3d;margin-bottom:6px">Mike 主任 CRM</div>
-    <div style="font-size:12px;color:#7a8a7a;margin-bottom:22px">請輸入後台密碼</div>
-    <input id="lockPw" type="password" autocomplete="current-password" placeholder="密碼" style="width:100%;padding:11px 14px;border:1px solid #e3dccd;border-radius:10px;font-size:14px;font-family:inherit;outline:none;margin-bottom:12px"/>
-    <div id="lockErr" style="display:none;color:#c0392b;font-size:12px;margin-bottom:10px">密碼不正確，請再試一次</div>
-    <button type="submit" style="width:100%;padding:11px;border:none;border-radius:24px;background:#6b8068;color:#fff;font-size:14px;cursor:pointer;font-family:inherit">進入後台</button>
-  </form>
+    <div style="font-size:12px;color:#7a8a7a;margin-bottom:22px">請用 Mike 主任的 Google 帳號登入</div>
+    <button type="button" onclick="googleLogin()" style="width:100%;padding:11px;border:1px solid #e3dccd;border-radius:24px;background:#fff;color:#3d4a3d;font-size:14px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font-weight:700;color:#4285f4">G</span> 用 Google 登入</button>
+    <div id="lockErr" style="display:none;font-size:12px;margin-top:12px;line-height:1.6"></div>
+  </div>
 </div>
 
 <script>
@@ -503,7 +502,7 @@ async function initFirebase(){
   const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
   const {getFirestore,collection,getDocs,doc,updateDoc,deleteDoc,addDoc,serverTimestamp}=
     await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js");
-  const app=initializeApp(fbCfg);
+  const app=window._fbApp||initializeApp(fbCfg);window._fbApp=app;
   db=getFirestore(app);
   window._fb={collection,getDocs,doc,updateDoc,deleteDoc,addDoc,serverTimestamp,db};
 }
@@ -1063,25 +1062,41 @@ window.filterSearch=()=>{searchQuery=document.getElementById('searchInput').valu
 
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-/* ══ 後台密碼門檻 ════════════════════════════════════════════════════ */
-const ADMIN_HASH='d91e556e1437bf3832b5499221be51505269ad33c5ce9b710e9a1e55d149c588';
-async function sha256(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
-function unlockAdmin(){document.getElementById('lockScreen').style.display='none';loadBookings();}
-window.tryUnlock=async(e)=>{
-  if(e)e.preventDefault();
-  const inp=document.getElementById('lockPw');
-  if(await sha256(inp.value.trim())===ADMIN_HASH){
-    try{sessionStorage.setItem('cbAdminOk','1');}catch(_){}
-    unlockAdmin();
-  }else{
-    document.getElementById('lockErr').style.display='block';inp.value='';inp.focus();
+/* ══ 後台登入（Firebase 會員驗證：只允許 Mike 主任的 Google 帳號）══════════ */
+const ADMIN_EMAIL='mikexin250484@gmail.com';
+let _auth=null,_authMod=null;
+function lockMsg(t,isErr){const e=document.getElementById('lockErr');e.textContent=t;e.style.display=t?'block':'none';e.style.color=isErr?'#c0392b':'#7a8a7a';}
+async function initAuth(){
+  const {initializeApp}=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+  _authMod=await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js");
+  window._fbApp=window._fbApp||initializeApp(fbCfg);
+  _auth=_authMod.getAuth(window._fbApp);
+  _authMod.onAuthStateChanged(_auth,async user=>{
+    if(!user){document.getElementById('lockScreen').style.display='flex';return;}
+    if(user.email!==ADMIN_EMAIL){
+      lockMsg(`${user.email} 沒有後台權限，請改用 Mike 主任的 Google 帳號登入`,true);
+      await _authMod.signOut(_auth);return;
+    }
+    document.getElementById('lockScreen').style.display='none';
+    loadBookings();
+  });
+}
+window.googleLogin=async()=>{
+  lockMsg('登入中…',false);
+  try{
+    if(!_auth)await initAuth();
+    const prov=new _authMod.GoogleAuthProvider();prov.setCustomParameters({prompt:'select_account'});
+    await _authMod.signInWithPopup(_auth,prov);
+    lockMsg('',false);
+  }catch(e){
+    const m={'auth/popup-closed-by-user':'登入視窗被關閉了，請再試一次','auth/popup-blocked':'瀏覽器擋住了登入視窗，請允許彈出視窗後再試',
+      'auth/unauthorized-domain':'這個網址還沒加入 Firebase 的「授權網域」','auth/configuration-not-found':'Firebase 尚未啟用 Google 登入',
+      'auth/operation-not-allowed':'Firebase 尚未啟用 Google 登入'};
+    lockMsg(m[e.code]||('登入失敗：'+(e.code||e.message)),true);
   }
 };
-window.lockAdmin=()=>{try{sessionStorage.removeItem('cbAdminOk');}catch(_){}location.reload();};
-window.addEventListener('DOMContentLoaded',()=>{
-  let ok=false;try{ok=sessionStorage.getItem('cbAdminOk')==='1';}catch(_){}
-  if(ok)unlockAdmin();else document.getElementById('lockPw').focus();
-});
+window.lockAdmin=async()=>{try{if(_auth)await _authMod.signOut(_auth);}catch(_){}location.reload();};
+window.addEventListener('DOMContentLoaded',()=>{initAuth().catch(e=>lockMsg('無法連線，請重新整理',true));});
 </script>
 </body>
 </html>
