@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 只有 Mike 主任的 Google 帳號算管理員
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'mikexin250484@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // 客戶可以：送出表單（新增）、看自己的報告（用網址裡的 id 讀單筆）、
+    //          在預約頁補「諮詢方式、備註」。
+    // 其他動作（列出全部、修改狀態、刪除）只有管理員可以。
+    match /bookings/{id} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.size() <= 60;
+      allow get: if true;
+      allow update: if isAdmin()
+                    || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['format', 'notes']);
+      allow list, delete: if isAdmin();
+    }
+
+    match /discClients/{id} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.size() <= 60;
+      allow get: if true;
+      allow update: if isAdmin()
+                    || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['format', 'notes']);
+      allow list, delete: if isAdmin();
+    }
+
+    match /talentClients/{id} {
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() <= 100
+                    && request.resource.data.size() <= 60;
+      allow get: if true;
+      allow update: if isAdmin()
+                    || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['format', 'notes']);
+      allow list, delete: if isAdmin();
+    }
+
+    // 其他所有資料：只有管理員能碰
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
